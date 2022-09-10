@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>ruoyi-generator</artifactId>
+    <artifactId>property-generator</artifactId>
 
     <description>
         generator代码生成
@@ -32,7 +32,7 @@
         <!-- 通用工具-->
         <dependency>
             <groupId>com.ruoyi</groupId>
-            <artifactId>ruoyi-common</artifactId>
+            <artifactId>property-common</artifactId>
         </dependency>
 
     </dependencies>

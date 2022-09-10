@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.backstage.mapper.ReceivableMapper">
+  <resultMap id="BaseResultMap" type="com.ruoyi.backstage.domain.Receivable">
+    <!--@mbg.generated-->
+    <!--@Table receivable-->
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="type_id" jdbcType="VARCHAR" property="typeId" />
+    <result column="receivable_name" jdbcType="VARCHAR" property="receivableName" />
+    <result column="receivable_content" jdbcType="VARCHAR" property="receivableContent" />
+    <result column="receivable_money" jdbcType="VARCHAR" property="receivableMoney" />
+    <result column="contract_id" jdbcType="VARCHAR" property="contractId" />
+    <result column="owner_id" jdbcType="VARCHAR" property="ownerId" />
+    <result column="stop_time" jdbcType="TIMESTAMP" property="stopTime" />
+    <result column="receivable_status" jdbcType="INTEGER" property="receivableStatus" />
+    <result column="create_id" jdbcType="VARCHAR" property="createId" />
+    <result column="is_flag" jdbcType="INTEGER" property="isFlag" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, type_id, receivable_name, receivable_content, receivable_money, contract_id, 
+    owner_id, stop_time, receivable_status, create_id, is_flag, create_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from receivable
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    <!--@mbg.generated-->
+    delete from receivable
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ruoyi.backstage.domain.Receivable">
+    <!--@mbg.generated-->
+    insert into receivable (id, type_id, receivable_name, 
+      receivable_content, receivable_money, contract_id, 
+      owner_id, stop_time, receivable_status, 
+      create_id, is_flag, create_time
+      )
+    values (#{id,jdbcType=VARCHAR}, #{typeId,jdbcType=VARCHAR}, #{receivableName,jdbcType=VARCHAR}, 
+      #{receivableContent,jdbcType=VARCHAR}, #{receivableMoney,jdbcType=VARCHAR}, #{contractId,jdbcType=VARCHAR}, 
+      #{ownerId,jdbcType=VARCHAR}, #{stopTime,jdbcType=TIMESTAMP}, #{receivableStatus,jdbcType=INTEGER}, 
+      #{createId,jdbcType=VARCHAR}, #{isFlag,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ruoyi.backstage.domain.Receivable">
+    <!--@mbg.generated-->
+    insert into receivable
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="typeId != null">
+        type_id,
+      </if>
+      <if test="receivableName != null">
+        receivable_name,
+      </if>
+      <if test="receivableContent != null">
+        receivable_content,
+      </if>
+      <if test="receivableMoney != null">
+        receivable_money,
+      </if>
+      <if test="contractId != null">
+        contract_id,
+      </if>
+      <if test="ownerId != null">
+        owner_id,
+      </if>
+      <if test="stopTime != null">
+        stop_time,
+      </if>
+      <if test="receivableStatus != null">
+        receivable_status,
+      </if>
+      <if test="createId != null">
+        create_id,
+      </if>
+      <if test="isFlag != null">
+        is_flag,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="typeId != null">
+        #{typeId,jdbcType=VARCHAR},
+      </if>
+      <if test="receivableName != null">
+        #{receivableName,jdbcType=VARCHAR},
+      </if>
+      <if test="receivableContent != null">
+        #{receivableContent,jdbcType=VARCHAR},
+      </if>
+      <if test="receivableMoney != null">
+        #{receivableMoney,jdbcType=VARCHAR},
+      </if>
+      <if test="contractId != null">
+        #{contractId,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerId != null">
+        #{ownerId,jdbcType=VARCHAR},
+      </if>
+      <if test="stopTime != null">
+        #{stopTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="receivableStatus != null">
+        #{receivableStatus,jdbcType=INTEGER},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="isFlag != null">
+        #{isFlag,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ruoyi.backstage.domain.Receivable">
+    <!--@mbg.generated-->
+    update receivable
+    <set>
+      <if test="typeId != null">
+        type_id = #{typeId,jdbcType=VARCHAR},
+      </if>
+      <if test="receivableName != null">
+        receivable_name = #{receivableName,jdbcType=VARCHAR},
+      </if>
+      <if test="receivableContent != null">
+        receivable_content = #{receivableContent,jdbcType=VARCHAR},
+      </if>
+      <if test="receivableMoney != null">
+        receivable_money = #{receivableMoney,jdbcType=VARCHAR},
+      </if>
+      <if test="contractId != null">
+        contract_id = #{contractId,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerId != null">
+        owner_id = #{ownerId,jdbcType=VARCHAR},
+      </if>
+      <if test="stopTime != null">
+        stop_time = #{stopTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="receivableStatus != null">
+        receivable_status = #{receivableStatus,jdbcType=INTEGER},
+      </if>
+      <if test="createId != null">
+        create_id = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="isFlag != null">
+        is_flag = #{isFlag,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ruoyi.backstage.domain.Receivable">
+    <!--@mbg.generated-->
+    update receivable
+    set type_id = #{typeId,jdbcType=VARCHAR},
+      receivable_name = #{receivableName,jdbcType=VARCHAR},
+      receivable_content = #{receivableContent,jdbcType=VARCHAR},
+      receivable_money = #{receivableMoney,jdbcType=VARCHAR},
+      contract_id = #{contractId,jdbcType=VARCHAR},
+      owner_id = #{ownerId,jdbcType=VARCHAR},
+      stop_time = #{stopTime,jdbcType=TIMESTAMP},
+      receivable_status = #{receivableStatus,jdbcType=INTEGER},
+      create_id = #{createId,jdbcType=VARCHAR},
+      is_flag = #{isFlag,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
