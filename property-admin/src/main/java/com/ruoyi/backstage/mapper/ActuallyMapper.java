@@ -3,10 +3,12 @@ package com.ruoyi.backstage.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.ruoyi.backstage.domain.Actually;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
 
 /**
- * @author 心风
+ * @author PG
  */
 @Mapper
 public interface ActuallyMapper extends BaseMapper<Actually> {
@@ -49,4 +51,20 @@ public interface ActuallyMapper extends BaseMapper<Actually> {
      * @return update count
      */
     int updateByPrimaryKey(Actually record);
+
+    /**
+     * 批量删除
+     *
+     * @param ids id集合
+     * @return int
+     */
+    int updateByIds(@Param("ids") String... ids);
+
+    /**
+     * 分页条件查询
+     *
+     * @param actually 实体
+     * @return list
+     */
+    List<Actually> selectActuallyList(Actually actually);
 }

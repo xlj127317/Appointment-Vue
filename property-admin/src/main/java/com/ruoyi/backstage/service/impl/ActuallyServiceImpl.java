@@ -2,6 +2,8 @@ package com.ruoyi.backstage.service.impl;
 
 import cn.hutool.core.date.CalendarUtil;
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ruoyi.backstage.domain.Actually;
 import com.ruoyi.backstage.mapper.ActuallyMapper;
@@ -13,6 +15,7 @@ import org.springframework.validation.annotation.Validated;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author 心风
@@ -20,6 +23,27 @@ import java.util.List;
  **/
 @Service
 public class ActuallyServiceImpl extends ServiceImpl<ActuallyMapper, Actually> implements ActuallyService {
+
+    /**
+     * 实收开始时间
+     */
+    public static final String ACTUALLY_START_TIME = "actuallyStartTime";
+
+    /**
+     * 实收结束时间
+     */
+    public static final String ACTUALLY_STOP_TIME = "actuallyStopTime";
+
+    /**
+     * 创建开始时间
+     */
+    public static final String CREATE_START_TIME = "createStartTime";
+
+    /**
+     * 创建结束时间
+     */
+    public static final String CREATE_STOP_TIME = "createStopTime";
+
 
     @Resource
     private ActuallyMapper actuallyMapper;
@@ -37,12 +61,12 @@ public class ActuallyServiceImpl extends ServiceImpl<ActuallyMapper, Actually> i
     }
 
     @Override
-    public AjaxResult deleteById(String[] id) {
-        return null;
+    public AjaxResult deleteById(String[] ids) {
+        return AjaxResult.success(actuallyMapper.updateByIds(ids));
     }
 
     @Override
     public List<Actually> queryList(Actually actually) {
-        return null;
+        return actuallyMapper.selectActuallyList(actually);
     }
 }

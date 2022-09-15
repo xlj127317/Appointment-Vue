@@ -3,6 +3,7 @@ package com.ruoyi.backstage.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.ruoyi.backstage.domain.Actually;
 import com.ruoyi.common.core.domain.AjaxResult;
+import com.ruoyi.common.core.page.TableDataInfo;
 
 import java.util.List;
 
@@ -31,10 +32,10 @@ public interface ActuallyService extends IService<Actually> {
     /**
      * 批量删除
      *
-     * @param id ids
+     * @param ids ids
      * @return ajaxResult
      */
-    AjaxResult deleteById(String[] id);
+    AjaxResult deleteById(String[] ids);
 
     /**
      * 分页

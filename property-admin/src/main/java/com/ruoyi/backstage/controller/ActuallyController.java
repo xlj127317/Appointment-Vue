@@ -8,10 +8,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,19 +26,19 @@ public class ActuallyController extends BaseController {
 
     @ApiOperation(value = "新增应收单")
     @PostMapping("/insert")
-    public AjaxResult insert(Actually actually) {
+    public AjaxResult insert(@RequestBody Actually actually) {
         return actuallyService.insertActually(actually);
     }
 
     @ApiOperation(value = "详情")
     @GetMapping("/selectById")
-    public AjaxResult queryById(String id) {
+    public AjaxResult queryById(@RequestParam String id) {
         return actuallyService.queryById(id);
     }
 
     @ApiOperation(value = "修改应收单")
     @PostMapping("/updateById")
-    public AjaxResult updateById(Actually actually) {
+    public AjaxResult updateById(@RequestBody Actually actually) {
         return AjaxResult.success(actuallyService.updateById(actually));
     }
 
@@ -51,9 +48,10 @@ public class ActuallyController extends BaseController {
         return actuallyService.deleteById(id);
     }
 
-    @ApiOperation(value = "新增应收单")
-    @PostMapping("/insert")
-    public TableDataInfo queryPage(Actually actually) {
+    @ApiOperation(value = "分页查询应收单")
+    @PostMapping("/queryByPage")
+    @ResponseBody
+    public TableDataInfo queryPage(@RequestBody Actually actually) {
         startPage();
         List<Actually> list = actuallyService.queryList(actually);
         return getDataTable(list);

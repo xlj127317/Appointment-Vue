@@ -3,9 +3,6 @@ package com.ruoyi.backstage.mapper;
 import com.ruoyi.backstage.domain.Houses;
 import org.apache.ibatis.annotations.Mapper;
 
-/**
- * @author wind
- */
 @Mapper
 public interface HousesMapper {
     /**

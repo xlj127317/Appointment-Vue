@@ -9,9 +9,15 @@
         <result column="actually_name" jdbcType="VARCHAR" property="actuallyName"/>
         <result column="actually_content" jdbcType="VARCHAR" property="actuallyContent"/>
         <result column="actually_money" jdbcType="VARCHAR" property="actuallyMoney"/>
+        <result column="payment_time" jdbcType="TIMESTAMP" property="paymentTime"/>
         <result column="contract_id" jdbcType="VARCHAR" property="contractId"/>
         <result column="owner_id" jdbcType="VARCHAR" property="ownerId"/>
         <result column="create_id" jdbcType="VARCHAR" property="createId"/>
+        <result column="advance_status" jdbcType="INTEGER" property="advanceStatus"/>
+        <result column="actually_status" jdbcType="INTEGER" property="actuallyStatus"/>
+        <result column="is_arrears" jdbcType="INTEGER" property="isArrears"/>
+        <result column="payment_type" jdbcType="INTEGER" property="paymentType"/>
+        <result column="actually_time" jdbcType="TIMESTAMP" property="actuallyTime"/>
         <result column="is_flag" jdbcType="INTEGER" property="isFlag"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
     </resultMap>
@@ -22,9 +28,15 @@
         actually_name,
         actually_content,
         actually_money,
+        payment_time,
         contract_id,
         owner_id,
         create_id,
+        advance_status,
+        actually_status,
+        is_arrears,
+        payment_type,
+        actually_time,
         is_flag,
         create_time
     </sql>
@@ -41,6 +53,22 @@
         from actually
         where id = #{id,jdbcType=VARCHAR}
     </delete>
+    <insert id="insert" parameterType="com.ruoyi.backstage.domain.Actually">
+        <!--@mbg.generated-->
+        insert into actually (id, type_id, actually_name,
+                              actually_content, actually_money, payment_time,
+                              contract_id, owner_id, create_id,
+                              advance_status, actually_status, is_arrears,
+                              payment_type, actually_time, is_flag,
+                              create_time)
+        values (#{id,jdbcType=VARCHAR}, #{typeId,jdbcType=VARCHAR}, #{actuallyName,jdbcType=VARCHAR},
+                #{actuallyContent,jdbcType=VARCHAR}, #{actuallyMoney,jdbcType=VARCHAR},
+                #{paymentTime,jdbcType=TIMESTAMP},
+                #{contractId,jdbcType=VARCHAR}, #{ownerId,jdbcType=VARCHAR}, #{createId,jdbcType=VARCHAR},
+                #{advanceStatus,jdbcType=INTEGER}, #{actuallyStatus,jdbcType=INTEGER}, #{isArrears,jdbcType=INTEGER},
+                #{paymentType,jdbcType=INTEGER}, #{actuallyTime,jdbcType=TIMESTAMP}, #{isFlag,jdbcType=INTEGER},
+                #{createTime,jdbcType=TIMESTAMP})
+    </insert>
     <insert id="insertSelective" parameterType="com.ruoyi.backstage.domain.Actually">
         <!--@mbg.generated-->
         insert into actually
@@ -60,6 +88,9 @@
             <if test="actuallyMoney != null">
                 actually_money,
             </if>
+            <if test="paymentTime != null">
+                payment_time,
+            </if>
             <if test="contractId != null">
                 contract_id,
             </if>
@@ -68,6 +99,21 @@
             </if>
             <if test="createId != null">
                 create_id,
+            </if>
+            <if test="advanceStatus != null">
+                advance_status,
+            </if>
+            <if test="actuallyStatus != null">
+                actually_status,
+            </if>
+            <if test="isArrears != null">
+                is_arrears,
+            </if>
+            <if test="paymentType != null">
+                payment_type,
+            </if>
+            <if test="actuallyTime != null">
+                actually_time,
             </if>
             <if test="isFlag != null">
                 is_flag,
@@ -92,6 +138,9 @@
             <if test="actuallyMoney != null">
                 #{actuallyMoney,jdbcType=VARCHAR},
             </if>
+            <if test="paymentTime != null">
+                #{paymentTime,jdbcType=TIMESTAMP},
+            </if>
             <if test="contractId != null">
                 #{contractId,jdbcType=VARCHAR},
             </if>
@@ -100,6 +149,21 @@
             </if>
             <if test="createId != null">
                 #{createId,jdbcType=VARCHAR},
+            </if>
+            <if test="advanceStatus != null">
+                #{advanceStatus,jdbcType=INTEGER},
+            </if>
+            <if test="actuallyStatus != null">
+                #{actuallyStatus,jdbcType=INTEGER},
+            </if>
+            <if test="isArrears != null">
+                #{isArrears,jdbcType=INTEGER},
+            </if>
+            <if test="paymentType != null">
+                #{paymentType,jdbcType=INTEGER},
+            </if>
+            <if test="actuallyTime != null">
+                #{actuallyTime,jdbcType=TIMESTAMP},
             </if>
             <if test="isFlag != null">
                 #{isFlag,jdbcType=INTEGER},
@@ -125,6 +189,9 @@
             <if test="actuallyMoney != null">
                 actually_money = #{actuallyMoney,jdbcType=VARCHAR},
             </if>
+            <if test="paymentTime != null">
+                payment_time = #{paymentTime,jdbcType=TIMESTAMP},
+            </if>
             <if test="contractId != null">
                 contract_id = #{contractId,jdbcType=VARCHAR},
             </if>
@@ -133,6 +200,21 @@
             </if>
             <if test="createId != null">
                 create_id = #{createId,jdbcType=VARCHAR},
+            </if>
+            <if test="advanceStatus != null">
+                advance_status = #{advanceStatus,jdbcType=INTEGER},
+            </if>
+            <if test="actuallyStatus != null">
+                actually_status = #{actuallyStatus,jdbcType=INTEGER},
+            </if>
+            <if test="isArrears != null">
+                is_arrears = #{isArrears,jdbcType=INTEGER},
+            </if>
+            <if test="paymentType != null">
+                payment_type = #{paymentType,jdbcType=INTEGER},
+            </if>
+            <if test="actuallyTime != null">
+                actually_time = #{actuallyTime,jdbcType=TIMESTAMP},
             </if>
             <if test="isFlag != null">
                 is_flag = #{isFlag,jdbcType=INTEGER},
@@ -150,11 +232,83 @@
             actually_name    = #{actuallyName,jdbcType=VARCHAR},
             actually_content = #{actuallyContent,jdbcType=VARCHAR},
             actually_money   = #{actuallyMoney,jdbcType=VARCHAR},
+            payment_time     = #{paymentTime,jdbcType=TIMESTAMP},
             contract_id      = #{contractId,jdbcType=VARCHAR},
             owner_id         = #{ownerId,jdbcType=VARCHAR},
             create_id        = #{createId,jdbcType=VARCHAR},
+            advance_status   = #{advanceStatus,jdbcType=INTEGER},
+            actually_status  = #{actuallyStatus,jdbcType=INTEGER},
+            is_arrears       = #{isArrears,jdbcType=INTEGER},
+            payment_type     = #{paymentType,jdbcType=INTEGER},
+            actually_time    = #{actuallyTime,jdbcType=TIMESTAMP},
             is_flag          = #{isFlag,jdbcType=INTEGER},
             create_time      = #{createTime,jdbcType=TIMESTAMP}
         where id = #{id,jdbcType=VARCHAR}
     </update>
+
+    <update id="updateByIds">
+        update actually a
+        set a.is_flag = 1
+        <choose>
+            <when test="ids != null and ids.length != 0">
+                where
+                <foreach collection="ids" item="id" separator="or">
+                    id = #{id}
+                </foreach>
+            </when>
+        </choose>
+    </update>
+
+    <select id="selectActuallyList" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from actually
+        <where>
+            <if test="typeId != null  and typeId != ''">
+                and type_id = #{typeId}
+            </if>
+            <if test="actuallyName != null  and actuallyName != ''">
+                and actually_name like concat('%', #{actuallyName}, '%')
+            </if>
+            <if test="actuallyContent != null  and actuallyContent != ''">
+                and actually_content = #{actuallyContent}
+            </if>
+            <if test="actuallyMoney != null  and actuallyMoney != ''">
+                and actually_money = #{actuallyMoney}
+            </if>
+            <if test="paymentTime != null">
+                and payment_time = #{paymentTime}
+            </if>
+            <if test="contractId != null  and contractId != ''">
+                and contract_id = #{contractId}
+            </if>
+            <if test="ownerId != null  and ownerId != ''">
+                and owner_id = #{ownerId}
+            </if>
+            <if test="createId != null  and createId != ''">
+                and create_id = #{createId}
+            </if>
+            <if test="advanceStatus != null">
+                and advance_status = #{advanceStatus}
+            </if>
+            <if test="actuallyStatus != null">
+                and actually_status = #{actuallyStatus}
+            </if>
+            <if test="isArrears != null">
+                and is_arrears = #{isArrears}
+            </if>
+            <if test="paymentType != null">
+                and payment_type = #{paymentType}
+            </if>
+            <if test="params.actuallyStartTime != null and actuallyStopTime != null">
+                and actually_time between #{params.actuallyStartTime} and #{params.actuallyStopTime}
+            </if>
+            <if test="params.createStartTime != null and params.createStoptTime != null">
+                and create_time between #{params.createStartTime} and #{params.createStoptTime}
+            </if>
+            <if test="isFlag != null">
+                and is_flag = 0
+            </if>
+        </where>
+    </select>
 </mapper>

@@ -46,6 +46,13 @@ public class Houses {
     private String area;
 
     /**
+     * 房屋状态；0：有效，1：失效
+     */
+    @ApiModelProperty(value = "房屋状态；0：有效，1：失效")
+    @Schema(description = "房屋状态；0：有效，1：失效")
+    private Integer housesStatus;
+
+    /**
      * 创建人id
      */
     @ApiModelProperty(value = "创建人id")

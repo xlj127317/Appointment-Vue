@@ -8,13 +8,14 @@
     <result column="houses_no" jdbcType="VARCHAR" property="housesNo" />
     <result column="owner_id" jdbcType="VARCHAR" property="ownerId" />
     <result column="area" jdbcType="VARCHAR" property="area" />
+    <result column="houses_status" jdbcType="INTEGER" property="housesStatus" />
     <result column="create_id" jdbcType="VARCHAR" property="createId" />
     <result column="is_flag" jdbcType="INTEGER" property="isFlag" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    id, houses_no, owner_id, area, create_id, is_flag, create_time
+    id, houses_no, owner_id, area, houses_status, create_id, is_flag, create_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     <!--@mbg.generated-->
@@ -31,11 +32,11 @@
   <insert id="insert" parameterType="com.ruoyi.backstage.domain.Houses">
     <!--@mbg.generated-->
     insert into houses (id, houses_no, owner_id, 
-      area, create_id, is_flag, 
-      create_time)
+      area, houses_status, create_id, 
+      is_flag, create_time)
     values (#{id,jdbcType=VARCHAR}, #{housesNo,jdbcType=VARCHAR}, #{ownerId,jdbcType=VARCHAR}, 
-      #{area,jdbcType=VARCHAR}, #{createId,jdbcType=VARCHAR}, #{isFlag,jdbcType=INTEGER}, 
-      #{createTime,jdbcType=TIMESTAMP})
+      #{area,jdbcType=VARCHAR}, #{housesStatus,jdbcType=INTEGER}, #{createId,jdbcType=VARCHAR}, 
+      #{isFlag,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.ruoyi.backstage.domain.Houses">
     <!--@mbg.generated-->
@@ -52,6 +53,9 @@
       </if>
       <if test="area != null">
         area,
+      </if>
+      <if test="housesStatus != null">
+        houses_status,
       </if>
       <if test="createId != null">
         create_id,
@@ -75,6 +79,9 @@
       </if>
       <if test="area != null">
         #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="housesStatus != null">
+        #{housesStatus,jdbcType=INTEGER},
       </if>
       <if test="createId != null">
         #{createId,jdbcType=VARCHAR},
@@ -100,6 +107,9 @@
       <if test="area != null">
         area = #{area,jdbcType=VARCHAR},
       </if>
+      <if test="housesStatus != null">
+        houses_status = #{housesStatus,jdbcType=INTEGER},
+      </if>
       <if test="createId != null">
         create_id = #{createId,jdbcType=VARCHAR},
       </if>
@@ -118,6 +128,7 @@
     set houses_no = #{housesNo,jdbcType=VARCHAR},
       owner_id = #{ownerId,jdbcType=VARCHAR},
       area = #{area,jdbcType=VARCHAR},
+      houses_status = #{housesStatus,jdbcType=INTEGER},
       create_id = #{createId,jdbcType=VARCHAR},
       is_flag = #{isFlag,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP}
