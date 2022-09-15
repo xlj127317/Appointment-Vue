@@ -1,137 +1,183 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.backstage.mapper.HousesMapper">
-  <resultMap id="BaseResultMap" type="com.ruoyi.backstage.domain.Houses">
-    <!--@mbg.generated-->
-    <!--@Table houses-->
-    <id column="id" jdbcType="VARCHAR" property="id" />
-    <result column="houses_no" jdbcType="VARCHAR" property="housesNo" />
-    <result column="owner_id" jdbcType="VARCHAR" property="ownerId" />
-    <result column="area" jdbcType="VARCHAR" property="area" />
-    <result column="houses_status" jdbcType="INTEGER" property="housesStatus" />
-    <result column="create_id" jdbcType="VARCHAR" property="createId" />
-    <result column="is_flag" jdbcType="INTEGER" property="isFlag" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    <!--@mbg.generated-->
-    id, houses_no, owner_id, area, houses_status, create_id, is_flag, create_time
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    <!--@mbg.generated-->
-    select 
-    <include refid="Base_Column_List" />
-    from houses
-    where id = #{id,jdbcType=VARCHAR}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    <!--@mbg.generated-->
-    delete from houses
-    where id = #{id,jdbcType=VARCHAR}
-  </delete>
-  <insert id="insert" parameterType="com.ruoyi.backstage.domain.Houses">
-    <!--@mbg.generated-->
-    insert into houses (id, houses_no, owner_id, 
-      area, houses_status, create_id, 
-      is_flag, create_time)
-    values (#{id,jdbcType=VARCHAR}, #{housesNo,jdbcType=VARCHAR}, #{ownerId,jdbcType=VARCHAR}, 
-      #{area,jdbcType=VARCHAR}, #{housesStatus,jdbcType=INTEGER}, #{createId,jdbcType=VARCHAR}, 
-      #{isFlag,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP})
-  </insert>
-  <insert id="insertSelective" parameterType="com.ruoyi.backstage.domain.Houses">
-    <!--@mbg.generated-->
-    insert into houses
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
+    <resultMap id="BaseResultMap" type="com.ruoyi.backstage.domain.Houses">
+        <!--@mbg.generated-->
+        <!--@Table houses-->
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="houses_no" jdbcType="VARCHAR" property="housesNo"/>
+        <result column="owner_id" jdbcType="VARCHAR" property="ownerId"/>
+        <result column="area" jdbcType="VARCHAR" property="area"/>
+        <result column="houses_status" jdbcType="INTEGER" property="housesStatus"/>
+        <result column="create_id" jdbcType="VARCHAR" property="createId"/>
+        <result column="is_flag" jdbcType="INTEGER" property="isFlag"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
         id,
-      </if>
-      <if test="housesNo != null">
         houses_no,
-      </if>
-      <if test="ownerId != null">
         owner_id,
-      </if>
-      <if test="area != null">
         area,
-      </if>
-      <if test="housesStatus != null">
         houses_status,
-      </if>
-      <if test="createId != null">
         create_id,
-      </if>
-      <if test="isFlag != null">
         is_flag,
-      </if>
-      <if test="createTime != null">
-        create_time,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=VARCHAR},
-      </if>
-      <if test="housesNo != null">
-        #{housesNo,jdbcType=VARCHAR},
-      </if>
-      <if test="ownerId != null">
-        #{ownerId,jdbcType=VARCHAR},
-      </if>
-      <if test="area != null">
-        #{area,jdbcType=VARCHAR},
-      </if>
-      <if test="housesStatus != null">
-        #{housesStatus,jdbcType=INTEGER},
-      </if>
-      <if test="createId != null">
-        #{createId,jdbcType=VARCHAR},
-      </if>
-      <if test="isFlag != null">
-        #{isFlag,jdbcType=INTEGER},
-      </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.ruoyi.backstage.domain.Houses">
-    <!--@mbg.generated-->
-    update houses
-    <set>
-      <if test="housesNo != null">
-        houses_no = #{housesNo,jdbcType=VARCHAR},
-      </if>
-      <if test="ownerId != null">
-        owner_id = #{ownerId,jdbcType=VARCHAR},
-      </if>
-      <if test="area != null">
-        area = #{area,jdbcType=VARCHAR},
-      </if>
-      <if test="housesStatus != null">
-        houses_status = #{housesStatus,jdbcType=INTEGER},
-      </if>
-      <if test="createId != null">
-        create_id = #{createId,jdbcType=VARCHAR},
-      </if>
-      <if test="isFlag != null">
-        is_flag = #{isFlag,jdbcType=INTEGER},
-      </if>
-      <if test="createTime != null">
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.ruoyi.backstage.domain.Houses">
-    <!--@mbg.generated-->
-    update houses
-    set houses_no = #{housesNo,jdbcType=VARCHAR},
-      owner_id = #{ownerId,jdbcType=VARCHAR},
-      area = #{area,jdbcType=VARCHAR},
-      houses_status = #{housesStatus,jdbcType=INTEGER},
-      create_id = #{createId,jdbcType=VARCHAR},
-      is_flag = #{isFlag,jdbcType=INTEGER},
-      create_time = #{createTime,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
+        create_time
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        <!--@mbg.generated-->
+        select
+        <include refid="Base_Column_List"/>
+        from houses
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        <!--@mbg.generated-->
+        delete
+        from houses
+        where id = #{id,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="com.ruoyi.backstage.domain.Houses">
+        <!--@mbg.generated-->
+        insert into houses (id, houses_no, owner_id,
+                            area, houses_status, create_id,
+                            is_flag, create_time)
+        values (#{id,jdbcType=VARCHAR}, #{housesNo,jdbcType=VARCHAR}, #{ownerId,jdbcType=VARCHAR},
+                #{area,jdbcType=VARCHAR}, #{housesStatus,jdbcType=INTEGER}, #{createId,jdbcType=VARCHAR},
+                #{isFlag,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.ruoyi.backstage.domain.Houses">
+        <!--@mbg.generated-->
+        insert into houses
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="housesNo != null">
+                houses_no,
+            </if>
+            <if test="ownerId != null">
+                owner_id,
+            </if>
+            <if test="area != null">
+                area,
+            </if>
+            <if test="housesStatus != null">
+                houses_status,
+            </if>
+            <if test="createId != null">
+                create_id,
+            </if>
+            <if test="isFlag != null">
+                is_flag,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="housesNo != null">
+                #{housesNo,jdbcType=VARCHAR},
+            </if>
+            <if test="ownerId != null">
+                #{ownerId,jdbcType=VARCHAR},
+            </if>
+            <if test="area != null">
+                #{area,jdbcType=VARCHAR},
+            </if>
+            <if test="housesStatus != null">
+                #{housesStatus,jdbcType=INTEGER},
+            </if>
+            <if test="createId != null">
+                #{createId,jdbcType=VARCHAR},
+            </if>
+            <if test="isFlag != null">
+                #{isFlag,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ruoyi.backstage.domain.Houses">
+        <!--@mbg.generated-->
+        update houses
+        <set>
+            <if test="housesNo != null">
+                houses_no = #{housesNo,jdbcType=VARCHAR},
+            </if>
+            <if test="ownerId != null">
+                owner_id = #{ownerId,jdbcType=VARCHAR},
+            </if>
+            <if test="area != null">
+                area = #{area,jdbcType=VARCHAR},
+            </if>
+            <if test="housesStatus != null">
+                houses_status = #{housesStatus,jdbcType=INTEGER},
+            </if>
+            <if test="createId != null">
+                create_id = #{createId,jdbcType=VARCHAR},
+            </if>
+            <if test="isFlag != null">
+                is_flag = #{isFlag,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.ruoyi.backstage.domain.Houses">
+        <!--@mbg.generated-->
+        update houses
+        set houses_no     = #{housesNo,jdbcType=VARCHAR},
+            owner_id      = #{ownerId,jdbcType=VARCHAR},
+            area          = #{area,jdbcType=VARCHAR},
+            houses_status = #{housesStatus,jdbcType=INTEGER},
+            create_id     = #{createId,jdbcType=VARCHAR},
+            is_flag       = #{isFlag,jdbcType=INTEGER},
+            create_time   = #{createTime,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateByIds">
+        update houses h
+        set h.is_flag = 1
+        <choose>
+            <when test="ids != null and ids.length != 0">
+                where
+                <foreach collection="ids" item="id" separator="or">
+                    id = #{id}
+                </foreach>
+            </when>
+        </choose>
+    </update>
+
+    <select id="queryHousesList" resultType="com.ruoyi.backstage.domain.Houses">
+        select
+        <include refid="Base_Column_List"/>
+        <where>
+            <if test="housesNo != null  and housesNo != ''">
+                and houses_no = #{housesNo}
+            </if>
+            <if test="ownerId != null  and ownerId != ''">
+                and owner_id = #{ownerId}
+            </if>
+            <if test="area != null  and area != ''">
+                and area = #{area}
+            </if>
+            <if test="housesStatus != null">
+                and houses_status = #{housesStatus}
+            </if>
+            <if test="createId != null  and createId != ''">
+                and create_id = #{createId}
+            </if>
+            <if test="isFlag != null">
+                and is_flag = #{isFlag}
+            </if>
+        </where>
+    </select>
 </mapper>

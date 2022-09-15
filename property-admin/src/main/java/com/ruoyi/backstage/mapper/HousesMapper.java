@@ -1,10 +1,18 @@
 package com.ruoyi.backstage.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.ruoyi.backstage.domain.Actually;
 import com.ruoyi.backstage.domain.Houses;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
+/**
+ * @author PG
+ */
 @Mapper
-public interface HousesMapper {
+public interface HousesMapper extends BaseMapper<Houses> {
     /**
      * delete by primary key
      *
@@ -52,4 +60,20 @@ public interface HousesMapper {
      * @return update count
      */
     int updateByPrimaryKey(Houses record);
+
+    /**
+     * 批量逻辑删除
+     *
+     * @param ids id 集合
+     * @return int
+     */
+    int updateByIds(@Param("ids") String[] ids);
+
+    /**
+     * 分页查询列表
+     *
+     * @param houses 列表条件
+     * @return list
+     */
+    List<Houses> queryHousesList(Houses houses);
 }

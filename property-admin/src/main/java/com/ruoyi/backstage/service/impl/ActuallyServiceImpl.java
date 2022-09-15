@@ -24,27 +24,6 @@ import java.util.Map;
 @Service
 public class ActuallyServiceImpl extends ServiceImpl<ActuallyMapper, Actually> implements ActuallyService {
 
-    /**
-     * 实收开始时间
-     */
-    public static final String ACTUALLY_START_TIME = "actuallyStartTime";
-
-    /**
-     * 实收结束时间
-     */
-    public static final String ACTUALLY_STOP_TIME = "actuallyStopTime";
-
-    /**
-     * 创建开始时间
-     */
-    public static final String CREATE_START_TIME = "createStartTime";
-
-    /**
-     * 创建结束时间
-     */
-    public static final String CREATE_STOP_TIME = "createStopTime";
-
-
     @Resource
     private ActuallyMapper actuallyMapper;
 
@@ -57,7 +36,10 @@ public class ActuallyServiceImpl extends ServiceImpl<ActuallyMapper, Actually> i
 
     @Override
     public AjaxResult queryById(String id) {
-        return AjaxResult.success(actuallyMapper.selectByPrimaryKey(id));
+        LambdaQueryWrapper<Actually> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(Actually::getId,id);
+        queryWrapper.eq(Actually::getIsFlag,0);
+        return AjaxResult.success(actuallyMapper.selectOne(queryWrapper));
     }
 
     @Override
