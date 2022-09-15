@@ -3,6 +3,7 @@ package com.ruoyi.backstage.service.impl;
 import cn.hutool.core.date.CalendarUtil;
 import cn.hutool.core.date.DateUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ruoyi.backstage.domain.Actually;
 import com.ruoyi.backstage.domain.Houses;
@@ -51,5 +52,13 @@ public class HousesServiceImpl extends ServiceImpl<HousesMapper, Houses> impleme
     @Override
     public List<Houses> queryList(Houses houses) {
         return housesMapper.queryHousesList(houses);
+    }
+
+    @Override
+    public AjaxResult updateStatus(String id) {
+        LambdaUpdateWrapper<Houses> updateWrapper = new LambdaUpdateWrapper<>();
+        updateWrapper.eq(Houses::getId, id);
+        updateWrapper.set(Houses::getHousesStatus, 1);
+        return AjaxResult.success(housesMapper.update(new Houses(), updateWrapper));
     }
 }

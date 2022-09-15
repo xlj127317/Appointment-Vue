@@ -42,6 +42,12 @@ public class HousesController extends BaseController {
         return AjaxResult.success(housesService.updateById(houses));
     }
 
+    @ApiOperation("房屋状态修改")
+    @GetMapping("/updateStatus")
+    public AjaxResult updateStatus(String id) {
+        return housesService.updateStatus(id);
+    }
+
     @ApiOperation(value = "删除应收单")
     @PostMapping("/deleteByIds")
     public AjaxResult deleteByIds(String... ids) {

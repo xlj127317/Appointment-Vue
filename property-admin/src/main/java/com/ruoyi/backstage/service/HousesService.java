@@ -44,4 +44,12 @@ public interface HousesService extends IService<Houses> {
      * @return AjaxResult
      */
     List<Houses> queryList(Houses houses);
+
+    /**
+     * 根据id修改房屋状态
+     *
+     * @param id id
+     * @return AjaxResult
+     */
+    AjaxResult updateStatus(String id);
 }
