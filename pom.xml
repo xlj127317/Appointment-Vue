@@ -195,6 +195,7 @@
         <module>property-quartz</module>
         <module>property-generator</module>
         <module>property-common</module>
+        <module>property-web</module>
     </modules>
     <packaging>pom</packaging>
 
