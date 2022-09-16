@@ -3,6 +3,9 @@ package com.ruoyi.property.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.ruoyi.property.domain.ActuallyType;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * @author PG
@@ -26,34 +29,19 @@ public interface ActuallyTypeMapper extends BaseMapper<ActuallyType> {
     int updateByPrimaryKeySelective(ActuallyType record);
 
     /**
-     * delete by primary key
+     * 批量逻辑删除
      *
-     * @param id primaryKey
-     * @return deleteCount
+     * @param ids id集合
+     * @return int
      */
-    int deleteByPrimaryKey(String id);
+    int updateByIds(@Param("ids") String[] ids);
 
     /**
-     * insert record to table
+     * 分页条件查询
      *
-     * @param record the record
-     * @return insert count
+     * @param actuallyType 分页条件
+     * @return list
      */
-    int insert(ActuallyType record);
+    List<ActuallyType> selectActuallyList(ActuallyType actuallyType);
 
-    /**
-     * select by primary key
-     *
-     * @param id primary key
-     * @return object by primary key
-     */
-    ActuallyType selectByPrimaryKey(String id);
-
-    /**
-     * update record
-     *
-     * @param record the updated record
-     * @return update count
-     */
-    int updateByPrimaryKey(ActuallyType record);
 }

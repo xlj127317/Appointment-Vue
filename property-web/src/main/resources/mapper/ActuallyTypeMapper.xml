@@ -53,4 +53,36 @@
         </set>
         where id = #{id,jdbcType=VARCHAR}
     </update>
+
+    <update id="updateByIds">
+        update actually_type
+        set is_flag = 1
+        <choose>
+            <when test="ids != null and ids.length != 0">
+                where
+                <foreach collection="ids" item="id" separator="or">
+                    id = #{id}
+                </foreach>
+            </when>
+        </choose>
+    </update>
+
+    <select id="selectActuallyList" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from actually_type
+        <where>
+            <if test="id != null">
+                id = #{id,jdbcType=VARCHAR}
+                  and
+            </if>
+            <if test="typeName != null">
+                type_name = #{typeName,jdbcType=VARCHAR}
+                  and
+            </if>
+            <if test="isFlag != null">
+                is_flag = #{isFlag,jdbcType=INTEGER}
+            </if>
+        </where>
+    </select>
 </mapper>
