@@ -59,6 +59,11 @@
             <artifactId>property-system</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>property-web</artifactId>
+        </dependency>
+
     </dependencies>
 
 </project>

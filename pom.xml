@@ -2,15 +2,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	
+    <modelVersion>4.0.0</modelVersion>
+
     <groupId>com.ruoyi</groupId>
     <artifactId>ruoyi</artifactId>
     <version>3.8.3</version>
 
     <name>property</name>
     <description>物业管理系统</description>
-    
+
     <properties>
         <ruoyi.version>3.8.3</ruoyi.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -32,7 +32,7 @@
         <velocity.version>2.3</velocity.version>
         <jwt.version>0.9.1</jwt.version>
     </properties>
-	
+
     <!-- 依赖声明 -->
     <dependencyManagement>
         <dependencies>
@@ -175,6 +175,19 @@
             <dependency>
                 <groupId>com.ruoyi</groupId>
                 <artifactId>property-system</artifactId>
+                <version>${ruoyi.version}</version>
+            </dependency>
+
+            <!--web 模块-->
+            <dependency>
+                <groupId>com.ruoyi</groupId>
+                <artifactId>property-web</artifactId>
+                <version>${ruoyi.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.ruoyi</groupId>
+                <artifactId>property-admin</artifactId>
                 <version>${ruoyi.version}</version>
             </dependency>
 

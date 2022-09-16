@@ -11,33 +11,12 @@
 
     <artifactId>property-web</artifactId>
 
-    <properties>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
+    <description>web 模块</description>
 
     <dependencies>
         <dependency>
             <groupId>com.ruoyi</groupId>
             <artifactId>property-common</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.ruoyi</groupId>
-            <artifactId>property-admin</artifactId>
-            <version>3.8.3</version>
-        </dependency>
-        <dependency>
-            <groupId>com.ruoyi</groupId>
-            <artifactId>property-generator</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.ruoyi</groupId>
-            <artifactId>property-framework</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.ruoyi</groupId>
-            <artifactId>property-quartz</artifactId>
         </dependency>
     </dependencies>
 

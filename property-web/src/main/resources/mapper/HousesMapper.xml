@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ruoyi.backstage.mapper.HousesMapper">
-    <resultMap id="BaseResultMap" type="com.ruoyi.backstage.domain.Houses">
+<mapper namespace="com.ruoyi.property.mapper.HousesMapper">
+    <resultMap id="BaseResultMap" type="com.ruoyi.property.domain.Houses">
         <!--@mbg.generated-->
         <!--@Table houses-->
         <id column="id" jdbcType="VARCHAR" property="id"/>
@@ -37,7 +37,7 @@
         from houses
         where id = #{id,jdbcType=VARCHAR}
     </delete>
-    <insert id="insert" parameterType="com.ruoyi.backstage.domain.Houses">
+    <insert id="insert" parameterType="com.ruoyi.property.domain.Houses">
         <!--@mbg.generated-->
         insert into houses (id, houses_no, owner_id,
                             area, houses_status, create_id,
@@ -46,7 +46,7 @@
                 #{area,jdbcType=VARCHAR}, #{housesStatus,jdbcType=INTEGER}, #{createId,jdbcType=VARCHAR},
                 #{isFlag,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP})
     </insert>
-    <insert id="insertSelective" parameterType="com.ruoyi.backstage.domain.Houses">
+    <insert id="insertSelective" parameterType="com.ruoyi.property.domain.Houses">
         <!--@mbg.generated-->
         insert into houses
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -102,7 +102,7 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.ruoyi.backstage.domain.Houses">
+    <update id="updateByPrimaryKeySelective" parameterType="com.ruoyi.property.domain.Houses">
         <!--@mbg.generated-->
         update houses
         <set>
@@ -130,7 +130,7 @@
         </set>
         where id = #{id,jdbcType=VARCHAR}
     </update>
-    <update id="updateByPrimaryKey" parameterType="com.ruoyi.backstage.domain.Houses">
+    <update id="updateByPrimaryKey" parameterType="com.ruoyi.property.domain.Houses">
         <!--@mbg.generated-->
         update houses
         set houses_no     = #{housesNo,jdbcType=VARCHAR},
@@ -156,27 +156,28 @@
         </choose>
     </update>
 
-    <select id="queryHousesList" resultType="com.ruoyi.backstage.domain.Houses">
+    <select id="queryHousesList" resultMap="BaseResultMap" resultType="com.ruoyi.property.domain.Houses">
         select
         <include refid="Base_Column_List"/>
+        from houses
         <where>
-            <if test="housesNo != null  and housesNo != ''">
-                and houses_no = #{housesNo}
+            <if test="houses.housesNo != null  and houses.housesNo != ''">
+                and houses_no = #{houses.housesNo}
             </if>
-            <if test="ownerId != null  and ownerId != ''">
-                and owner_id = #{ownerId}
+            <if test="houses.ownerId != null  and houses.ownerId != ''">
+                and owner_id = #{houses.ownerId}
             </if>
-            <if test="area != null  and area != ''">
-                and area = #{area}
+            <if test="houses.area != null  and houses.area != ''">
+                and area = #{houses.area}
             </if>
-            <if test="housesStatus != null">
-                and houses_status = #{housesStatus}
+            <if test="houses.housesStatus != null">
+                and houses_status = #{houses.housesStatus}
             </if>
-            <if test="createId != null  and createId != ''">
-                and create_id = #{createId}
+            <if test="houses.createId != null  and houses.createId != ''">
+                and create_id = #{houses.createId}
             </if>
-            <if test="isFlag != null">
-                and is_flag = #{isFlag}
+            <if test="houses.isFlag != null">
+                and is_flag = #{houses.isFlag}
             </if>
         </where>
     </select>
