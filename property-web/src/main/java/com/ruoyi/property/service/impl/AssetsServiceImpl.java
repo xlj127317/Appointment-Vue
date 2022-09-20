@@ -2,8 +2,6 @@ package com.ruoyi.property.service.impl;
 
 import cn.hutool.core.date.CalendarUtil;
 import cn.hutool.core.date.DateUtil;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ruoyi.property.domain.Assets;
 import com.ruoyi.property.mapper.AssetsMapper;
 import com.ruoyi.property.service.AssetsService;
@@ -19,7 +17,7 @@ import java.util.List;
  * @date 2022/09/16 14:13
  **/
 @Service
-public class AssetsServiceImpl extends ServiceImpl<AssetsMapper, Assets> implements AssetsService {
+public class AssetsServiceImpl implements AssetsService {
 
     @Resource
     private AssetsMapper assetsMapper;
@@ -33,19 +31,21 @@ public class AssetsServiceImpl extends ServiceImpl<AssetsMapper, Assets> impleme
 
     @Override
     public AjaxResult queryById(String id) {
-        LambdaQueryWrapper<Assets> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(Assets::getId, id);
-        queryWrapper.eq(Assets::getIsFlag, 0);
-        return AjaxResult.success(assetsMapper.selectOne(queryWrapper));
+        return AjaxResult.success(assetsMapper.selectOne(id));
     }
 
     @Override
-    public AjaxResult deleteById(String[] ids) {
-        return AjaxResult.success(assetsMapper.updateByIds(ids));
+    public int deleteById(String[] ids) {
+        return assetsMapper.updateByIds(ids);
     }
 
     @Override
     public List<Assets> queryList(Assets assets) {
         return assetsMapper.queryHousesList(assets);
+    }
+
+    @Override
+    public AjaxResult updateById(Assets assets) {
+        return AjaxResult.success(assetsMapper.updateByPrimaryKeySelective(assets));
     }
 }

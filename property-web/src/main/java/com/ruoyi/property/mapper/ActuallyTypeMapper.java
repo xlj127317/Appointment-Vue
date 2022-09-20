@@ -1,6 +1,5 @@
 package com.ruoyi.property.mapper;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.ruoyi.property.domain.ActuallyType;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -11,7 +10,7 @@ import java.util.List;
  * @author PG
  */
 @Mapper
-public interface ActuallyTypeMapper extends BaseMapper<ActuallyType> {
+public interface ActuallyTypeMapper {
     /**
      * insert record to table selective
      *
@@ -34,7 +33,7 @@ public interface ActuallyTypeMapper extends BaseMapper<ActuallyType> {
      * @param ids id集合
      * @return int
      */
-    int updateByIds(@Param("ids") String[] ids);
+    int updateByIds(String[] ids);
 
     /**
      * 分页条件查询
@@ -44,4 +43,5 @@ public interface ActuallyTypeMapper extends BaseMapper<ActuallyType> {
      */
     List<ActuallyType> selectActuallyList(ActuallyType actuallyType);
 
+    ActuallyType selectOne(String id);
 }

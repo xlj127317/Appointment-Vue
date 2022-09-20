@@ -3,7 +3,6 @@ package com.ruoyi.web.controller.web.actually;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.page.TableDataInfo;
-import com.ruoyi.property.domain.Actually;
 import com.ruoyi.property.domain.ActuallyType;
 import com.ruoyi.property.service.ActuallyTypeService;
 import io.swagger.annotations.Api;
@@ -39,19 +38,19 @@ public class ActuallyTypeController extends BaseController {
     @ApiOperation(value = "修改应收类型")
     @PostMapping("/updateById")
     public AjaxResult updateById(@RequestBody ActuallyType actuallyType) {
-        return AjaxResult.success(actuallyTypeService.updateById(actuallyType));
+        return actuallyTypeService.updateById(actuallyType);
     }
 
     @ApiOperation(value = "删除应收类型")
-    @PostMapping("/deleteByIds")
-    public AjaxResult deleteByIds(String... id) {
-        return actuallyTypeService.deleteById(id);
+    @DeleteMapping("/deleteByIds/{ids}")
+    public AjaxResult deleteByIds(@PathVariable String... ids) {
+        return toAjax(actuallyTypeService.deleteById(ids));
     }
 
     @ApiOperation(value = "分页查询应收类型")
-    @PostMapping("/queryByPage")
+    @GetMapping("/queryByPage")
     @ResponseBody
-    public TableDataInfo queryPage(@RequestBody ActuallyType actuallyType) {
+    public TableDataInfo queryPage(ActuallyType actuallyType) {
         startPage();
         List<ActuallyType> list = actuallyTypeService.queryList(actuallyType);
         return getDataTable(list);

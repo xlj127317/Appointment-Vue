@@ -1,6 +1,5 @@
 package com.ruoyi.property.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
 import com.ruoyi.property.domain.Actually;
 import com.ruoyi.common.core.domain.AjaxResult;
 
@@ -10,7 +9,7 @@ import java.util.List;
  * @author 心风
  * @date 2022/09/09 14:30
  **/
-public interface ActuallyService extends IService<Actually> {
+public interface ActuallyService {
 
     /**
      * 添加
@@ -34,7 +33,7 @@ public interface ActuallyService extends IService<Actually> {
      * @param ids ids
      * @return ajaxResult
      */
-    AjaxResult deleteById(String[] ids);
+    int deleteById(String[] ids);
 
     /**
      * 分页
@@ -43,4 +42,6 @@ public interface ActuallyService extends IService<Actually> {
      * @return List<Actually>
      */
     List<Actually> queryList(Actually actually);
+
+    AjaxResult updateById(Actually actually);
 }

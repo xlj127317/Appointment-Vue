@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -43,23 +42,16 @@ public class HousesController extends BaseController {
         return housesService.updateHousesById(houses);
     }
 
-    @ApiOperation("房屋状态修改")
-    @GetMapping("/updateStatus")
-    public AjaxResult updateStatus(String id) {
-        return housesService.updateStatus(id);
-    }
-
     @ApiOperation(value = "删除房屋")
-    @PostMapping("/deleteByIds")
-    public AjaxResult deleteByIds(String... ids) {
-        return housesService.deleteById(ids);
+    @DeleteMapping("/deleteByIds/{ids}")
+    public AjaxResult deleteByIds(@PathVariable String... ids) {
+        return toAjax(housesService.deleteById(ids)) ;
     }
 
     @ApiOperation(value = "分页查询房屋")
-    @PostMapping("/queryByPage")
+    @GetMapping("/queryByPage")
     @PreAuthorize("@ss.hasPermi('system:houses:list')")
-    @ResponseBody
-    public TableDataInfo queryPage(@RequestBody Houses houses) {
+    public TableDataInfo queryPage(Houses houses) {
         startPage();
         List<Houses> list = housesService.queryList(houses);
         return getDataTable(list);

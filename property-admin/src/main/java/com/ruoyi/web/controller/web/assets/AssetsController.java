@@ -23,7 +23,7 @@ public class AssetsController extends BaseController {
     @Resource
     private AssetsService assetsService;
 
-    @ApiOperation(value = "新增应收单")
+    @ApiOperation(value = "新增资产单")
     @PostMapping("/insert")
     public AjaxResult insert(@RequestBody Assets assets) {
         return assetsService.insertAssets(assets);
@@ -35,22 +35,22 @@ public class AssetsController extends BaseController {
         return assetsService.queryById(id);
     }
 
-    @ApiOperation(value = "修改应收单")
+    @ApiOperation(value = "修改资产单")
     @PostMapping("/updateById")
     public AjaxResult updateById(@RequestBody Assets assets) {
-        return AjaxResult.success(assetsService.updateById(assets));
+        return assetsService.updateById(assets);
     }
 
-    @ApiOperation(value = "删除应收单")
-    @PostMapping("/deleteByIds")
-    public AjaxResult deleteByIds(String... id) {
-        return assetsService.deleteById(id);
+    @ApiOperation(value = "删除资产单")
+    @DeleteMapping("/deleteByIds/{ids}")
+    public AjaxResult deleteByIds(@PathVariable String... ids) {
+        return toAjax(assetsService.deleteById(ids));
     }
 
-    @ApiOperation(value = "分页查询应收单")
-    @PostMapping("/queryByPage")
+    @ApiOperation(value = "分页查询资产单")
+    @GetMapping("/queryByPage")
     @ResponseBody
-    public TableDataInfo queryPage(@RequestBody Assets assets) {
+    public TableDataInfo queryPage(Assets assets) {
         startPage();
         List<Assets> list = assetsService.queryList(assets);
         return getDataTable(list);

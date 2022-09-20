@@ -134,14 +134,10 @@
     <update id="updateByIds">
         update assets h
         set h.is_flag = 1
-        <choose>
-            <when test="ids != null and ids.length != 0">
-                where
-                <foreach collection="ids" item="id" separator="or">
-                    id = #{id}
-                </foreach>
-            </when>
-        </choose>
+        where
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
     </update>
 
     <select id="queryHousesList" resultMap="BaseResultMap">
@@ -173,5 +169,13 @@
                 create_time = #{createTime,jdbcType=TIMESTAMP}
             </if>
         </where>
+    </select>
+
+    <select id="selectOne" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from assets id in
+        where id = #{id,jdbcType=VARCHAR}
+          and is_flag = 0
     </select>
 </mapper>

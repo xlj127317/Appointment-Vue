@@ -39,19 +39,19 @@ public class ActuallyController extends BaseController {
     @ApiOperation(value = "修改应收单")
     @PostMapping("/updateById")
     public AjaxResult updateById(@RequestBody Actually actually) {
-        return AjaxResult.success(actuallyService.updateById(actually));
+        return actuallyService.updateById(actually);
     }
 
     @ApiOperation(value = "删除应收单")
-    @PostMapping("/deleteByIds")
-    public AjaxResult deleteByIds(String... id) {
-        return actuallyService.deleteById(id);
+    @PostMapping("/deleteByIds/{ids}")
+    public AjaxResult deleteByIds(@PathVariable String... ids) {
+        return toAjax(actuallyService.deleteById(ids));
     }
 
     @ApiOperation(value = "分页查询应收单")
-    @PostMapping("/queryByPage")
+    @GetMapping("/queryByPage")
     @ResponseBody
-    public TableDataInfo queryPage(@RequestBody Actually actually) {
+    public TableDataInfo queryPage(Actually actually) {
         startPage();
         List<Actually> list = actuallyService.queryList(actually);
         return getDataTable(list);

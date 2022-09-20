@@ -1,6 +1,5 @@
 package com.ruoyi.property.mapper;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.ruoyi.property.domain.Actually;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -11,7 +10,7 @@ import java.util.List;
  * @author PG
  */
 @Mapper
-public interface ActuallyMapper extends BaseMapper<Actually> {
+public interface ActuallyMapper {
     /**
      * delete by primary key
      *
@@ -66,7 +65,7 @@ public interface ActuallyMapper extends BaseMapper<Actually> {
      * @param ids id集合
      * @return int
      */
-    int updateByIds(@Param("ids") String... ids);
+    int updateByIds(String... ids);
 
     /**
      * 分页条件查询
@@ -75,4 +74,6 @@ public interface ActuallyMapper extends BaseMapper<Actually> {
      * @return list
      */
     List<Actually> selectActuallyList(Actually actually);
+
+    Actually selectOne(String id);
 }

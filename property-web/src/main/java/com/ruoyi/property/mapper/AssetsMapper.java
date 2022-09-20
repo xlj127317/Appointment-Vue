@@ -1,6 +1,5 @@
 package com.ruoyi.property.mapper;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.ruoyi.property.domain.Assets;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -11,7 +10,7 @@ import java.util.List;
  * @author PG
  */
 @Mapper
-public interface AssetsMapper extends BaseMapper<Assets> {
+public interface AssetsMapper {
     /**
      * delete by primary key
      *
@@ -66,7 +65,15 @@ public interface AssetsMapper extends BaseMapper<Assets> {
      * @param ids id集合
      * @return int
      */
-    int updateByIds(@Param("ids") String[] ids);
+    int updateByIds(String[] ids);
 
     List<Assets> queryHousesList(Assets assets);
+
+    /**
+     * 详情
+     *
+     * @param id id
+     * @return asset
+     */
+    Assets selectOne(String id);
 }

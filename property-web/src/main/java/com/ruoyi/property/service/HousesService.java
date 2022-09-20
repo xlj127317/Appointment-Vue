@@ -1,6 +1,5 @@
 package com.ruoyi.property.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.property.domain.Houses;
 
@@ -10,7 +9,7 @@ import java.util.List;
  * @author 心风
  * @date 2022/09/15 14:32
  **/
-public interface HousesService extends IService<Houses> {
+public interface HousesService {
 
     /**
      * 添加
@@ -43,7 +42,7 @@ public interface HousesService extends IService<Houses> {
      * @param ids ids
      * @return AjaxResult
      */
-    AjaxResult deleteById(String[] ids);
+    int deleteById(String[] ids);
 
     /**
      * 分页条件查询
@@ -53,11 +52,4 @@ public interface HousesService extends IService<Houses> {
      */
     List<Houses> queryList(Houses houses);
 
-    /**
-     * 根据id修改房屋状态
-     *
-     * @param id id
-     * @return AjaxResult
-     */
-    AjaxResult updateStatus(String id);
 }

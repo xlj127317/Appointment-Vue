@@ -146,9 +146,9 @@
     <update id="updateByIds">
         update houses h
         set h.is_flag = 1
-        where
-        <foreach collection="ids" item="id" separator="or">
-            id = #{id}
+        where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
         </foreach>
     </update>
 

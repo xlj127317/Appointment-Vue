@@ -1,6 +1,5 @@
 package com.ruoyi.property.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
 import com.ruoyi.property.domain.Assets;
 import com.ruoyi.common.core.domain.AjaxResult;
 
@@ -10,7 +9,7 @@ import java.util.List;
  * @author 心风
  * @date 2022/09/16 14:13
  **/
-public interface AssetsService extends IService<Assets> {
+public interface AssetsService {
     /**
      * 添加
      *
@@ -33,7 +32,7 @@ public interface AssetsService extends IService<Assets> {
      * @param ids ids
      * @return ajaxResult
      */
-    AjaxResult deleteById(String[] ids);
+    int deleteById(String[] ids);
 
     /**
      * 分页
@@ -42,4 +41,10 @@ public interface AssetsService extends IService<Assets> {
      * @return List<Assets>
      */
     List<Assets> queryList(Assets assets);
+
+    /**
+     * @param assets 更新实体
+     * @return ajaxResult
+     */
+    AjaxResult updateById(Assets assets);
 }

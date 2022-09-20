@@ -57,14 +57,10 @@
     <update id="updateByIds">
         update actually_type
         set is_flag = 1
-        <choose>
-            <when test="ids != null and ids.length != 0">
-                where
-                <foreach collection="ids" item="id" separator="or">
-                    id = #{id}
-                </foreach>
-            </when>
-        </choose>
+        where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
     </update>
 
     <select id="selectActuallyList" resultMap="BaseResultMap">
@@ -84,5 +80,13 @@
                 is_flag = #{isFlag,jdbcType=INTEGER}
             </if>
         </where>
+    </select>
+
+    <select id="selectOne" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from actually_type
+        where id = #{id,jdbcType=VARCHAR}
+          and is_flag = 0
     </select>
 </mapper>
