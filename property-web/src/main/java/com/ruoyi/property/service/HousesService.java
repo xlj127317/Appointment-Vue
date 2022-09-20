@@ -28,6 +28,15 @@ public interface HousesService extends IService<Houses> {
      */
     AjaxResult queryById(String id);
 
+
+    /**
+     * 更新数据
+     *
+     * @param houses 更新条件
+     * @return AjaxResult
+     */
+    AjaxResult updateHousesById(Houses houses);
+
     /**
      * 批量逻辑删除
      *

@@ -7,6 +7,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.property.domain.Houses;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +22,7 @@ import java.util.List;
 @RequestMapping("/hcx/property/houses")
 @Api(tags = "房屋管理")
 public class HousesController extends BaseController {
-    @Resource
+    @Autowired
     private HousesService housesService;
 
     @ApiOperation(value = "新增房屋")
@@ -39,7 +40,7 @@ public class HousesController extends BaseController {
     @ApiOperation(value = "修改房屋")
     @PostMapping("/updateById")
     public AjaxResult updateById(@RequestBody Houses houses) {
-        return AjaxResult.success(housesService.updateById(houses));
+        return housesService.updateHousesById(houses);
     }
 
     @ApiOperation("房屋状态修改")

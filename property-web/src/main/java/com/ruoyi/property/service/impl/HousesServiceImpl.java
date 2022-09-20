@@ -1,8 +1,8 @@
 package com.ruoyi.property.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.CalendarUtil;
 import cn.hutool.core.date.DateUtil;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ruoyi.common.core.domain.AjaxResult;
@@ -10,6 +10,7 @@ import com.ruoyi.common.utils.uuid.IdUtils;
 import com.ruoyi.property.domain.Houses;
 import com.ruoyi.property.mapper.HousesMapper;
 import com.ruoyi.property.service.HousesService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -22,13 +23,12 @@ import java.util.List;
 @Service
 public class HousesServiceImpl extends ServiceImpl<HousesMapper, Houses> implements HousesService {
 
-    @Resource
+    @Autowired
     private HousesMapper housesMapper;
 
     @Override
     public AjaxResult insertHouses(Houses houses) {
         houses.setId(IdUtils.fastSimpleUUID());
-        houses.setHousesStatus(0);
         houses.setCreateTime(DateUtil.date(CalendarUtil.calendar()));
         houses.setIsFlag(0);
         return AjaxResult.success(housesMapper.insert(houses));
@@ -36,14 +36,19 @@ public class HousesServiceImpl extends ServiceImpl<HousesMapper, Houses> impleme
 
     @Override
     public AjaxResult queryById(String id) {
-        LambdaQueryWrapper<Houses> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(Houses::getId, id);
-        queryWrapper.eq(Houses::getIsFlag, 0);
-        return AjaxResult.success(housesMapper.selectOne(queryWrapper));
+        return AjaxResult.success(housesMapper.selectById(id));
+    }
+
+    @Override
+    public AjaxResult updateHousesById(Houses houses) {
+        return AjaxResult.success(housesMapper.updateById(houses));
     }
 
     @Override
     public AjaxResult deleteById(String[] ids) {
+        if (ids.length < 0) {
+            return AjaxResult.error("id is not null");
+        }
         return AjaxResult.success(housesMapper.updateByIds(ids));
     }
 

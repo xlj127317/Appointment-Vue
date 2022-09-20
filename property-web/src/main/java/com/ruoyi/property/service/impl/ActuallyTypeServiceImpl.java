@@ -35,8 +35,8 @@ public class ActuallyTypeServiceImpl extends ServiceImpl<ActuallyTypeMapper, Act
     @Override
     public AjaxResult queryById(String id) {
         LambdaQueryWrapper<ActuallyType> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(ActuallyType::getId,id);
-        queryWrapper.eq(ActuallyType::getIsFlag,0);
+        queryWrapper.eq(ActuallyType::getId, id);
+        queryWrapper.eq(ActuallyType::getIsFlag, 0);
         return AjaxResult.success(actuallyTypeMapper.selectOne(queryWrapper));
     }
 

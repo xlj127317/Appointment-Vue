@@ -2,7 +2,10 @@ package com.ruoyi.property.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.ruoyi.property.domain.Houses;
-import org.apache.ibatis.annotations.Mapper;import org.apache.ibatis.annotations.Param;import java.util.List;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * @author PG
@@ -72,4 +75,6 @@ public interface HousesMapper extends BaseMapper<Houses> {
      * @return list
      */
     List<Houses> queryHousesList(@Param("houses") Houses houses);
+
+    Houses selectById(String id);
 }

@@ -146,14 +146,10 @@
     <update id="updateByIds">
         update houses h
         set h.is_flag = 1
-        <choose>
-            <when test="ids != null and ids.length != 0">
-                where
-                <foreach collection="ids" item="id" separator="or">
-                    id = #{id}
-                </foreach>
-            </when>
-        </choose>
+        where
+        <foreach collection="ids" item="id" separator="or">
+            id = #{id}
+        </foreach>
     </update>
 
     <select id="queryHousesList" resultMap="BaseResultMap" resultType="com.ruoyi.property.domain.Houses">
@@ -161,6 +157,7 @@
         <include refid="Base_Column_List"/>
         from houses
         <where>
+            is_flag = 0
             <if test="houses.housesNo != null  and houses.housesNo != ''">
                 and houses_no = #{houses.housesNo}
             </if>
@@ -176,9 +173,14 @@
             <if test="houses.createId != null  and houses.createId != ''">
                 and create_id = #{houses.createId}
             </if>
-            <if test="houses.isFlag != null">
-                and is_flag = #{houses.isFlag}
-            </if>
         </where>
+    </select>
+
+    <select id="selectById" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from houses h
+        where h.id = #{id,jdbcType=VARCHAR}
+          and h.is_flag = 0;
     </select>
 </mapper>

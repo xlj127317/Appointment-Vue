@@ -35,8 +35,8 @@ public class ActuallyServiceImpl extends ServiceImpl<ActuallyMapper, Actually> i
     @Override
     public AjaxResult queryById(String id) {
         LambdaQueryWrapper<Actually> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(Actually::getId,id);
-        queryWrapper.eq(Actually::getIsFlag,0);
+        queryWrapper.eq(Actually::getId, id);
+        queryWrapper.eq(Actually::getIsFlag, 0);
         return AjaxResult.success(actuallyMapper.selectOne(queryWrapper));
     }
 

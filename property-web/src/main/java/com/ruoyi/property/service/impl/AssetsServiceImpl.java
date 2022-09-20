@@ -34,8 +34,8 @@ public class AssetsServiceImpl extends ServiceImpl<AssetsMapper, Assets> impleme
     @Override
     public AjaxResult queryById(String id) {
         LambdaQueryWrapper<Assets> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(Assets::getId,id);
-        queryWrapper.eq(Assets::getIsFlag,0);
+        queryWrapper.eq(Assets::getId, id);
+        queryWrapper.eq(Assets::getIsFlag, 0);
         return AjaxResult.success(assetsMapper.selectOne(queryWrapper));
     }
 

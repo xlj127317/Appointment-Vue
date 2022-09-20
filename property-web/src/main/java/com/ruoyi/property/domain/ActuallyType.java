@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 
 /**
  * 实收类型表
+ *
  * @author PG
  */
 @ApiModel(value = "实收类型表")
