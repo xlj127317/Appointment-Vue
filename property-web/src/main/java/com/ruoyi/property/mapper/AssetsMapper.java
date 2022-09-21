@@ -1,14 +1,8 @@
 package com.ruoyi.property.mapper;
 
 import com.ruoyi.property.domain.Assets;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Mapper;import java.util.List;
 
-import java.util.List;
-
-/**
- * @author PG
- */
 @Mapper
 public interface AssetsMapper {
     /**

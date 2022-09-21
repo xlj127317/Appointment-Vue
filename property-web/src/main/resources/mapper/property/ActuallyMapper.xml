@@ -296,11 +296,13 @@
             <if test="paymentType != null">
                 and payment_type = #{paymentType}
             </if>
-            <if test="params.actuallyStartTime != null and actuallyStopTime != null">
-                and actually_time between #{params.actuallyStartTime} and #{params.actuallyStopTime}
+            <if test="params.beginTime != null and params.beginTime != ''">
+                <!-- 开始时间检索 -->
+                AND date_format(create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
             </if>
-            <if test="params.createStartTime != null and params.createStoptTime != null">
-                and create_time between #{params.createStartTime} and #{params.createStoptTime}
+            <if test="params.endTime != null and params.endTime != ''">
+                <!-- 结束时间检索 -->
+                AND date_format(create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
             </if>
             <if test="isFlag != null">
                 and is_flag = 0

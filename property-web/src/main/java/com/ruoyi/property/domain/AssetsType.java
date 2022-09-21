@@ -1,5 +1,6 @@
 package com.ruoyi.property.domain;
 
+import com.ruoyi.common.core.domain.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -16,7 +17,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AssetsType {
+public class AssetsType extends BaseEntity {
     public static final String COL_ID = "id";
     public static final String COL_ASSETS_TYPE = "assets_type";
     public static final String COL_CREATE_ID = "create_id";

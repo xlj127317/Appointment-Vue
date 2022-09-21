@@ -4,17 +4,13 @@ import com.ruoyi.common.core.domain.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.util.Date;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
  * 资产管理表
- *
- * @author wind
  */
 @ApiModel(value = "资产管理表")
 @Schema
@@ -42,6 +38,13 @@ public class Assets extends BaseEntity {
     @ApiModelProperty(value = "资产名称")
     @Schema(description = "资产名称")
     private String assetsName;
+
+    /**
+     * 库存
+     */
+    @ApiModelProperty(value = "库存")
+    @Schema(description = "库存")
+    private String inStock;
 
     /**
      * 默认0，0：正常，1：报废
