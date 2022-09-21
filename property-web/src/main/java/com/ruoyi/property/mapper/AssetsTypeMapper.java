@@ -61,7 +61,7 @@ public interface AssetsTypeMapper {
      * @param id 资产类别管理主键
      * @return 资产类别管理
      */
-    public AssetsType selectAssetsTypeById(String id);
+    AssetsType selectAssetsTypeById(String id);
 
     /**
      * 查询资产类别管理列表
@@ -69,7 +69,7 @@ public interface AssetsTypeMapper {
      * @param assetsType 资产类别管理
      * @return 资产类别管理集合
      */
-    public List<AssetsType> selectAssetsTypeList(AssetsType assetsType);
+    List<AssetsType> selectAssetsTypeList(AssetsType assetsType);
 
     /**
      * 新增资产类别管理
@@ -77,7 +77,7 @@ public interface AssetsTypeMapper {
      * @param assetsType 资产类别管理
      * @return 结果
      */
-    public int insertAssetsType(AssetsType assetsType);
+    int insertAssetsType(AssetsType assetsType);
 
     /**
      * 修改资产类别管理
@@ -85,7 +85,7 @@ public interface AssetsTypeMapper {
      * @param assetsType 资产类别管理
      * @return 结果
      */
-    public int updateAssetsType(AssetsType assetsType);
+    int updateAssetsType(AssetsType assetsType);
 
     /**
      * 删除资产类别管理
@@ -93,7 +93,7 @@ public interface AssetsTypeMapper {
      * @param id 资产类别管理主键
      * @return 结果
      */
-    public int deleteAssetsTypeById(String id);
+    int deleteAssetsTypeById(String id);
 
     /**
      * 批量删除资产类别管理
@@ -101,6 +101,6 @@ public interface AssetsTypeMapper {
      * @param ids 需要删除的数据主键集合
      * @return 结果
      */
-    public int deleteAssetsTypeByIds(String[] ids);
+    int deleteAssetsTypeByIds(String[] ids);
 
 }
