@@ -1,121 +1,125 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.property.mapper.AssetsTypeMapper">
-  <resultMap id="BaseResultMap" type="com.ruoyi.property.domain.AssetsType">
-    <!--@mbg.generated-->
-    <!--@Table assets_type-->
-    <id column="id" jdbcType="VARCHAR" property="id" />
-    <result column="assets_type" jdbcType="VARCHAR" property="assetsType" />
-    <result column="create_id" jdbcType="VARCHAR" property="createId" />
-    <result column="type_status" jdbcType="INTEGER" property="typeStatus" />
-    <result column="is_flag" jdbcType="INTEGER" property="isFlag" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    <!--@mbg.generated-->
-    id, assets_type, create_id, type_status, is_flag, create_time
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    <!--@mbg.generated-->
-    select 
-    <include refid="Base_Column_List" />
-    from assets_type
-    where id = #{id,jdbcType=VARCHAR}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    <!--@mbg.generated-->
-    delete from assets_type
-    where id = #{id,jdbcType=VARCHAR}
-  </delete>
-  <insert id="insert" parameterType="com.ruoyi.property.domain.AssetsType">
-    <!--@mbg.generated-->
-    insert into assets_type (id, assets_type, create_id, 
-      type_status, is_flag, create_time
-      )
-    values (#{id,jdbcType=VARCHAR}, #{assetsType,jdbcType=VARCHAR}, #{createId,jdbcType=VARCHAR}, 
-      #{typeStatus,jdbcType=INTEGER}, #{isFlag,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="com.ruoyi.property.domain.AssetsType">
-    <!--@mbg.generated-->
-    insert into assets_type
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
+    <resultMap id="BaseResultMap" type="com.ruoyi.property.domain.AssetsType">
+        <!--@mbg.generated-->
+        <!--@Table assets_type-->
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="assets_type" jdbcType="VARCHAR" property="assetsType"/>
+        <result column="create_id" jdbcType="VARCHAR" property="createId"/>
+        <result column="type_status" jdbcType="INTEGER" property="typeStatus"/>
+        <result column="is_flag" jdbcType="INTEGER" property="isFlag"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
         id,
-      </if>
-      <if test="assetsType != null">
         assets_type,
-      </if>
-      <if test="createId != null">
         create_id,
-      </if>
-      <if test="typeStatus != null">
         type_status,
-      </if>
-      <if test="isFlag != null">
         is_flag,
-      </if>
-      <if test="createTime != null">
-        create_time,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=VARCHAR},
-      </if>
-      <if test="assetsType != null">
-        #{assetsType,jdbcType=VARCHAR},
-      </if>
-      <if test="createId != null">
-        #{createId,jdbcType=VARCHAR},
-      </if>
-      <if test="typeStatus != null">
-        #{typeStatus,jdbcType=INTEGER},
-      </if>
-      <if test="isFlag != null">
-        #{isFlag,jdbcType=INTEGER},
-      </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.ruoyi.property.domain.AssetsType">
-    <!--@mbg.generated-->
-    update assets_type
-    <set>
-      <if test="assetsType != null">
-        assets_type = #{assetsType,jdbcType=VARCHAR},
-      </if>
-      <if test="createId != null">
-        create_id = #{createId,jdbcType=VARCHAR},
-      </if>
-      <if test="typeStatus != null">
-        type_status = #{typeStatus,jdbcType=INTEGER},
-      </if>
-      <if test="isFlag != null">
-        is_flag = #{isFlag,jdbcType=INTEGER},
-      </if>
-      <if test="createTime != null">
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.ruoyi.property.domain.AssetsType">
-    <!--@mbg.generated-->
-    update assets_type
-    set assets_type = #{assetsType,jdbcType=VARCHAR},
-      create_id = #{createId,jdbcType=VARCHAR},
-      type_status = #{typeStatus,jdbcType=INTEGER},
-      is_flag = #{isFlag,jdbcType=INTEGER},
-      create_time = #{createTime,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
+        create_time
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        <!--@mbg.generated-->
+        select
+        <include refid="Base_Column_List"/>
+        from assets_type
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        <!--@mbg.generated-->
+        delete
+        from assets_type
+        where id = #{id,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="com.ruoyi.property.domain.AssetsType">
+        <!--@mbg.generated-->
+        insert into assets_type (id, assets_type, create_id,
+                                 type_status, is_flag, create_time)
+        values (#{id,jdbcType=VARCHAR}, #{assetsType,jdbcType=VARCHAR}, #{createId,jdbcType=VARCHAR},
+                #{typeStatus,jdbcType=INTEGER}, #{isFlag,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.ruoyi.property.domain.AssetsType">
+        <!--@mbg.generated-->
+        insert into assets_type
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="assetsType != null">
+                assets_type,
+            </if>
+            <if test="createId != null">
+                create_id,
+            </if>
+            <if test="typeStatus != null">
+                type_status,
+            </if>
+            <if test="isFlag != null">
+                is_flag,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="assetsType != null">
+                #{assetsType,jdbcType=VARCHAR},
+            </if>
+            <if test="createId != null">
+                #{createId,jdbcType=VARCHAR},
+            </if>
+            <if test="typeStatus != null">
+                #{typeStatus,jdbcType=INTEGER},
+            </if>
+            <if test="isFlag != null">
+                #{isFlag,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ruoyi.property.domain.AssetsType">
+        <!--@mbg.generated-->
+        update assets_type
+        <set>
+            <if test="assetsType != null">
+                assets_type = #{assetsType,jdbcType=VARCHAR},
+            </if>
+            <if test="createId != null">
+                create_id = #{createId,jdbcType=VARCHAR},
+            </if>
+            <if test="typeStatus != null">
+                type_status = #{typeStatus,jdbcType=INTEGER},
+            </if>
+            <if test="isFlag != null">
+                is_flag = #{isFlag,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.ruoyi.property.domain.AssetsType">
+        <!--@mbg.generated-->
+        update assets_type
+        set assets_type = #{assetsType,jdbcType=VARCHAR},
+            create_id   = #{createId,jdbcType=VARCHAR},
+            type_status = #{typeStatus,jdbcType=INTEGER},
+            is_flag     = #{isFlag,jdbcType=INTEGER},
+            create_time = #{createTime,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
 
     <select id="selectAssetsTypeList" parameterType="com.ruoyi.property.domain.AssetsType" resultMap="BaseResultMap">
         select
-        <include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         from assets_type
         <where>
             is_flag = 0
@@ -130,11 +134,11 @@
             </if>
             <if test="params.beginTime != null and params.beginTime != ''">
                 <!-- 开始时间检索 -->
-                AND date_format(create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+                AND date_format(create_time, '%y%m%d') &gt;= date_format(#{params.beginTime}, '%y%m%d')
             </if>
             <if test="params.endTime != null and params.endTime != ''">
                 <!-- 结束时间检索 -->
-                AND date_format(create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+                AND date_format(create_time, '%y%m%d') &lt;= date_format(#{params.endTime}, '%y%m%d')
             </if>
         </where>
         order by create_time desc
@@ -142,9 +146,9 @@
 
     <select id="selectAssetsTypeById" parameterType="String" resultMap="BaseResultMap">
         select
-        <include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         from assets_type
-        where id = #{id}
+        where id = #{id} and is_flag = 0
     </select>
 
     <insert id="insertAssetsType" parameterType="com.ruoyi.property.domain.AssetsType">
