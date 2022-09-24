@@ -135,12 +135,12 @@
         from ${tableName} where ${pkColumn.columnName} = #{${pkColumn.javaField}}
     </delete>
 
-    <delete id="delete${ClassName}By${pkColumn.capJavaField}s" parameterType="String">
-        delete from ${tableName} where ${pkColumn.columnName} in
+    <update id="delete${ClassName}By${pkColumn.capJavaField}s" parameterType="String">
+        update ${tableName} set is_flag = 1 where ${pkColumn.columnName} in
         <foreach item="${pkColumn.javaField}" collection="array" open="(" separator="," close=")">
             #{${pkColumn.javaField}}
         </foreach>
-    </delete>
+    </update>
     #if($table.sub)
 
         <delete id="delete${subClassName}By${subTableFkClassName}s" parameterType="String">

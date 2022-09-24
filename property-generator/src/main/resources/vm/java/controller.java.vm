@@ -3,6 +3,8 @@ package ${packageName}.controller;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,15 +33,17 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * @author ${author}
  * @date ${datetime}
  */
+@Api(tags = "${functionName}")
 @RestController
-@RequestMapping("/${moduleName}/${businessName}")
+@RequestMapping("/hcx/${moduleName}/${businessName}")
 public class ${ClassName}Controller extends BaseController {
     @Autowired
-    private I${ClassName}Service ${className}Service;
+    private ${ClassName}Service ${className}Service;
 
 /**
  * 查询${functionName}列表
  */
+@ApiOperation("查询${functionName}列表")
 @PreAuthorize("@ss.hasPermi('${permissionPrefix}:list')")
 @GetMapping("/list")
     #if($table.crud || $table.sub)
@@ -58,6 +62,7 @@ public class ${ClassName}Controller extends BaseController {
     /**
      * 导出${functionName}列表
      */
+    @ApiOperation("导出${functionName}列表")
     @PreAuthorize("@ss.hasPermi('${permissionPrefix}:export')")
     @Log(title = "${functionName}", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
@@ -70,6 +75,7 @@ public class ${ClassName}Controller extends BaseController {
     /**
      * 获取${functionName}详细信息
      */
+    @ApiOperation("获取${functionName}详细信息")
     @PreAuthorize("@ss.hasPermi('${permissionPrefix}:query')")
     @GetMapping(value = "/{${pkColumn.javaField}}")
     public AjaxResult getInfo(@PathVariable("${pkColumn.javaField}") ${pkColumn.javaType} ${pkColumn.javaField}) {
@@ -79,6 +85,7 @@ public class ${ClassName}Controller extends BaseController {
     /**
      * 新增${functionName}
      */
+    @ApiOperation("新增${functionName}")
     @PreAuthorize("@ss.hasPermi('${permissionPrefix}:add')")
     @Log(title = "${functionName}", businessType = BusinessType.INSERT)
     @PostMapping
@@ -89,6 +96,7 @@ public class ${ClassName}Controller extends BaseController {
     /**
      * 修改${functionName}
      */
+    @ApiOperation("修改${functionName}")
     @PreAuthorize("@ss.hasPermi('${permissionPrefix}:edit')")
     @Log(title = "${functionName}", businessType = BusinessType.UPDATE)
     @PutMapping
@@ -99,6 +107,7 @@ public class ${ClassName}Controller extends BaseController {
     /**
      * 删除${functionName}
      */
+    @ApiOperation("删除${functionName}")
     @PreAuthorize("@ss.hasPermi('${permissionPrefix}:remove')")
     @Log(title = "${functionName}", businessType = BusinessType.DELETE)
     @DeleteMapping("/{${pkColumn.javaField}s}")
