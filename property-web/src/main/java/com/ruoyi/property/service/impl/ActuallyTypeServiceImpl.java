@@ -4,6 +4,7 @@ import cn.hutool.core.date.CalendarUtil;
 import cn.hutool.core.date.DateUtil;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.utils.uuid.IdUtils;
+import com.ruoyi.common.utils.uuid.PkeyGenerator;
 import com.ruoyi.property.domain.ActuallyType;
 import com.ruoyi.property.mapper.ActuallyTypeMapper;
 import com.ruoyi.property.service.ActuallyTypeService;
@@ -24,7 +25,7 @@ public class ActuallyTypeServiceImpl implements ActuallyTypeService {
 
     @Override
     public AjaxResult insertActuallyType(ActuallyType actuallyType) {
-        actuallyType.setId(IdUtils.fastSimpleUUID());
+        actuallyType.setId(PkeyGenerator.getUniqueString());
         actuallyType.setCreateTime(DateUtil.date(CalendarUtil.calendar()));
         return AjaxResult.success(actuallyTypeMapper.insertSelective(actuallyType));
     }

@@ -2,6 +2,7 @@ package com.ruoyi.property.service.impl;
 
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.uuid.IdUtils;
+import com.ruoyi.common.utils.uuid.PkeyGenerator;
 import com.ruoyi.property.domain.AssetsType;
 import com.ruoyi.property.mapper.AssetsTypeMapper;
 import com.ruoyi.property.service.IAssetsTypeService;
@@ -50,7 +51,7 @@ public class AssetsTypeServiceImpl implements IAssetsTypeService {
      */
     @Override
     public int insertAssetsType(AssetsType assetsType) {
-        assetsType.setId(IdUtils.fastSimpleUUID());
+        assetsType.setId(PkeyGenerator.getUniqueString());
         assetsType.setCreateTime(DateUtils.getNowDate());
         return assetsTypeMapper.insertAssetsType(assetsType);
     }

@@ -2,6 +2,7 @@ package com.ruoyi.property.service.impl;
 
 import cn.hutool.core.date.CalendarUtil;
 import cn.hutool.core.date.DateUtil;
+import com.ruoyi.common.utils.uuid.PkeyGenerator;
 import com.ruoyi.property.domain.Assets;
 import com.ruoyi.property.mapper.AssetsMapper;
 import com.ruoyi.property.service.AssetsService;
@@ -24,7 +25,7 @@ public class AssetsServiceImpl implements AssetsService {
 
     @Override
     public AjaxResult insertAssets(Assets assets) {
-        assets.setId(IdUtils.fastSimpleUUID());
+        assets.setId(PkeyGenerator.getUniqueString());
         assets.setCreateTime(DateUtil.date(CalendarUtil.calendar()));
         return AjaxResult.success(assetsMapper.insertSelective(assets));
     }

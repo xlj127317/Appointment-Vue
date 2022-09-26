@@ -30,8 +30,8 @@ public class AssetsController extends BaseController {
     }
 
     @ApiOperation(value = "详情")
-    @GetMapping("/selectById")
-    public AjaxResult queryById(@RequestParam String id) {
+    @GetMapping("/selectById/{id}")
+    public AjaxResult queryById(@PathVariable String id) {
         return assetsService.queryById(id);
     }
 

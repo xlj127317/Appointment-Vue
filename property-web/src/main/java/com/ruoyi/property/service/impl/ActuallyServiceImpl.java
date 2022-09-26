@@ -2,10 +2,10 @@ package com.ruoyi.property.service.impl;
 
 import cn.hutool.core.date.CalendarUtil;
 import cn.hutool.core.date.DateUtil;
+import com.ruoyi.common.utils.uuid.PkeyGenerator;
 import com.ruoyi.property.domain.Actually;
 import com.ruoyi.property.mapper.ActuallyMapper;
 import com.ruoyi.common.core.domain.AjaxResult;
-import com.ruoyi.common.utils.uuid.IdUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 import com.ruoyi.property.service.ActuallyService;
@@ -25,7 +25,7 @@ public class ActuallyServiceImpl implements ActuallyService {
 
     @Override
     public AjaxResult insertActually(@Validated Actually actually) {
-        actually.setId(IdUtils.fastSimpleUUID());
+        actually.setId(PkeyGenerator.getUniqueString());
         actually.setCreateTime(DateUtil.date(CalendarUtil.calendar()));
         return AjaxResult.success(actuallyMapper.insertSelective(actually));
     }

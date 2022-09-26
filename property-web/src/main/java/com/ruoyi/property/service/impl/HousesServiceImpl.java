@@ -1,52 +1,91 @@
 package com.ruoyi.property.service.impl;
 
-import cn.hutool.core.date.CalendarUtil;
-import cn.hutool.core.date.DateUtil;
-import com.ruoyi.common.core.domain.AjaxResult;
-import com.ruoyi.common.utils.uuid.IdUtils;
-import com.ruoyi.property.domain.Houses;
-import com.ruoyi.property.mapper.HousesMapper;
-import com.ruoyi.property.service.HousesService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 
-/**
- * @author 心风
- * @date 2022/09/15 14:32
- **/
-@Service
-public class HousesServiceImpl implements HousesService {
+import com.ruoyi.common.utils.DateUtils;
+import com.ruoyi.common.utils.uuid.PkeyGenerator;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import com.ruoyi.property.mapper.HousesMapper;
+import com.ruoyi.property.domain.Houses;
+import com.ruoyi.property.service.IHousesService;
 
+/**
+ * 房屋管理Service业务层处理
+ *
+ * @author wind
+ * @date 2022-09-21
+ */
+@Service
+public class HousesServiceImpl implements IHousesService {
     @Autowired
     private HousesMapper housesMapper;
 
+    /**
+     * 查询房屋管理
+     *
+     * @param id 房屋管理主键
+     * @return 房屋管理
+     */
     @Override
-    public AjaxResult insertHouses(Houses houses) {
-        houses.setId(IdUtils.fastSimpleUUID());
-        houses.setCreateTime(DateUtil.date(CalendarUtil.calendar()));
-        houses.setIsFlag(0);
-        return AjaxResult.success(housesMapper.insert(houses));
+    public Houses selectHousesById(String id) {
+        return housesMapper.selectHousesById(id);
     }
 
+    /**
+     * 查询房屋管理列表
+     *
+     * @param houses 房屋管理
+     * @return 房屋管理
+     */
     @Override
-    public AjaxResult queryById(String id) {
-        return AjaxResult.success(housesMapper.selectById(id));
+    public List<Houses> selectHousesList(Houses houses) {
+        return housesMapper.selectHousesList(houses);
     }
 
+    /**
+     * 新增房屋管理
+     *
+     * @param houses 房屋管理
+     * @return 结果
+     */
     @Override
-    public AjaxResult updateHousesById(Houses houses) {
-        return AjaxResult.success(housesMapper.updateByPrimaryKeySelective(houses));
+    public int insertHouses(Houses houses) {
+        houses.setId(PkeyGenerator.getUniqueString());
+        houses.setCreateTime(DateUtils.getNowDate());
+        return housesMapper.insertHouses(houses);
     }
 
+    /**
+     * 修改房屋管理
+     *
+     * @param houses 房屋管理
+     * @return 结果
+     */
     @Override
-    public int deleteById(String[] ids) {
-        return housesMapper.updateByIds(ids);
+    public int updateHouses(Houses houses) {
+        return housesMapper.updateHouses(houses);
     }
 
+    /**
+     * 批量删除房屋管理
+     *
+     * @param ids 需要删除的房屋管理主键
+     * @return 结果
+     */
     @Override
-    public List<Houses> queryList(Houses houses) {
-        return housesMapper.queryHousesList(houses);
+    public int deleteHousesByIds(String[] ids) {
+        return housesMapper.deleteHousesByIds(ids);
+    }
+
+    /**
+     * 删除房屋管理信息
+     *
+     * @param id 房屋管理主键
+     * @return 结果
+     */
+    @Override
+    public int deleteHousesById(String id) {
+        return housesMapper.deleteHousesById(id);
     }
 }
