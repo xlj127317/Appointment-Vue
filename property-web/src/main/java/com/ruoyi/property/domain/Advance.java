@@ -118,5 +118,5 @@ public class Advance extends BaseEntity {
      */
     @ApiModelProperty(value = "创建时间")
     @Schema(description = "创建时间")
-    private Integer createTime;
+    private Date createTime;
 }
