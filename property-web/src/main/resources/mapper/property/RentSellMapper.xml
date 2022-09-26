@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ruoyi.property.mapper.HousesMapper">
-    <resultMap id="BaseResultMap" type="com.ruoyi.property.domain.Houses">
+<mapper namespace="com.ruoyi.property.mapper.RentSellMapper">
+    <resultMap id="BaseResultMap" type="com.ruoyi.property.domain.RentSell">
         <!--@mbg.generated-->
-        <!--@Table houses-->
+        <!--@Table rent_sell-->
         <id column="id" jdbcType="VARCHAR" property="id"/>
-        <result column="houses_no" jdbcType="VARCHAR" property="housesNo"/>
+        <result column="houses_id" jdbcType="VARCHAR" property="housesId"/>
+        <result column="sell_id" jdbcType="VARCHAR" property="sellId"/>
         <result column="owner_id" jdbcType="VARCHAR" property="ownerId"/>
-        <result column="area" jdbcType="VARCHAR" property="area"/>
-        <result column="houses_status" jdbcType="INTEGER" property="housesStatus"/>
+        <result column="sell_time" jdbcType="VARCHAR" property="sellTime"/>
+        <result column="sell_money" jdbcType="VARCHAR" property="sellMoney"/>
+        <result column="seller" jdbcType="VARCHAR" property="seller"/>
+        <result column="rent_status" jdbcType="INTEGER" property="rentStatus"/>
         <result column="create_id" jdbcType="VARCHAR" property="createId"/>
         <result column="is_flag" jdbcType="INTEGER" property="isFlag"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
@@ -16,10 +19,13 @@
     <sql id="Base_Column_List">
         <!--@mbg.generated-->
         id,
-        houses_no,
+        houses_id,
+        sell_id,
         owner_id,
-        area,
-        houses_status,
+        sell_time,
+        sell_money,
+        seller,
+        rent_status,
         create_id,
         is_flag,
         create_time
@@ -28,42 +34,42 @@
         <!--@mbg.generated-->
         select
         <include refid="Base_Column_List"/>
-        from houses
+        from rent_sell
         where id = #{id,jdbcType=VARCHAR}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
         <!--@mbg.generated-->
         delete
-        from houses
+        from rent_sell
         where id = #{id,jdbcType=VARCHAR}
     </delete>
-    <insert id="insert" parameterType="com.ruoyi.property.domain.Houses">
+    <insert id="insertSelective" parameterType="com.ruoyi.property.domain.RentSell">
         <!--@mbg.generated-->
-        insert into houses (id, houses_no, owner_id,
-                            area, houses_status, create_id,
-                            is_flag, create_time)
-        values (#{id,jdbcType=VARCHAR}, #{housesNo,jdbcType=VARCHAR}, #{ownerId,jdbcType=VARCHAR},
-                #{area,jdbcType=VARCHAR}, #{housesStatus,jdbcType=INTEGER}, #{createId,jdbcType=VARCHAR},
-                #{isFlag,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP})
-    </insert>
-    <insert id="insertSelective" parameterType="com.ruoyi.property.domain.Houses">
-        <!--@mbg.generated-->
-        insert into houses
+        insert into rent_sell
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
                 id,
             </if>
-            <if test="housesNo != null">
-                houses_no,
+            <if test="housesId != null">
+                houses_id,
+            </if>
+            <if test="sellId != null">
+                sell_id,
             </if>
             <if test="ownerId != null">
                 owner_id,
             </if>
-            <if test="area != null">
-                area,
+            <if test="sellTime != null">
+                sell_time,
             </if>
-            <if test="housesStatus != null">
-                houses_status,
+            <if test="sellMoney != null">
+                sell_money,
+            </if>
+            <if test="seller != null">
+                seller,
+            </if>
+            <if test="rentStatus != null">
+                rent_status,
             </if>
             <if test="createId != null">
                 create_id,
@@ -79,17 +85,26 @@
             <if test="id != null">
                 #{id,jdbcType=VARCHAR},
             </if>
-            <if test="housesNo != null">
-                #{housesNo,jdbcType=VARCHAR},
+            <if test="housesId != null">
+                #{housesId,jdbcType=VARCHAR},
+            </if>
+            <if test="sellId != null">
+                #{sellId,jdbcType=VARCHAR},
             </if>
             <if test="ownerId != null">
                 #{ownerId,jdbcType=VARCHAR},
             </if>
-            <if test="area != null">
-                #{area,jdbcType=VARCHAR},
+            <if test="sellTime != null">
+                #{sellTime,jdbcType=VARCHAR},
             </if>
-            <if test="housesStatus != null">
-                #{housesStatus,jdbcType=INTEGER},
+            <if test="sellMoney != null">
+                #{sellMoney,jdbcType=VARCHAR},
+            </if>
+            <if test="seller != null">
+                #{seller,jdbcType=VARCHAR},
+            </if>
+            <if test="rentStatus != null">
+                #{rentStatus,jdbcType=INTEGER},
             </if>
             <if test="createId != null">
                 #{createId,jdbcType=VARCHAR},
@@ -102,21 +117,30 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.ruoyi.property.domain.Houses">
+    <update id="updateByPrimaryKeySelective" parameterType="com.ruoyi.property.domain.RentSell">
         <!--@mbg.generated-->
-        update houses
+        update rent_sell
         <set>
-            <if test="housesNo != null">
-                houses_no = #{housesNo,jdbcType=VARCHAR},
+            <if test="housesId != null">
+                houses_id = #{housesId,jdbcType=VARCHAR},
+            </if>
+            <if test="sellId != null">
+                sell_id = #{sellId,jdbcType=VARCHAR},
             </if>
             <if test="ownerId != null">
                 owner_id = #{ownerId,jdbcType=VARCHAR},
             </if>
-            <if test="area != null">
-                area = #{area,jdbcType=VARCHAR},
+            <if test="sellTime != null">
+                sell_time = #{sellTime,jdbcType=VARCHAR},
             </if>
-            <if test="housesStatus != null">
-                houses_status = #{housesStatus,jdbcType=INTEGER},
+            <if test="sellMoney != null">
+                sell_money = #{sellMoney,jdbcType=VARCHAR},
+            </if>
+            <if test="seller != null">
+                seller = #{seller,jdbcType=VARCHAR},
+            </if>
+            <if test="rentStatus != null">
+                rent_status = #{rentStatus,jdbcType=INTEGER},
             </if>
             <if test="createId != null">
                 create_id = #{createId,jdbcType=VARCHAR},
@@ -130,53 +154,51 @@
         </set>
         where id = #{id,jdbcType=VARCHAR}
     </update>
-    <update id="updateByPrimaryKey" parameterType="com.ruoyi.property.domain.Houses">
-        <!--@mbg.generated-->
-        update houses
-        set houses_no     = #{housesNo,jdbcType=VARCHAR},
-            owner_id      = #{ownerId,jdbcType=VARCHAR},
-            area          = #{area,jdbcType=VARCHAR},
-            houses_status = #{housesStatus,jdbcType=INTEGER},
-            create_id     = #{createId,jdbcType=VARCHAR},
-            is_flag       = #{isFlag,jdbcType=INTEGER},
-            create_time   = #{createTime,jdbcType=TIMESTAMP}
-        where id = #{id,jdbcType=VARCHAR}
-    </update>
 
-    <select id="selectHousesList" resultMap="BaseResultMap">
+    <select id="selectRentSellList">
         select
         <include refid="Base_Column_List"/>
-        from houses
+        from rent_sell
         <where>
             is_flag = 0
-            <if test="housesNo != null  and housesNo != ''">
-                and houses_no =
-                    #{housesNo}
+            <if test="housesId != null  and housesId != ''">
+                and houses_id =
+                    #{housesId}
+            </if>
+            <if test="sellId != null  and sellId != ''">
+                and sell_id
+                    =
+                    #{sellId}
             </if>
             <if test="ownerId != null  and ownerId != ''">
                 and owner_id
                     =
                     #{ownerId}
             </if>
-            <if test="area != null  and area != ''">
-                and area
+            <if test="sellTime != null  and sellTime != ''">
+                and sell_time
                     =
-                    #{area}
+                    #{sellTime}
             </if>
-            <if test="housesStatus != null">
-                and houses_status
+            <if test="sellMoney != null  and sellMoney != ''">
+                and sell_money
                     =
-                    #{housesStatus}
+                    #{sellMoney}
+            </if>
+            <if test="seller != null  and seller != ''">
+                and seller
+                    =
+                    #{seller}
+            </if>
+            <if test="rentStatus != null">
+                and rent_status
+                    =
+                    #{rentStatus}
             </if>
             <if test="createId != null  and createId != ''">
                 and create_id
                     =
                     #{createId}
-            </if>
-            <if test="isFlag != null">
-                and is_flag
-                    =
-                    1
             </if>
             <if test="params.beginTime != null and params.beginTime != ''">
                 <!-- 开始时间检索 -->
@@ -190,30 +212,40 @@
         order by create_time desc
     </select>
 
-    <select id="selectHousesById" parameterType="String" resultMap="BaseResultMap">
+    <select id="selectRentSellById" parameterType="String">
         select
         <include refid="Base_Column_List"/>
-        from houses
-        where id = #{id,jdbcType=VARCHAR}
+        from rent_sell
+        where id =
+              #{id}
     </select>
 
-    <insert id="insertHouses">
-        insert into houses
+    <insert id="insertRentSell">
+        insert into rent_sell
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
                 id,
             </if>
-            <if test="housesNo != null and housesNo != ''">
-                houses_no,
+            <if test="housesId != null and housesId != ''">
+                houses_id,
+            </if>
+            <if test="sellId != null and sellId != ''">
+                sell_id,
             </if>
             <if test="ownerId != null and ownerId != ''">
                 owner_id,
             </if>
-            <if test="area != null and area != ''">
-                area,
+            <if test="sellTime != null and sellTime != ''">
+                sell_time,
             </if>
-            <if test="housesStatus != null">
-                houses_status,
+            <if test="sellMoney != null and sellMoney != ''">
+                sell_money,
+            </if>
+            <if test="seller != null and seller != ''">
+                seller,
+            </if>
+            <if test="rentStatus != null">
+                rent_status,
             </if>
             <if test="createId != null and createId != ''">
                 create_id,
@@ -229,17 +261,26 @@
             <if test="id != null">
                 #{id},
             </if>
-            <if test="housesNo != null and housesNo != ''">
-                #{housesNo},
+            <if test="housesId != null and housesId != ''">
+                #{housesId},
+            </if>
+            <if test="sellId != null and sellId != ''">
+                #{sellId},
             </if>
             <if test="ownerId != null and ownerId != ''">
                 #{ownerId},
             </if>
-            <if test="area != null and area != ''">
-                #{area},
+            <if test="sellTime != null and sellTime != ''">
+                #{sellTime},
             </if>
-            <if test="housesStatus != null">
-                #{housesStatus},
+            <if test="sellMoney != null and sellMoney != ''">
+                #{sellMoney},
+            </if>
+            <if test="seller != null and seller != ''">
+                #{seller},
+            </if>
+            <if test="rentStatus != null">
+                #{rentStatus},
             </if>
             <if test="createId != null and createId != ''">
                 #{createId},
@@ -253,24 +294,36 @@
         </trim>
     </insert>
 
-    <update id="updateHouses">
-        update houses
+    <update id="updateRentSell">
+        update rent_sell
         <trim prefix="SET" suffixOverrides=",">
-            <if test="housesNo != null and housesNo != ''">
-                houses_no =
-                    #{housesNo},
+            <if test="housesId != null and housesId != ''">
+                houses_id =
+                    #{housesId},
+            </if>
+            <if test="sellId != null and sellId != ''">
+                sell_id =
+                    #{sellId},
             </if>
             <if test="ownerId != null and ownerId != ''">
                 owner_id =
                     #{ownerId},
             </if>
-            <if test="area != null and area != ''">
-                area =
-                    #{area},
+            <if test="sellTime != null and sellTime != ''">
+                sell_time =
+                    #{sellTime},
             </if>
-            <if test="housesStatus != null">
-                houses_status =
-                    #{housesStatus},
+            <if test="sellMoney != null and sellMoney != ''">
+                sell_money =
+                    #{sellMoney},
+            </if>
+            <if test="seller != null and seller != ''">
+                seller =
+                    #{seller},
+            </if>
+            <if test="rentStatus != null">
+                rent_status =
+                    #{rentStatus},
             </if>
             <if test="createId != null and createId != ''">
                 create_id =
@@ -288,16 +341,16 @@
         where id = #{id}
     </update>
 
-    <delete id="deleteHousesById" parameterType="String">
+    <delete id="deleteRentSellById" parameterType="String">
         delete
-        from houses
+        from rent_sell
         where id = #{id}
     </delete>
 
-    <update id="deleteHousesByIds" parameterType="String">
-        update houses
+    <update id="deleteRentSellByIds" parameterType="String">
+        update rent_sell
         set is_flag = 1 where id in
-        <foreach close=")" collection="array" item="id" open="(" separator=",">
+        <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>
     </update>

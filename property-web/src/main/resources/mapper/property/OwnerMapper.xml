@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ruoyi.property.mapper.HousesMapper">
-    <resultMap id="BaseResultMap" type="com.ruoyi.property.domain.Houses">
+<mapper namespace="com.ruoyi.property.mapper.OwnerMapper">
+    <resultMap id="BaseResultMap" type="com.ruoyi.property.domain.Owner">
         <!--@mbg.generated-->
-        <!--@Table houses-->
+        <!--@Table `owner`-->
         <id column="id" jdbcType="VARCHAR" property="id"/>
-        <result column="houses_no" jdbcType="VARCHAR" property="housesNo"/>
-        <result column="owner_id" jdbcType="VARCHAR" property="ownerId"/>
-        <result column="area" jdbcType="VARCHAR" property="area"/>
-        <result column="houses_status" jdbcType="INTEGER" property="housesStatus"/>
+        <result column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="gender" jdbcType="INTEGER" property="gender"/>
+        <result column="identity" jdbcType="VARCHAR" property="identity"/>
+        <result column="phone" jdbcType="VARCHAR" property="phone"/>
+        <result column="owner_status" jdbcType="INTEGER" property="ownerStatus"/>
         <result column="create_id" jdbcType="VARCHAR" property="createId"/>
         <result column="is_flag" jdbcType="INTEGER" property="isFlag"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
@@ -16,10 +17,11 @@
     <sql id="Base_Column_List">
         <!--@mbg.generated-->
         id,
-        houses_no,
-        owner_id,
-        area,
-        houses_status,
+        username,
+        gender,
+        `identity`,
+        phone,
+        owner_status,
         create_id,
         is_flag,
         create_time
@@ -28,42 +30,36 @@
         <!--@mbg.generated-->
         select
         <include refid="Base_Column_List"/>
-        from houses
+        from `owner`
         where id = #{id,jdbcType=VARCHAR}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
         <!--@mbg.generated-->
         delete
-        from houses
+        from `owner`
         where id = #{id,jdbcType=VARCHAR}
     </delete>
-    <insert id="insert" parameterType="com.ruoyi.property.domain.Houses">
+    <insert id="insertSelective" parameterType="com.ruoyi.property.domain.Owner">
         <!--@mbg.generated-->
-        insert into houses (id, houses_no, owner_id,
-                            area, houses_status, create_id,
-                            is_flag, create_time)
-        values (#{id,jdbcType=VARCHAR}, #{housesNo,jdbcType=VARCHAR}, #{ownerId,jdbcType=VARCHAR},
-                #{area,jdbcType=VARCHAR}, #{housesStatus,jdbcType=INTEGER}, #{createId,jdbcType=VARCHAR},
-                #{isFlag,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP})
-    </insert>
-    <insert id="insertSelective" parameterType="com.ruoyi.property.domain.Houses">
-        <!--@mbg.generated-->
-        insert into houses
+        insert into `owner`
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
                 id,
             </if>
-            <if test="housesNo != null">
-                houses_no,
+            <if test="username != null">
+                username,
             </if>
-            <if test="ownerId != null">
-                owner_id,
+            <if test="gender != null">
+                gender,
             </if>
-            <if test="area != null">
-                area,
+            <if test="identity != null">
+                `identity`,
             </if>
-            <if test="housesStatus != null">
-                houses_status,
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="ownerStatus != null">
+                owner_status,
             </if>
             <if test="createId != null">
                 create_id,
@@ -79,17 +75,20 @@
             <if test="id != null">
                 #{id,jdbcType=VARCHAR},
             </if>
-            <if test="housesNo != null">
-                #{housesNo,jdbcType=VARCHAR},
+            <if test="username != null">
+                #{username,jdbcType=VARCHAR},
             </if>
-            <if test="ownerId != null">
-                #{ownerId,jdbcType=VARCHAR},
+            <if test="gender != null">
+                #{gender,jdbcType=INTEGER},
             </if>
-            <if test="area != null">
-                #{area,jdbcType=VARCHAR},
+            <if test="identity != null">
+                #{identity,jdbcType=VARCHAR},
             </if>
-            <if test="housesStatus != null">
-                #{housesStatus,jdbcType=INTEGER},
+            <if test="phone != null">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="ownerStatus != null">
+                #{ownerStatus,jdbcType=INTEGER},
             </if>
             <if test="createId != null">
                 #{createId,jdbcType=VARCHAR},
@@ -102,21 +101,24 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.ruoyi.property.domain.Houses">
+    <update id="updateByPrimaryKeySelective" parameterType="com.ruoyi.property.domain.Owner">
         <!--@mbg.generated-->
-        update houses
+        update `owner`
         <set>
-            <if test="housesNo != null">
-                houses_no = #{housesNo,jdbcType=VARCHAR},
+            <if test="username != null">
+                username = #{username,jdbcType=VARCHAR},
             </if>
-            <if test="ownerId != null">
-                owner_id = #{ownerId,jdbcType=VARCHAR},
+            <if test="gender != null">
+                gender = #{gender,jdbcType=INTEGER},
             </if>
-            <if test="area != null">
-                area = #{area,jdbcType=VARCHAR},
+            <if test="identity != null">
+                `identity` = #{identity,jdbcType=VARCHAR},
             </if>
-            <if test="housesStatus != null">
-                houses_status = #{housesStatus,jdbcType=INTEGER},
+            <if test="phone != null">
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="ownerStatus != null">
+                owner_status = #{ownerStatus,jdbcType=INTEGER},
             </if>
             <if test="createId != null">
                 create_id = #{createId,jdbcType=VARCHAR},
@@ -130,53 +132,39 @@
         </set>
         where id = #{id,jdbcType=VARCHAR}
     </update>
-    <update id="updateByPrimaryKey" parameterType="com.ruoyi.property.domain.Houses">
-        <!--@mbg.generated-->
-        update houses
-        set houses_no     = #{housesNo,jdbcType=VARCHAR},
-            owner_id      = #{ownerId,jdbcType=VARCHAR},
-            area          = #{area,jdbcType=VARCHAR},
-            houses_status = #{housesStatus,jdbcType=INTEGER},
-            create_id     = #{createId,jdbcType=VARCHAR},
-            is_flag       = #{isFlag,jdbcType=INTEGER},
-            create_time   = #{createTime,jdbcType=TIMESTAMP}
-        where id = #{id,jdbcType=VARCHAR}
-    </update>
-
-    <select id="selectHousesList" resultMap="BaseResultMap">
+    <select id="selectOwnerList" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from houses
+        from owner
         <where>
             is_flag = 0
-            <if test="housesNo != null  and housesNo != ''">
-                and houses_no =
-                    #{housesNo}
+            <if test="username != null  and username != ''">
+                and username like concat('%', #{username}, '%')
             </if>
-            <if test="ownerId != null  and ownerId != ''">
-                and owner_id
+            <if test="gender != null">
+                and gender
                     =
-                    #{ownerId}
+                    #{gender}
             </if>
-            <if test="area != null  and area != ''">
-                and area
+            <if test="identity != null  and identity != ''">
+                and identity
                     =
-                    #{area}
+                    #{identity}
             </if>
-            <if test="housesStatus != null">
-                and houses_status
+            <if test="phone != null  and phone != ''">
+                and phone
                     =
-                    #{housesStatus}
+                    #{phone}
+            </if>
+            <if test="ownerStatus != null">
+                and owner_status
+                    =
+                    #{ownerStatus}
             </if>
             <if test="createId != null  and createId != ''">
                 and create_id
                     =
                     #{createId}
-            </if>
-            <if test="isFlag != null">
-                and is_flag
-                    =
-                    1
             </if>
             <if test="params.beginTime != null and params.beginTime != ''">
                 <!-- 开始时间检索 -->
@@ -190,30 +178,34 @@
         order by create_time desc
     </select>
 
-    <select id="selectHousesById" parameterType="String" resultMap="BaseResultMap">
+    <select id="selectOwnerById" parameterType="String" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from houses
-        where id = #{id,jdbcType=VARCHAR}
+        from owner
+        where id =
+              #{id}
     </select>
 
-    <insert id="insertHouses">
-        insert into houses
+    <insert id="insertOwner">
+        insert into owner
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
                 id,
             </if>
-            <if test="housesNo != null and housesNo != ''">
-                houses_no,
+            <if test="username != null and username != ''">
+                username,
             </if>
-            <if test="ownerId != null and ownerId != ''">
-                owner_id,
+            <if test="gender != null">
+                gender,
             </if>
-            <if test="area != null and area != ''">
-                area,
+            <if test="identity != null and identity != ''">
+                identity,
             </if>
-            <if test="housesStatus != null">
-                houses_status,
+            <if test="phone != null and phone != ''">
+                phone,
+            </if>
+            <if test="ownerStatus != null">
+                owner_status,
             </if>
             <if test="createId != null and createId != ''">
                 create_id,
@@ -229,17 +221,20 @@
             <if test="id != null">
                 #{id},
             </if>
-            <if test="housesNo != null and housesNo != ''">
-                #{housesNo},
+            <if test="username != null and username != ''">
+                #{username},
             </if>
-            <if test="ownerId != null and ownerId != ''">
-                #{ownerId},
+            <if test="gender != null">
+                #{gender},
             </if>
-            <if test="area != null and area != ''">
-                #{area},
+            <if test="identity != null and identity != ''">
+                #{identity},
             </if>
-            <if test="housesStatus != null">
-                #{housesStatus},
+            <if test="phone != null and phone != ''">
+                #{phone},
+            </if>
+            <if test="ownerStatus != null">
+                #{ownerStatus},
             </if>
             <if test="createId != null and createId != ''">
                 #{createId},
@@ -253,24 +248,28 @@
         </trim>
     </insert>
 
-    <update id="updateHouses">
-        update houses
+    <update id="updateOwner">
+        update owner
         <trim prefix="SET" suffixOverrides=",">
-            <if test="housesNo != null and housesNo != ''">
-                houses_no =
-                    #{housesNo},
+            <if test="username != null and username != ''">
+                username =
+                    #{username},
             </if>
-            <if test="ownerId != null and ownerId != ''">
-                owner_id =
-                    #{ownerId},
+            <if test="gender != null">
+                gender =
+                    #{gender},
             </if>
-            <if test="area != null and area != ''">
-                area =
-                    #{area},
+            <if test="identity != null and identity != ''">
+                identity =
+                    #{identity},
             </if>
-            <if test="housesStatus != null">
-                houses_status =
-                    #{housesStatus},
+            <if test="phone != null and phone != ''">
+                phone =
+                    #{phone},
+            </if>
+            <if test="ownerStatus != null">
+                owner_status =
+                    #{ownerStatus},
             </if>
             <if test="createId != null and createId != ''">
                 create_id =
@@ -288,16 +287,16 @@
         where id = #{id}
     </update>
 
-    <delete id="deleteHousesById" parameterType="String">
+    <delete id="deleteOwnerById" parameterType="String">
         delete
-        from houses
+        from owner
         where id = #{id}
     </delete>
 
-    <update id="deleteHousesByIds" parameterType="String">
-        update houses
+    <update id="deleteOwnerByIds" parameterType="String">
+        update owner
         set is_flag = 1 where id in
-        <foreach close=")" collection="array" item="id" open="(" separator=",">
+        <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>
     </update>

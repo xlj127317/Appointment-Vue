@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ruoyi.property.mapper.ActuallyTypeMapper">
-    <resultMap id="BaseResultMap" type="com.ruoyi.property.domain.ActuallyType">
+<mapper namespace="com.ruoyi.property.mapper.ContractTypeMapper">
+    <resultMap id="BaseResultMap" type="com.ruoyi.property.domain.ContractType">
         <!--@mbg.generated-->
-        <!--@Table actually_type-->
+        <!--@Table contract_type-->
         <id column="id" jdbcType="VARCHAR" property="id"/>
         <result column="type_name" jdbcType="VARCHAR" property="typeName"/>
         <result column="is_flag" jdbcType="INTEGER" property="isFlag"/>
@@ -14,9 +14,22 @@
         type_name,
         is_flag
     </sql>
-    <insert id="insertSelective" parameterType="com.ruoyi.property.domain.ActuallyType">
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
         <!--@mbg.generated-->
-        insert into actually_type
+        select
+        <include refid="Base_Column_List"/>
+        from contract_type
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        <!--@mbg.generated-->
+        delete
+        from contract_type
+        where id = #{id,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insertSelective" parameterType="com.ruoyi.property.domain.ContractType">
+        <!--@mbg.generated-->
+        insert into contract_type
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
                 id,
@@ -40,9 +53,9 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.ruoyi.property.domain.ActuallyType">
+    <update id="updateByPrimaryKeySelective" parameterType="com.ruoyi.property.domain.ContractType">
         <!--@mbg.generated-->
-        update actually_type
+        update contract_type
         <set>
             <if test="typeName != null">
                 type_name = #{typeName,jdbcType=VARCHAR},
@@ -53,37 +66,4 @@
         </set>
         where id = #{id,jdbcType=VARCHAR}
     </update>
-
-    <update id="updateByIds">
-        update actually_type
-        set is_flag = 1
-        where id in
-        <foreach item="id" collection="array" open="(" separator="," close=")">
-            #{id}
-        </foreach>
-    </update>
-
-    <select id="selectActuallyList" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from actually_type
-        <where>
-            is_flag = 0
-            <if test="id != null">
-                and id = #{id,jdbcType=VARCHAR}
-            </if>
-            <if test="typeName != null">
-                and type_name = #{typeName,jdbcType=VARCHAR}
-            </if>
-        </where>
-        order by id desc
-    </select>
-
-    <select id="selectOne" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from actually_type
-        where id = #{id,jdbcType=VARCHAR}
-          and is_flag = 0
-    </select>
 </mapper>

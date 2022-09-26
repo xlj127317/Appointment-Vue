@@ -1,0 +1,653 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.property.mapper.ReceivableMapper">
+    <resultMap id="BaseResultMap" type="com.ruoyi.property.domain.Receivable">
+        <!--@mbg.generated-->
+        <!--@Table receivable-->
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="contract_id" jdbcType="VARCHAR" property="contractId"/>
+        <result column="owner_id" jdbcType="VARCHAR" property="ownerId"/>
+        <result column="payment_id" jdbcType="VARCHAR" property="paymentId"/>
+        <result column="payment_name" jdbcType="VARCHAR" property="paymentName"/>
+        <result column="payment_content" jdbcType="VARCHAR" property="paymentContent"/>
+        <result column="receivable_money" jdbcType="VARCHAR" property="receivableMoney"/>
+        <result column="payment_date" jdbcType="TIMESTAMP" property="paymentDate"/>
+        <result column="advance_status" jdbcType="INTEGER" property="advanceStatus"/>
+        <result column="deduct_money" jdbcType="VARCHAR" property="deductMoney"/>
+        <result column="deduct_after_money" jdbcType="VARCHAR" property="deductAfterMoney"/>
+        <result column="deduct_date" jdbcType="TIMESTAMP" property="deductDate"/>
+        <result column="actually_status" jdbcType="INTEGER" property="actuallyStatus"/>
+        <result column="actually_money" jdbcType="VARCHAR" property="actuallyMoney"/>
+        <result column="actually_date" jdbcType="TIMESTAMP" property="actuallyDate"/>
+        <result column="stop_time" jdbcType="TIMESTAMP" property="stopTime"/>
+        <result column="arrears_status" jdbcType="INTEGER" property="arrearsStatus"/>
+        <result column="arrears_money" jdbcType="VARCHAR" property="arrearsMoney"/>
+        <result column="repair_date" jdbcType="TIMESTAMP" property="repairDate"/>
+        <result column="payment_type" jdbcType="INTEGER" property="paymentType"/>
+        <result column="refund_status" jdbcType="INTEGER" property="refundStatus"/>
+        <result column="create_id" jdbcType="VARCHAR" property="createId"/>
+        <result column="is_flag" jdbcType="INTEGER" property="isFlag"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        id,
+        contract_id,
+        owner_id,
+        payment_id,
+        payment_name,
+        payment_content,
+        receivable_money,
+        payment_date,
+        advance_status,
+        deduct_money,
+        deduct_after_money,
+        deduct_date,
+        actually_status,
+        actually_money,
+        actually_date,
+        stop_time,
+        arrears_status,
+        arrears_money,
+        repair_date,
+        payment_type,
+        refund_status,
+        create_id,
+        is_flag,
+        create_time
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        <!--@mbg.generated-->
+        select
+        <include refid="Base_Column_List"/>
+        from receivable
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        <!--@mbg.generated-->
+        delete
+        from receivable
+        where id = #{id,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insertSelective" parameterType="com.ruoyi.property.domain.Receivable">
+        <!--@mbg.generated-->
+        insert into receivable
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="contractId != null">
+                contract_id,
+            </if>
+            <if test="ownerId != null">
+                owner_id,
+            </if>
+            <if test="paymentId != null">
+                payment_id,
+            </if>
+            <if test="paymentName != null">
+                payment_name,
+            </if>
+            <if test="paymentContent != null">
+                payment_content,
+            </if>
+            <if test="receivableMoney != null">
+                receivable_money,
+            </if>
+            <if test="paymentDate != null">
+                payment_date,
+            </if>
+            <if test="advanceStatus != null">
+                advance_status,
+            </if>
+            <if test="deductMoney != null">
+                deduct_money,
+            </if>
+            <if test="deductAfterMoney != null">
+                deduct_after_money,
+            </if>
+            <if test="deductDate != null">
+                deduct_date,
+            </if>
+            <if test="actuallyStatus != null">
+                actually_status,
+            </if>
+            <if test="actuallyMoney != null">
+                actually_money,
+            </if>
+            <if test="actuallyDate != null">
+                actually_date,
+            </if>
+            <if test="stopTime != null">
+                stop_time,
+            </if>
+            <if test="arrearsStatus != null">
+                arrears_status,
+            </if>
+            <if test="arrearsMoney != null">
+                arrears_money,
+            </if>
+            <if test="repairDate != null">
+                repair_date,
+            </if>
+            <if test="paymentType != null">
+                payment_type,
+            </if>
+            <if test="refundStatus != null">
+                refund_status,
+            </if>
+            <if test="createId != null">
+                create_id,
+            </if>
+            <if test="isFlag != null">
+                is_flag,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="contractId != null">
+                #{contractId,jdbcType=VARCHAR},
+            </if>
+            <if test="ownerId != null">
+                #{ownerId,jdbcType=VARCHAR},
+            </if>
+            <if test="paymentId != null">
+                #{paymentId,jdbcType=VARCHAR},
+            </if>
+            <if test="paymentName != null">
+                #{paymentName,jdbcType=VARCHAR},
+            </if>
+            <if test="paymentContent != null">
+                #{paymentContent,jdbcType=VARCHAR},
+            </if>
+            <if test="receivableMoney != null">
+                #{receivableMoney,jdbcType=VARCHAR},
+            </if>
+            <if test="paymentDate != null">
+                #{paymentDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="advanceStatus != null">
+                #{advanceStatus,jdbcType=INTEGER},
+            </if>
+            <if test="deductMoney != null">
+                #{deductMoney,jdbcType=VARCHAR},
+            </if>
+            <if test="deductAfterMoney != null">
+                #{deductAfterMoney,jdbcType=VARCHAR},
+            </if>
+            <if test="deductDate != null">
+                #{deductDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="actuallyStatus != null">
+                #{actuallyStatus,jdbcType=INTEGER},
+            </if>
+            <if test="actuallyMoney != null">
+                #{actuallyMoney,jdbcType=VARCHAR},
+            </if>
+            <if test="actuallyDate != null">
+                #{actuallyDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="stopTime != null">
+                #{stopTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="arrearsStatus != null">
+                #{arrearsStatus,jdbcType=INTEGER},
+            </if>
+            <if test="arrearsMoney != null">
+                #{arrearsMoney,jdbcType=VARCHAR},
+            </if>
+            <if test="repairDate != null">
+                #{repairDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="paymentType != null">
+                #{paymentType,jdbcType=INTEGER},
+            </if>
+            <if test="refundStatus != null">
+                #{refundStatus,jdbcType=INTEGER},
+            </if>
+            <if test="createId != null">
+                #{createId,jdbcType=VARCHAR},
+            </if>
+            <if test="isFlag != null">
+                #{isFlag,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ruoyi.property.domain.Receivable">
+        <!--@mbg.generated-->
+        update receivable
+        <set>
+            <if test="contractId != null">
+                contract_id = #{contractId,jdbcType=VARCHAR},
+            </if>
+            <if test="ownerId != null">
+                owner_id = #{ownerId,jdbcType=VARCHAR},
+            </if>
+            <if test="paymentId != null">
+                payment_id = #{paymentId,jdbcType=VARCHAR},
+            </if>
+            <if test="paymentName != null">
+                payment_name = #{paymentName,jdbcType=VARCHAR},
+            </if>
+            <if test="paymentContent != null">
+                payment_content = #{paymentContent,jdbcType=VARCHAR},
+            </if>
+            <if test="receivableMoney != null">
+                receivable_money = #{receivableMoney,jdbcType=VARCHAR},
+            </if>
+            <if test="paymentDate != null">
+                payment_date = #{paymentDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="advanceStatus != null">
+                advance_status = #{advanceStatus,jdbcType=INTEGER},
+            </if>
+            <if test="deductMoney != null">
+                deduct_money = #{deductMoney,jdbcType=VARCHAR},
+            </if>
+            <if test="deductAfterMoney != null">
+                deduct_after_money = #{deductAfterMoney,jdbcType=VARCHAR},
+            </if>
+            <if test="deductDate != null">
+                deduct_date = #{deductDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="actuallyStatus != null">
+                actually_status = #{actuallyStatus,jdbcType=INTEGER},
+            </if>
+            <if test="actuallyMoney != null">
+                actually_money = #{actuallyMoney,jdbcType=VARCHAR},
+            </if>
+            <if test="actuallyDate != null">
+                actually_date = #{actuallyDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="stopTime != null">
+                stop_time = #{stopTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="arrearsStatus != null">
+                arrears_status = #{arrearsStatus,jdbcType=INTEGER},
+            </if>
+            <if test="arrearsMoney != null">
+                arrears_money = #{arrearsMoney,jdbcType=VARCHAR},
+            </if>
+            <if test="repairDate != null">
+                repair_date = #{repairDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="paymentType != null">
+                payment_type = #{paymentType,jdbcType=INTEGER},
+            </if>
+            <if test="refundStatus != null">
+                refund_status = #{refundStatus,jdbcType=INTEGER},
+            </if>
+            <if test="createId != null">
+                create_id = #{createId,jdbcType=VARCHAR},
+            </if>
+            <if test="isFlag != null">
+                is_flag = #{isFlag,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <select id="selectReceivableList" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from receivable
+        <where>
+            is_flag = 0
+            <if test="contractId != null  and contractId != ''">
+                and contract_id = #{contractId}
+            </if>
+            <if test="ownerId != null  and ownerId != ''">
+                and owner_id = #{ownerId}
+            </if>
+            <if test="paymentId != null  and paymentId != ''">
+                and payment_id = #{paymentId}
+            </if>
+            <if test="paymentName != null  and paymentName != ''">
+                and payment_name like concat('%', #{paymentName}, '%')
+            </if>
+            <if test="paymentContent != null  and paymentContent != ''">
+                and payment_content = #{paymentContent}
+            </if>
+            <if test="receivableMoney != null  and receivableMoney != ''">
+                and receivable_money = #{receivableMoney}
+            </if>
+            <if test="paymentDate != null">
+                and payment_date = #{paymentDate}
+            </if>
+            <if test="advanceStatus != null">
+                and advance_status = #{advanceStatus}
+            </if>
+            <if test="deductMoney != null  and deductMoney != ''">
+                and deduct_money = #{deductMoney}
+            </if>
+            <if test="deductAfterMoney != null  and deductAfterMoney != ''">
+                and deduct_after_money = #{deductAfterMoney}
+            </if>
+            <if test="deductDate != null">
+                and deduct_date = #{deductDate}
+            </if>
+            <if test="actuallyStatus != null">
+                and actually_status = #{actuallyStatus}
+            </if>
+            <if test="actuallyMoney != null  and actuallyMoney != ''">
+                and actually_money = #{actuallyMoney}
+            </if>
+            <if test="actuallyDate != null">
+                and actually_date = #{actuallyDate}
+            </if>
+            <if test="stopTime != null">
+                and stop_time = #{stopTime}
+            </if>
+            <if test="arrearsStatus != null">
+                and arrears_status = #{arrearsStatus}
+            </if>
+            <if test="arrearsMoney != null  and arrearsMoney != ''">
+                and arrears_money = #{arrearsMoney}
+            </if>
+            <if test="repairDate != null">
+                and repair_date = #{repairDate}
+            </if>
+            <if test="paymentType != null">
+                and payment_type = #{paymentType}
+            </if>
+            <if test="refundStatus != null">
+                and refund_status = #{refundStatus}
+            </if>
+            <if test="createId != null  and createId != ''">
+                and create_id = #{createId}
+            </if>
+            <if test="params.beginTime != null and params.beginTime != ''">
+                <!-- 开始时间检索 -->
+                AND date_format(create_time, '%y%m%d') &gt;= date_format(#{params.beginTime}, '%y%m%d')
+            </if>
+            <if test="params.endTime != null and params.endTime != ''">
+                <!-- 结束时间检索 -->
+                AND date_format(create_time, '%y%m%d') &lt;= date_format(#{params.endTime}, '%y%m%d')
+            </if>
+        </where>
+        order by create_time desc
+    </select>
+
+    <select id="selectReceivableById" parameterType="String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from receivable
+        where id = #{id}
+    </select>
+
+    <insert id="insertReceivable">
+        insert into receivable
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="contractId != null and contractId != ''">
+                contract_id,
+            </if>
+            <if test="ownerId != null and ownerId != ''">
+                owner_id,
+            </if>
+            <if test="paymentId != null and paymentId != ''">
+                payment_id,
+            </if>
+            <if test="paymentName != null and paymentName != ''">
+                payment_name,
+            </if>
+            <if test="paymentContent != null and paymentContent != ''">
+                payment_content,
+            </if>
+            <if test="receivableMoney != null and receivableMoney != ''">
+                receivable_money,
+            </if>
+            <if test="paymentDate != null">
+                payment_date,
+            </if>
+            <if test="advanceStatus != null">
+                advance_status,
+            </if>
+            <if test="deductMoney != null">
+                deduct_money,
+            </if>
+            <if test="deductAfterMoney != null">
+                deduct_after_money,
+            </if>
+            <if test="deductDate != null">
+                deduct_date,
+            </if>
+            <if test="actuallyStatus != null">
+                actually_status,
+            </if>
+            <if test="actuallyMoney != null">
+                actually_money,
+            </if>
+            <if test="actuallyDate != null">
+                actually_date,
+            </if>
+            <if test="stopTime != null">
+                stop_time,
+            </if>
+            <if test="arrearsStatus != null">
+                arrears_status,
+            </if>
+            <if test="arrearsMoney != null">
+                arrears_money,
+            </if>
+            <if test="repairDate != null">
+                repair_date,
+            </if>
+            <if test="paymentType != null">
+                payment_type,
+            </if>
+            <if test="refundStatus != null">
+                refund_status,
+            </if>
+            <if test="createId != null and createId != ''">
+                create_id,
+            </if>
+            <if test="isFlag != null">
+                is_flag,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="contractId != null and contractId != ''">
+                #{contractId},
+            </if>
+            <if test="ownerId != null and ownerId != ''">
+                #{ownerId},
+            </if>
+            <if test="paymentId != null and paymentId != ''">
+                #{paymentId},
+            </if>
+            <if test="paymentName != null and paymentName != ''">
+                #{paymentName},
+            </if>
+            <if test="paymentContent != null and paymentContent != ''">
+                #{paymentContent},
+            </if>
+            <if test="receivableMoney != null and receivableMoney != ''">
+                #{receivableMoney},
+            </if>
+            <if test="paymentDate != null">
+                #{paymentDate},
+            </if>
+            <if test="advanceStatus != null">
+                #{advanceStatus},
+            </if>
+            <if test="deductMoney != null">
+                #{deductMoney},
+            </if>
+            <if test="deductAfterMoney != null">
+                #{deductAfterMoney},
+            </if>
+            <if test="deductDate != null">
+                #{deductDate},
+            </if>
+            <if test="actuallyStatus != null">
+                #{actuallyStatus},
+            </if>
+            <if test="actuallyMoney != null">
+                #{actuallyMoney},
+            </if>
+            <if test="actuallyDate != null">
+                #{actuallyDate},
+            </if>
+            <if test="stopTime != null">
+                #{stopTime},
+            </if>
+            <if test="arrearsStatus != null">
+                #{arrearsStatus},
+            </if>
+            <if test="arrearsMoney != null">
+                #{arrearsMoney},
+            </if>
+            <if test="repairDate != null">
+                #{repairDate},
+            </if>
+            <if test="paymentType != null">
+                #{paymentType},
+            </if>
+            <if test="refundStatus != null">
+                #{refundStatus},
+            </if>
+            <if test="createId != null and createId != ''">
+                #{createId},
+            </if>
+            <if test="isFlag != null">
+                #{isFlag},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateReceivable">
+        update receivable
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="contractId != null and contractId != ''">
+                contract_id =
+                #{contractId},
+            </if>
+            <if test="ownerId != null and ownerId != ''">
+                owner_id =
+                #{ownerId},
+            </if>
+            <if test="paymentId != null and paymentId != ''">
+                payment_id =
+                #{paymentId},
+            </if>
+            <if test="paymentName != null and paymentName != ''">
+                payment_name =
+                #{paymentName},
+            </if>
+            <if test="paymentContent != null and paymentContent != ''">
+                payment_content =
+                #{paymentContent},
+            </if>
+            <if test="receivableMoney != null and receivableMoney != ''">
+                receivable_money =
+                #{receivableMoney},
+            </if>
+            <if test="paymentDate != null">
+                payment_date =
+                #{paymentDate},
+            </if>
+            <if test="advanceStatus != null">
+                advance_status =
+                #{advanceStatus},
+            </if>
+            <if test="deductMoney != null">
+                deduct_money =
+                #{deductMoney},
+            </if>
+            <if test="deductAfterMoney != null">
+                deduct_after_money =
+                #{deductAfterMoney},
+            </if>
+            <if test="deductDate != null">
+                deduct_date =
+                #{deductDate},
+            </if>
+            <if test="actuallyStatus != null">
+                actually_status =
+                #{actuallyStatus},
+            </if>
+            <if test="actuallyMoney != null">
+                actually_money =
+                #{actuallyMoney},
+            </if>
+            <if test="actuallyDate != null">
+                actually_date =
+                #{actuallyDate},
+            </if>
+            <if test="stopTime != null">
+                stop_time =
+                #{stopTime},
+            </if>
+            <if test="arrearsStatus != null">
+                arrears_status =
+                #{arrearsStatus},
+            </if>
+            <if test="arrearsMoney != null">
+                arrears_money =
+                #{arrearsMoney},
+            </if>
+            <if test="repairDate != null">
+                repair_date =
+                #{repairDate},
+            </if>
+            <if test="paymentType != null">
+                payment_type =
+                #{paymentType},
+            </if>
+            <if test="refundStatus != null">
+                refund_status =
+                #{refundStatus},
+            </if>
+            <if test="createId != null and createId != ''">
+                create_id =
+                #{createId},
+            </if>
+            <if test="isFlag != null">
+                is_flag =
+                #{isFlag},
+            </if>
+            <if test="createTime != null">
+                create_time =
+                #{createTime},
+            </if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteReceivableById" parameterType="String">
+        delete
+        from receivable
+        where id = #{id}
+    </delete>
+
+    <update id="deleteReceivableByIds" parameterType="String">
+        update receivable
+        set is_flag = 1 where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+</mapper>

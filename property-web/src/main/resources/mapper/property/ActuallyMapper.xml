@@ -260,6 +260,7 @@
         <include refid="Base_Column_List"/>
         from actually
         <where>
+            is_flag = 0
             <if test="typeId != null  and typeId != ''">
                 and type_id = #{typeId}
             </if>
@@ -298,16 +299,14 @@
             </if>
             <if test="params.beginTime != null and params.beginTime != ''">
                 <!-- 开始时间检索 -->
-                AND date_format(create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+                AND date_format(create_time, '%y%m%d') &gt;= date_format(#{params.beginTime}, '%y%m%d')
             </if>
             <if test="params.endTime != null and params.endTime != ''">
                 <!-- 结束时间检索 -->
-                AND date_format(create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
-            </if>
-            <if test="isFlag != null">
-                and is_flag = 0
+                AND date_format(create_time, '%y%m%d') &lt;= date_format(#{params.endTime}, '%y%m%d')
             </if>
         </where>
+        order by create_time desc
     </select>
 
     <select id="selectOne" resultMap="BaseResultMap">

@@ -147,6 +147,7 @@
         update assets h
         set h.is_flag = 1
         where
+            id in
         <foreach close=")" collection="array" item="id" open="(" separator=",">
             #{id}
         </foreach>
@@ -157,8 +158,9 @@
         <include refid="Base_Column_List"/>
         from assets
         <where>
+            is_flag = 0
             <if test="typeId != null">
-                type_id = #{typeId,jdbcType=VARCHAR}
+                and type_id = #{typeId,jdbcType=VARCHAR}
             </if>
             <if test="assetsName != null">
                 and assets_name = #{assetsName,jdbcType=VARCHAR}
@@ -172,23 +174,20 @@
             <if test="createId != null">
                 and create_id = #{createId,jdbcType=VARCHAR}
             </if>
-            <if test="isFlag != null">
-                and is_flag = #{isFlag,jdbcType=INTEGER}
-            </if>
             <if test="createTime != null">
                 and create_time = #{createTime,jdbcType=TIMESTAMP}
             </if>
             <if test="params.beginTime != null and params.beginTime != ''">
                 <!-- 开始时间检索 -->
                 AND date_format(create_time
-                  , '%y%m%d') &gt;= date_format(#{params.beginTime}
-                  , '%y%m%d')
+                        , '%y%m%d') &gt;= date_format(#{params.beginTime}
+                        , '%y%m%d')
             </if>
             <if test="params.endTime != null and params.endTime != ''">
                 <!-- 结束时间检索 -->
                 AND date_format(create_time
-                  , '%y%m%d') &lt;= date_format(#{params.endTime}
-                  , '%y%m%d')
+                        , '%y%m%d') &lt;= date_format(#{params.endTime}
+                        , '%y%m%d')
             </if>
         </where>
         order by create_time desc
