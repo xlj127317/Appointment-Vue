@@ -173,11 +173,6 @@
                     =
                     #{createId}
             </if>
-            <if test="isFlag != null">
-                and is_flag
-                    =
-                    1
-            </if>
             <if test="params.beginTime != null and params.beginTime != ''">
                 <!-- 开始时间检索 -->
                 AND date_format(create_time, '%y%m%d') &gt;= date_format(#{params.beginTime}, '%y%m%d')

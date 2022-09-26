@@ -1,14 +1,8 @@
 package com.ruoyi.property.mapper;
 
 import com.ruoyi.property.domain.Houses;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Mapper;import java.util.List;
 
-import java.util.List;
-
-/**
- * @author PG
- */
 @Mapper
 public interface HousesMapper {
     /**
@@ -60,20 +54,50 @@ public interface HousesMapper {
     int updateByPrimaryKey(Houses record);
 
     /**
-     * 批量逻辑删除
+     * 查询房屋管理
      *
-     * @param ids id 集合
-     * @return int
+     * @param id 房屋管理主键
+     * @return 房屋管理
      */
-    int updateByIds(String[] ids);
+    Houses selectHousesById(String id);
 
     /**
-     * 分页查询列表
+     * 查询房屋管理列表
      *
-     * @param houses 列表条件
-     * @return list
+     * @param houses 房屋管理
+     * @return 房屋管理集合
      */
-    List<Houses> queryHousesList(@Param("houses") Houses houses);
+    List<Houses> selectHousesList(Houses houses);
 
-    Houses selectById(String id);
+    /**
+     * 新增房屋管理
+     *
+     * @param houses 房屋管理
+     * @return 结果
+     */
+    int insertHouses(Houses houses);
+
+    /**
+     * 修改房屋管理
+     *
+     * @param houses 房屋管理
+     * @return 结果
+     */
+    int updateHouses(Houses houses);
+
+    /**
+     * 删除房屋管理
+     *
+     * @param id 房屋管理主键
+     * @return 结果
+     */
+    int deleteHousesById(String id);
+
+    /**
+     * 批量删除房屋管理
+     *
+     * @param ids 需要删除的数据主键集合
+     * @return 结果
+     */
+    int deleteHousesByIds(String[] ids);
 }
