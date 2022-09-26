@@ -1,62 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.property.mapper.CruiseMapper">
-  <resultMap id="BaseResultMap" type="com.ruoyi.property.domain.Cruise">
-    <!--@mbg.generated-->
-    <!--@Table cruise-->
-    <id column="id" jdbcType="VARCHAR" property="id" />
-    <result column="cruise_id" jdbcType="VARCHAR" property="cruiseId" />
-    <result column="type_id" jdbcType="VARCHAR" property="typeId" />
-    <result column="cruise_content" jdbcType="VARCHAR" property="cruiseContent" />
-    <result column="create_id" jdbcType="VARCHAR" property="createId" />
-    <result column="is_flag" jdbcType="INTEGER" property="isFlag" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    <!--@mbg.generated-->
-    id, cruise_id, type_id, cruise_content, create_id, is_flag, create_time
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    <!--@mbg.generated-->
-    select 
-    <include refid="Base_Column_List" />
-    from cruise
-    where id = #{id,jdbcType=VARCHAR}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    <!--@mbg.generated-->
-    delete from cruise
-    where id = #{id,jdbcType=VARCHAR}
-  </delete>
-  <update id="updateByPrimaryKeySelective" parameterType="com.ruoyi.property.domain.Cruise">
-    <!--@mbg.generated-->
-    update cruise
-    <set>
-      <if test="cruiseId != null">
-        cruise_id = #{cruiseId,jdbcType=VARCHAR},
-      </if>
-      <if test="typeId != null">
-        type_id = #{typeId,jdbcType=VARCHAR},
-      </if>
-      <if test="cruiseContent != null">
-        cruise_content = #{cruiseContent,jdbcType=VARCHAR},
-      </if>
-      <if test="createId != null">
-        create_id = #{createId,jdbcType=VARCHAR},
-      </if>
-      <if test="isFlag != null">
-        is_flag = #{isFlag,jdbcType=INTEGER},
-      </if>
-      <if test="createTime != null">
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
+    <resultMap id="BaseResultMap" type="com.ruoyi.property.domain.Cruise">
+        <!--@mbg.generated-->
+        <!--@Table cruise-->
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="cruise_id" jdbcType="VARCHAR" property="cruiseId"/>
+        <result column="type_id" jdbcType="VARCHAR" property="typeId"/>
+        <result column="cruise_content" jdbcType="VARCHAR" property="cruiseContent"/>
+        <result column="create_id" jdbcType="VARCHAR" property="createId"/>
+        <result column="is_flag" jdbcType="INTEGER" property="isFlag"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        id,
+        cruise_id,
+        type_id,
+        cruise_content,
+        create_id,
+        is_flag,
+        create_time
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        <!--@mbg.generated-->
+        select
+        <include refid="Base_Column_List"/>
+        from cruise
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        <!--@mbg.generated-->
+        delete
+        from cruise
+        where id = #{id,jdbcType=VARCHAR}
+    </delete>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ruoyi.property.domain.Cruise">
+        <!--@mbg.generated-->
+        update cruise
+        <set>
+            <if test="cruiseId != null">
+                cruise_id = #{cruiseId,jdbcType=VARCHAR},
+            </if>
+            <if test="typeId != null">
+                type_id = #{typeId,jdbcType=VARCHAR},
+            </if>
+            <if test="cruiseContent != null">
+                cruise_content = #{cruiseContent,jdbcType=VARCHAR},
+            </if>
+            <if test="createId != null">
+                create_id = #{createId,jdbcType=VARCHAR},
+            </if>
+            <if test="isFlag != null">
+                is_flag = #{isFlag,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
 
     <select id="selectCruiseList" resultMap="BaseResultMap">
         select
-        <include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         from cruise
         <where>
             is_flag = 0
@@ -79,12 +86,20 @@
                     =
                     #{createId}
             </if>
+            <if test="params.beginTime != null and params.beginTime != ''">
+                <!-- 开始时间检索 -->
+                AND date_format(create_time, '%y%m%d') &gt;= date_format(#{params.beginTime}, '%y%m%d')
+            </if>
+            <if test="params.endTime != null and params.endTime != ''">
+                <!-- 结束时间检索 -->
+                AND date_format(create_time, '%y%m%d') &lt;= date_format(#{params.endTime}, '%y%m%d')
+            </if>
         </where>
     </select>
 
     <select id="selectCruiseById" parameterType="String" resultMap="BaseResultMap">
         select
-        <include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         from cruise
         where id =
               #{id}

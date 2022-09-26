@@ -30,30 +30,6 @@ public interface CruiseMapper {
     int updateByPrimaryKeySelective(Cruise record);
 
     /**
-     * insert record to table
-     *
-     * @param record the record
-     * @return insert count
-     */
-    int insert(Cruise record);
-
-    /**
-     * insert record to table selective
-     *
-     * @param record the record
-     * @return insert count
-     */
-    int insertSelective(Cruise record);
-
-    /**
-     * update record
-     *
-     * @param record the updated record
-     * @return update count
-     */
-    int updateByPrimaryKey(Cruise record);
-
-    /**
      * 查询巡航管理
      *
      * @param id 巡航管理主键
