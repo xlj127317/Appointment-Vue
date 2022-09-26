@@ -1,9 +1,7 @@
 package com.ruoyi.property.mapper;
 
 import com.ruoyi.property.domain.Report;
-import org.apache.ibatis.annotations.Mapper;
-
-import java.util.List;
+import org.apache.ibatis.annotations.Mapper;import java.util.List;
 
 @Mapper
 public interface ReportMapper {
@@ -86,5 +84,4 @@ public interface ReportMapper {
      * @return 结果
      */
     int deleteReportByIds(String[] ids);
-
 }

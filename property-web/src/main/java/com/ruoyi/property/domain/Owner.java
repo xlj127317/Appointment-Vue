@@ -4,17 +4,20 @@ import com.ruoyi.common.core.domain.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.*;
-
-import java.io.Serializable;
-import java.util.Objects;
+import java.util.Date;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 业主管理表
  */
 @ApiModel(value = "业主管理表")
 @Schema
-public class Owner extends BaseEntity implements Serializable {
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class Owner extends BaseEntity {
     /**
      * 主键
      */
@@ -71,81 +74,10 @@ public class Owner extends BaseEntity implements Serializable {
     @Schema(description = "状态,0 未删除 1已删除")
     private Integer isFlag;
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public Integer getGender() {
-        return gender;
-    }
-
-    public void setGender(Integer gender) {
-        this.gender = gender;
-    }
-
-    public String getIdentity() {
-        return identity;
-    }
-
-    public void setIdentity(String identity) {
-        this.identity = identity;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public Integer getOwnerStatus() {
-        return ownerStatus;
-    }
-
-    public void setOwnerStatus(Integer ownerStatus) {
-        this.ownerStatus = ownerStatus;
-    }
-
-    public String getCreateId() {
-        return createId;
-    }
-
-    public void setCreateId(String createId) {
-        this.createId = createId;
-    }
-
-    public Integer getIsFlag() {
-        return isFlag;
-    }
-
-    public void setIsFlag(Integer isFlag) {
-        this.isFlag = isFlag;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Owner owner = (Owner) o;
-        return id.equals(owner.id) && username.equals(owner.username) && gender.equals(owner.gender) && identity.equals(owner.identity) && phone.equals(owner.phone) && ownerStatus.equals(owner.ownerStatus) && createId.equals(owner.createId) && isFlag.equals(owner.isFlag);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, username, gender, identity, phone, ownerStatus, createId, isFlag);
-    }
-
+    /**
+     * 创建时间
+     */
+    @ApiModelProperty(value = "创建时间")
+    @Schema(description = "创建时间")
+    private Date createTime;
 }

@@ -1,75 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.property.mapper.PaymentTypeMapper">
-    <resultMap id="BaseResultMap" type="com.ruoyi.property.domain.PaymentType">
-        <!--@mbg.generated-->
-        <!--@Table payment_type-->
-        <id column="id" jdbcType="VARCHAR" property="id"/>
-        <result column="payment_name" jdbcType="VARCHAR" property="paymentName"/>
-        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
-    </resultMap>
-    <sql id="Base_Column_List">
-        <!--@mbg.generated-->
+  <resultMap id="BaseResultMap" type="com.ruoyi.property.domain.PaymentType">
+    <!--@mbg.generated-->
+    <!--@Table payment_type-->
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="payment_name" jdbcType="VARCHAR" property="paymentName" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, payment_name, create_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from payment_type
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    <!--@mbg.generated-->
+    delete from payment_type
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insertSelective" parameterType="com.ruoyi.property.domain.PaymentType">
+    <!--@mbg.generated-->
+    insert into payment_type
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
         id,
+      </if>
+      <if test="paymentName != null">
         payment_name,
-        create_time
-    </sql>
-    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-        <!--@mbg.generated-->
-        select
-        <include refid="Base_Column_List"/>
-        from payment_type
-        where id = #{id,jdbcType=VARCHAR}
-    </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-        <!--@mbg.generated-->
-        delete
-        from payment_type
-        where id = #{id,jdbcType=VARCHAR}
-    </delete>
-    <insert id="insertSelective" parameterType="com.ruoyi.property.domain.PaymentType">
-        <!--@mbg.generated-->
-        insert into payment_type
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                id,
-            </if>
-            <if test="paymentName != null">
-                payment_name,
-            </if>
-            <if test="createTime != null">
-                create_time,
-            </if>
-        </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                #{id,jdbcType=VARCHAR},
-            </if>
-            <if test="paymentName != null">
-                #{paymentName,jdbcType=VARCHAR},
-            </if>
-            <if test="createTime != null">
-                #{createTime,jdbcType=TIMESTAMP},
-            </if>
-        </trim>
-    </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.ruoyi.property.domain.PaymentType">
-        <!--@mbg.generated-->
-        update payment_type
-        <set>
-            <if test="paymentName != null">
-                payment_name = #{paymentName,jdbcType=VARCHAR},
-            </if>
-            <if test="createTime != null">
-                create_time = #{createTime,jdbcType=TIMESTAMP},
-            </if>
-        </set>
-        where id = #{id,jdbcType=VARCHAR}
-    </update>
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="paymentName != null">
+        #{paymentName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ruoyi.property.domain.PaymentType">
+    <!--@mbg.generated-->
+    update payment_type
+    <set>
+      <if test="paymentName != null">
+        payment_name = #{paymentName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
 
     <select id="selectPaymentTypeList" resultMap="BaseResultMap">
         select
-        <include refid="Base_Column_List"/>
+        <include refid="Base_Column_List" />
         from payment_type
         <where>
             <if test="paymentName != null  and paymentName != ''">
@@ -84,7 +81,7 @@
 
     <select id="selectPaymentTypeById" parameterType="String" resultType="com.ruoyi.property.domain.PaymentType">
         select
-        <include refid="Base_Column_List"/>
+        <include refid="Base_Column_List" />
         from payment_type
         where id =
               #{id}
@@ -140,7 +137,7 @@
     <update id="deletePaymentTypeByIds" parameterType="String">
         delete
         from payment_type where id in
-        <foreach item="id" collection="array" open="(" separator="," close=")">
+        <foreach close=")" collection="array" item="id" open="(" separator=",">
             #{id}
         </foreach>
     </update>

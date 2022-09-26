@@ -1,9 +1,7 @@
 package com.ruoyi.property.mapper;
 
 import com.ruoyi.property.domain.Receivable;
-import org.apache.ibatis.annotations.Mapper;
-
-import java.util.List;
+import org.apache.ibatis.annotations.Mapper;import java.util.List;
 
 @Mapper
 public interface ReceivableMapper {

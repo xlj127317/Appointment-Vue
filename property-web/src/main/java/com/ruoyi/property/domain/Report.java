@@ -4,10 +4,11 @@ import com.ruoyi.common.core.domain.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.Date;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 /**
@@ -16,7 +17,6 @@ import lombok.NoArgsConstructor;
 @ApiModel(value = "工单管理表")
 @Schema
 @Data
-@EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
 public class Report extends BaseEntity {
@@ -82,4 +82,11 @@ public class Report extends BaseEntity {
     @ApiModelProperty(value = "状态,0 未删除 1已删除")
     @Schema(description = "状态,0 未删除 1已删除")
     private Integer isFlag;
+
+    /**
+     * 创建时间
+     */
+    @ApiModelProperty(value = "创建时间")
+    @Schema(description = "创建时间")
+    private Date createTime;
 }

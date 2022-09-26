@@ -40,6 +40,14 @@ public interface DepositMapper {
     int updateByPrimaryKeySelective(Deposit record);
 
     /**
+     * update record
+     *
+     * @param record the updated record
+     * @return update count
+     */
+    int updateByPrimaryKey(Deposit record);
+
+    /**
      * 查询押金
      *
      * @param id 押金主键
@@ -86,5 +94,4 @@ public interface DepositMapper {
      * @return 结果
      */
     int deleteDepositByIds(String[] ids);
-
 }

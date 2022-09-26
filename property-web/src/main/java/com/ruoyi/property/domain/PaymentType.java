@@ -4,18 +4,17 @@ import com.ruoyi.common.core.domain.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
+import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 /**
  * 款项类型表
  */
-@ApiModel(value = "租售类型表")
+@ApiModel(value = "款项类型表")
 @Schema
 @Data
-@EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
 public class PaymentType extends BaseEntity {
@@ -32,4 +31,11 @@ public class PaymentType extends BaseEntity {
     @ApiModelProperty(value = "款项类别")
     @Schema(description = "款项类别")
     private String paymentName;
+
+    /**
+     * 创建时间
+     */
+    @ApiModelProperty(value = "创建时间")
+    @Schema(description = "创建时间")
+    private Date createTime;
 }

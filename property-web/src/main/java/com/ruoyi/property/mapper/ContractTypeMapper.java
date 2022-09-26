@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 public interface ContractTypeMapper {
     /**
      * delete by primary key
+     *
      * @param id primaryKey
      * @return deleteCount
      */
@@ -14,6 +15,7 @@ public interface ContractTypeMapper {
 
     /**
      * insert record to table selective
+     *
      * @param record the record
      * @return insert count
      */
@@ -21,6 +23,7 @@ public interface ContractTypeMapper {
 
     /**
      * select by primary key
+     *
      * @param id primary key
      * @return object by primary key
      */
@@ -28,10 +31,9 @@ public interface ContractTypeMapper {
 
     /**
      * update record selective
+     *
      * @param record the updated record
      * @return update count
      */
     int updateByPrimaryKeySelective(ContractType record);
-
-
 }

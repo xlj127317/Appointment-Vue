@@ -1,163 +1,153 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.property.mapper.RentSellMapper">
-    <resultMap id="BaseResultMap" type="com.ruoyi.property.domain.RentSell">
-        <!--@mbg.generated-->
-        <!--@Table rent_sell-->
-        <id column="id" jdbcType="VARCHAR" property="id"/>
-        <result column="houses_id" jdbcType="VARCHAR" property="housesId"/>
-        <result column="sell_id" jdbcType="VARCHAR" property="sellId"/>
-        <result column="owner_id" jdbcType="VARCHAR" property="ownerId"/>
-        <result column="sell_time" jdbcType="VARCHAR" property="sellTime"/>
-        <result column="sell_money" jdbcType="VARCHAR" property="sellMoney"/>
-        <result column="seller" jdbcType="VARCHAR" property="seller"/>
-        <result column="rent_status" jdbcType="INTEGER" property="rentStatus"/>
-        <result column="create_id" jdbcType="VARCHAR" property="createId"/>
-        <result column="is_flag" jdbcType="INTEGER" property="isFlag"/>
-        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
-    </resultMap>
-    <sql id="Base_Column_List">
-        <!--@mbg.generated-->
+  <resultMap id="BaseResultMap" type="com.ruoyi.property.domain.RentSell">
+    <!--@mbg.generated-->
+    <!--@Table rent_sell-->
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="houses_id" jdbcType="VARCHAR" property="housesId" />
+    <result column="sell_id" jdbcType="VARCHAR" property="sellId" />
+    <result column="owner_id" jdbcType="VARCHAR" property="ownerId" />
+    <result column="sell_time" jdbcType="VARCHAR" property="sellTime" />
+    <result column="sell_money" jdbcType="VARCHAR" property="sellMoney" />
+    <result column="seller" jdbcType="VARCHAR" property="seller" />
+    <result column="rent_status" jdbcType="INTEGER" property="rentStatus" />
+    <result column="create_id" jdbcType="VARCHAR" property="createId" />
+    <result column="is_flag" jdbcType="INTEGER" property="isFlag" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, houses_id, sell_id, owner_id, sell_time, sell_money, seller, rent_status, create_id, 
+    is_flag, create_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from rent_sell
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    <!--@mbg.generated-->
+    delete from rent_sell
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insertSelective" parameterType="com.ruoyi.property.domain.RentSell">
+    <!--@mbg.generated-->
+    insert into rent_sell
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
         id,
+      </if>
+      <if test="housesId != null">
         houses_id,
+      </if>
+      <if test="sellId != null">
         sell_id,
+      </if>
+      <if test="ownerId != null">
         owner_id,
+      </if>
+      <if test="sellTime != null">
         sell_time,
+      </if>
+      <if test="sellMoney != null">
         sell_money,
+      </if>
+      <if test="seller != null">
         seller,
+      </if>
+      <if test="rentStatus != null">
         rent_status,
+      </if>
+      <if test="createId != null">
         create_id,
+      </if>
+      <if test="isFlag != null">
         is_flag,
-        create_time
-    </sql>
-    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-        <!--@mbg.generated-->
-        select
-        <include refid="Base_Column_List"/>
-        from rent_sell
-        where id = #{id,jdbcType=VARCHAR}
-    </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-        <!--@mbg.generated-->
-        delete
-        from rent_sell
-        where id = #{id,jdbcType=VARCHAR}
-    </delete>
-    <insert id="insertSelective" parameterType="com.ruoyi.property.domain.RentSell">
-        <!--@mbg.generated-->
-        insert into rent_sell
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                id,
-            </if>
-            <if test="housesId != null">
-                houses_id,
-            </if>
-            <if test="sellId != null">
-                sell_id,
-            </if>
-            <if test="ownerId != null">
-                owner_id,
-            </if>
-            <if test="sellTime != null">
-                sell_time,
-            </if>
-            <if test="sellMoney != null">
-                sell_money,
-            </if>
-            <if test="seller != null">
-                seller,
-            </if>
-            <if test="rentStatus != null">
-                rent_status,
-            </if>
-            <if test="createId != null">
-                create_id,
-            </if>
-            <if test="isFlag != null">
-                is_flag,
-            </if>
-            <if test="createTime != null">
-                create_time,
-            </if>
-        </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                #{id,jdbcType=VARCHAR},
-            </if>
-            <if test="housesId != null">
-                #{housesId,jdbcType=VARCHAR},
-            </if>
-            <if test="sellId != null">
-                #{sellId,jdbcType=VARCHAR},
-            </if>
-            <if test="ownerId != null">
-                #{ownerId,jdbcType=VARCHAR},
-            </if>
-            <if test="sellTime != null">
-                #{sellTime,jdbcType=VARCHAR},
-            </if>
-            <if test="sellMoney != null">
-                #{sellMoney,jdbcType=VARCHAR},
-            </if>
-            <if test="seller != null">
-                #{seller,jdbcType=VARCHAR},
-            </if>
-            <if test="rentStatus != null">
-                #{rentStatus,jdbcType=INTEGER},
-            </if>
-            <if test="createId != null">
-                #{createId,jdbcType=VARCHAR},
-            </if>
-            <if test="isFlag != null">
-                #{isFlag,jdbcType=INTEGER},
-            </if>
-            <if test="createTime != null">
-                #{createTime,jdbcType=TIMESTAMP},
-            </if>
-        </trim>
-    </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.ruoyi.property.domain.RentSell">
-        <!--@mbg.generated-->
-        update rent_sell
-        <set>
-            <if test="housesId != null">
-                houses_id = #{housesId,jdbcType=VARCHAR},
-            </if>
-            <if test="sellId != null">
-                sell_id = #{sellId,jdbcType=VARCHAR},
-            </if>
-            <if test="ownerId != null">
-                owner_id = #{ownerId,jdbcType=VARCHAR},
-            </if>
-            <if test="sellTime != null">
-                sell_time = #{sellTime,jdbcType=VARCHAR},
-            </if>
-            <if test="sellMoney != null">
-                sell_money = #{sellMoney,jdbcType=VARCHAR},
-            </if>
-            <if test="seller != null">
-                seller = #{seller,jdbcType=VARCHAR},
-            </if>
-            <if test="rentStatus != null">
-                rent_status = #{rentStatus,jdbcType=INTEGER},
-            </if>
-            <if test="createId != null">
-                create_id = #{createId,jdbcType=VARCHAR},
-            </if>
-            <if test="isFlag != null">
-                is_flag = #{isFlag,jdbcType=INTEGER},
-            </if>
-            <if test="createTime != null">
-                create_time = #{createTime,jdbcType=TIMESTAMP},
-            </if>
-        </set>
-        where id = #{id,jdbcType=VARCHAR}
-    </update>
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="housesId != null">
+        #{housesId,jdbcType=VARCHAR},
+      </if>
+      <if test="sellId != null">
+        #{sellId,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerId != null">
+        #{ownerId,jdbcType=VARCHAR},
+      </if>
+      <if test="sellTime != null">
+        #{sellTime,jdbcType=VARCHAR},
+      </if>
+      <if test="sellMoney != null">
+        #{sellMoney,jdbcType=VARCHAR},
+      </if>
+      <if test="seller != null">
+        #{seller,jdbcType=VARCHAR},
+      </if>
+      <if test="rentStatus != null">
+        #{rentStatus,jdbcType=INTEGER},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="isFlag != null">
+        #{isFlag,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ruoyi.property.domain.RentSell">
+    <!--@mbg.generated-->
+    update rent_sell
+    <set>
+      <if test="housesId != null">
+        houses_id = #{housesId,jdbcType=VARCHAR},
+      </if>
+      <if test="sellId != null">
+        sell_id = #{sellId,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerId != null">
+        owner_id = #{ownerId,jdbcType=VARCHAR},
+      </if>
+      <if test="sellTime != null">
+        sell_time = #{sellTime,jdbcType=VARCHAR},
+      </if>
+      <if test="sellMoney != null">
+        sell_money = #{sellMoney,jdbcType=VARCHAR},
+      </if>
+      <if test="seller != null">
+        seller = #{seller,jdbcType=VARCHAR},
+      </if>
+      <if test="rentStatus != null">
+        rent_status = #{rentStatus,jdbcType=INTEGER},
+      </if>
+      <if test="createId != null">
+        create_id = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="isFlag != null">
+        is_flag = #{isFlag,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
 
     <select id="selectRentSellList">
         select
-        <include refid="Base_Column_List"/>
+        <include refid="Base_Column_List" />
         from rent_sell
         <where>
             is_flag = 0
@@ -214,7 +204,7 @@
 
     <select id="selectRentSellById" parameterType="String">
         select
-        <include refid="Base_Column_List"/>
+        <include refid="Base_Column_List" />
         from rent_sell
         where id =
               #{id}
@@ -350,7 +340,7 @@
     <update id="deleteRentSellByIds" parameterType="String">
         update rent_sell
         set is_flag = 1 where id in
-        <foreach item="id" collection="array" open="(" separator="," close=")">
+        <foreach close=")" collection="array" item="id" open="(" separator=",">
             #{id}
         </foreach>
     </update>
