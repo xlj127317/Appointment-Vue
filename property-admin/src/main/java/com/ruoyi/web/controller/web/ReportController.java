@@ -37,12 +37,12 @@ public class ReportController extends BaseController {
     @Autowired
     private IReportService reportService;
 
-/**
- * 表查询工单管理列
- */
-@ApiOperation("表查询工单管理列")
-@PreAuthorize("@ss.hasPermi('property:report:list')")
-@GetMapping("/list")
+    /**
+     * 表查询工单管理列
+     */
+    @ApiOperation("表查询工单管理列")
+    @PreAuthorize("@ss.hasPermi('property:report:list')")
+    @GetMapping("/list")
     public TableDataInfo list(Report report) {
         startPage();
         List<Report> list = reportService.selectReportList(report);
@@ -58,7 +58,7 @@ public class ReportController extends BaseController {
     @PostMapping("/export")
     public void export(HttpServletResponse response, Report report) {
         List<Report> list = reportService.selectReportList(report);
-        ExcelUtil<Report> util = new ExcelUtil<Report>(Report. class);
+        ExcelUtil<Report> util = new ExcelUtil<>(Report.class);
         util.exportExcel(response, list, "工单管理数据");
     }
 
