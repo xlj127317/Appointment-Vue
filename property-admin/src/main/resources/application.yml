@@ -78,8 +78,12 @@ spring:
     # 密码
     password: hcx_123456
     # 连接超时时间
-    timeout: 10s
+    timeout: 50000ms
     lettuce:
+      cluster:
+        refresh:
+          adaptive: true
+          period: 600000
       pool:
         # 连接池中的最小空闲连接
         min-idle: 0
