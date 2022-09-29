@@ -82,7 +82,7 @@ public class ReceivableController extends BaseController {
      * 新增应收管理
      */
     @ApiOperation("新增应收管理")
-    // @PreAuthorize("@ss.hasPermi('property:receivable:add')")
+    @PreAuthorize("@ss.hasPermi('property:receivable:add')")
     @Log(title = "应收管理", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody ReceivableCreateInput input) {
