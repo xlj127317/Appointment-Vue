@@ -3,6 +3,9 @@ package com.ruoyi.web.controller.web;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
+import com.ruoyi.property.domain.Contract;
+import com.ruoyi.property.service.IContractService;
+import com.ruoyi.web.dto.ReceivableCreateInput;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -36,6 +39,9 @@ import com.ruoyi.common.core.page.TableDataInfo;
 public class ReceivableController extends BaseController {
     @Autowired
     private IReceivableService receivableService;
+
+    @Autowired
+    private IContractService contractService;
 
 /**
  * 表查询应收管理列
@@ -76,10 +82,26 @@ public class ReceivableController extends BaseController {
      * 新增应收管理
      */
     @ApiOperation("新增应收管理")
-    @PreAuthorize("@ss.hasPermi('property:receivable:add')")
+    // @PreAuthorize("@ss.hasPermi('property:receivable:add')")
     @Log(title = "应收管理", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody Receivable receivable) {
+    public AjaxResult add(@RequestBody ReceivableCreateInput input) {
+        Contract contract = contractService.selectContractById(input.getContractId());
+        if (contract == null) {
+            return error("合同不存在");
+        }
+
+        Receivable receivable = new Receivable();
+        receivable.setContractId(contract.getId());
+        receivable.setOwnerId(contract.getOwnerId());
+        receivable.setPaymentId(input.getPaymentTypeId());
+        receivable.setPaymentDate(input.getPaymentDate());
+        receivable.setPaymentName(input.getPaymentName());
+        receivable.setReceivableMoney(input.getReceivableMoney().toString());
+        receivable.setPaymentContent(input.getPaymentContent());
+        receivable.setStopTime(input.getExpiresDate());
+        receivable.setPaymentType(0);
+        receivable.setCreateId(getUserId());
         return toAjax(receivableService.insertReceivable(receivable));
     }
 
