@@ -37,12 +37,12 @@ public class PaymentTypeController extends BaseController {
     @Autowired
     private IPaymentTypeService paymentTypeService;
 
-/**
- * 表查询租售类型列
- */
-@ApiOperation("查询款项类型列表")
-@PreAuthorize("@ss.hasPermi('property:type:list')")
-@GetMapping("/list")
+    /**
+     * 表查询租售类型列
+     */
+    @ApiOperation("查询款项类型列表")
+    @PreAuthorize("@ss.hasPermi('property:type:list')")
+    @GetMapping("/list")
     public TableDataInfo list(PaymentType paymentType) {
         startPage();
         List<PaymentType> list = paymentTypeService.selectPaymentTypeList(paymentType);
@@ -58,7 +58,7 @@ public class PaymentTypeController extends BaseController {
     @PostMapping("/export")
     public void export(HttpServletResponse response, PaymentType paymentType) {
         List<PaymentType> list = paymentTypeService.selectPaymentTypeList(paymentType);
-        ExcelUtil<PaymentType> util = new ExcelUtil<PaymentType>(PaymentType. class);
+        ExcelUtil<PaymentType> util = new ExcelUtil<PaymentType>(PaymentType.class);
         util.exportExcel(response, list, "款项类型数据");
     }
 

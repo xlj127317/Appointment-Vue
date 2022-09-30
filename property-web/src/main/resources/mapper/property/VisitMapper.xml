@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.property.mapper.VisitMapper">
+    <resultMap id="BaseResultMap" type="com.ruoyi.property.domain.Visit">
+        <!--@mbg.generated-->
+        <!--@Table visit-->
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="visit_name" jdbcType="VARCHAR" property="visitName"/>
+        <result column="visit_phone" jdbcType="VARCHAR" property="visitPhone"/>
+        <result column="visit_date" jdbcType="TIMESTAMP" property="visitDate"/>
+        <result column="reason" jdbcType="LONGVARCHAR" property="reason"/>
+        <result column="img_src" jdbcType="VARCHAR" property="imgSrc"/>
+        <result column="applicant_time" jdbcType="TIMESTAMP" property="applicantTime"/>
+        <result column="audit_status" jdbcType="INTEGER" property="auditStatus"/>
+        <result column="audit_id" jdbcType="VARCHAR" property="auditId"/>
+        <result column="create_id" jdbcType="VARCHAR" property="createId"/>
+        <result column="is_flag" jdbcType="INTEGER" property="isFlag"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        id,
+        visit_name,
+        visit_phone,
+        visit_date,
+        reason,
+        img_src,
+        applicant_time,
+        audit_status,
+        audit_id,
+        create_id,
+        is_flag,
+        create_time
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        <!--@mbg.generated-->
+        select
+        <include refid="Base_Column_List"/>
+        from visit
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        <!--@mbg.generated-->
+        delete
+        from visit
+        where id = #{id,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insertSelective" parameterType="com.ruoyi.property.domain.Visit">
+        <!--@mbg.generated-->
+        insert into visit
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="visitName != null">
+                visit_name,
+            </if>
+            <if test="visitPhone != null">
+                visit_phone,
+            </if>
+            <if test="visitDate != null">
+                visit_date,
+            </if>
+            <if test="reason != null">
+                reason,
+            </if>
+            <if test="imgSrc != null">
+                img_src,
+            </if>
+            <if test="applicantTime != null">
+                applicant_time,
+            </if>
+            <if test="auditStatus != null">
+                audit_status,
+            </if>
+            <if test="auditId != null">
+                audit_id,
+            </if>
+            <if test="createId != null">
+                create_id,
+            </if>
+            <if test="isFlag != null">
+                is_flag,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="visitName != null">
+                #{visitName,jdbcType=VARCHAR},
+            </if>
+            <if test="visitPhone != null">
+                #{visitPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="visitDate != null">
+                #{visitDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="reason != null">
+                #{reason,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="imgSrc != null">
+                #{imgSrc,jdbcType=VARCHAR},
+            </if>
+            <if test="applicantTime != null">
+                #{applicantTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="auditStatus != null">
+                #{auditStatus,jdbcType=INTEGER},
+            </if>
+            <if test="auditId != null">
+                #{auditId,jdbcType=VARCHAR},
+            </if>
+            <if test="createId != null">
+                #{createId,jdbcType=VARCHAR},
+            </if>
+            <if test="isFlag != null">
+                #{isFlag,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ruoyi.property.domain.Visit">
+        <!--@mbg.generated-->
+        update visit
+        <set>
+            <if test="visitName != null">
+                visit_name = #{visitName,jdbcType=VARCHAR},
+            </if>
+            <if test="visitPhone != null">
+                visit_phone = #{visitPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="visitDate != null">
+                visit_date = #{visitDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="reason != null">
+                reason = #{reason,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="imgSrc != null">
+                img_src = #{imgSrc,jdbcType=VARCHAR},
+            </if>
+            <if test="applicantTime != null">
+                applicant_time = #{applicantTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="auditStatus != null">
+                audit_status = #{auditStatus,jdbcType=INTEGER},
+            </if>
+            <if test="auditId != null">
+                audit_id = #{auditId,jdbcType=VARCHAR},
+            </if>
+            <if test="createId != null">
+                create_id = #{createId,jdbcType=VARCHAR},
+            </if>
+            <if test="isFlag != null">
+                is_flag = #{isFlag,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <select id="selectVisitList" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from visit
+        <where>
+            is_flag = 0
+            <if test="visitName != null  and visitName != ''">
+                and visit_name like concat('%',
+                                           #{visitName},
+                                           '%'
+                    )
+            </if>
+            <if test="visitPhone != null  and visitPhone != ''">
+                and visit_phone
+                    =
+                    #{visitPhone}
+            </if>
+            <if test="visitDate != null">
+                and visit_date
+                    =
+                    #{visitDate}
+            </if>
+            <if test="reason != null  and reason != ''">
+                and reason
+                    =
+                    #{reason}
+            </if>
+            <if test="imgSrc != null  and imgSrc != ''">
+                and img_src
+                    =
+                    #{imgSrc}
+            </if>
+            <if test="applicantTime != null">
+                and applicant_time
+                    =
+                    #{applicantTime}
+            </if>
+            <if test="auditStatus != null">
+                and audit_status
+                    =
+                    #{auditStatus}
+            </if>
+            <if test="auditId != null  and auditId != ''">
+                and audit_id
+                    =
+                    #{auditId}
+            </if>
+            <if test="createId != null  and createId != ''">
+                and create_id
+                    =
+                    #{createId}
+            </if>
+        </where>
+        order by create_time desc
+    </select>
+
+    <select id="selectVisitById" parameterType="String"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from visit
+        where id = #{id}
+          and is_flag = 0
+    </select>
+
+    <insert id="insertVisit">
+        insert into visit
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="visitName != null and visitName != ''">
+                visit_name,
+            </if>
+            <if test="visitPhone != null and visitPhone != ''">
+                visit_phone,
+            </if>
+            <if test="visitDate != null">
+                visit_date,
+            </if>
+            <if test="reason != null and reason != ''">
+                reason,
+            </if>
+            <if test="imgSrc != null and imgSrc != ''">
+                img_src,
+            </if>
+            <if test="applicantTime != null">
+                applicant_time,
+            </if>
+            <if test="auditStatus != null">
+                audit_status,
+            </if>
+            <if test="auditId != null">
+                audit_id,
+            </if>
+            <if test="createId != null and createId != ''">
+                create_id,
+            </if>
+            <if test="isFlag != null">
+                is_flag,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="visitName != null and visitName != ''">
+                #{visitName},
+            </if>
+            <if test="visitPhone != null and visitPhone != ''">
+                #{visitPhone},
+            </if>
+            <if test="visitDate != null">
+                #{visitDate},
+            </if>
+            <if test="reason != null and reason != ''">
+                #{reason},
+            </if>
+            <if test="imgSrc != null and imgSrc != ''">
+                #{imgSrc},
+            </if>
+            <if test="applicantTime != null">
+                #{applicantTime},
+            </if>
+            <if test="auditStatus != null">
+                #{auditStatus},
+            </if>
+            <if test="auditId != null">
+                #{auditId},
+            </if>
+            <if test="createId != null and createId != ''">
+                #{createId},
+            </if>
+            <if test="isFlag != null">
+                #{isFlag},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateVisit">
+        update visit
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="visitName != null and visitName != ''">
+                visit_name =
+                    #{visitName},
+            </if>
+            <if test="visitPhone != null and visitPhone != ''">
+                visit_phone =
+                    #{visitPhone},
+            </if>
+            <if test="visitDate != null">
+                visit_date =
+                    #{visitDate},
+            </if>
+            <if test="reason != null and reason != ''">
+                reason =
+                    #{reason},
+            </if>
+            <if test="imgSrc != null and imgSrc != ''">
+                img_src =
+                    #{imgSrc},
+            </if>
+            <if test="applicantTime != null">
+                applicant_time =
+                    #{applicantTime},
+            </if>
+            <if test="auditStatus != null">
+                audit_status =
+                    #{auditStatus},
+            </if>
+            <if test="auditId != null">
+                audit_id =
+                    #{auditId},
+            </if>
+            <if test="createId != null and createId != ''">
+                create_id =
+                    #{createId},
+            </if>
+            <if test="isFlag != null">
+                is_flag =
+                    #{isFlag},
+            </if>
+            <if test="createTime != null">
+                create_time =
+                    #{createTime},
+            </if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteVisitById" parameterType="String">
+        delete
+        from visit
+        where id = #{id}
+    </delete>
+
+    <update id="deleteVisitByIds" parameterType="String">
+        update visit
+        set is_flag = 1 where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            id = #{id}
+        </foreach>
+    </update>
+</mapper>
