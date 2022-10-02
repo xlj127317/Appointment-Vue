@@ -170,7 +170,7 @@ public class Receivable extends BaseEntity {
      */
     @ApiModelProperty(value = "创建人id")
     @Schema(description = "创建人id")
-    private Long createId;
+    private String createId;
 
     /**
      * 状态,0 未删除 1已删除

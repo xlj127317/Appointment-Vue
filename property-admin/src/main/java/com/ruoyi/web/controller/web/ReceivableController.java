@@ -101,7 +101,7 @@ public class ReceivableController extends BaseController {
         receivable.setPaymentContent(input.getPaymentContent());
         receivable.setStopTime(input.getExpiresDate());
         receivable.setPaymentType(0);
-        receivable.setCreateId(getUserId());
+        receivable.setCreateId(getUserId().toString());
         return toAjax(receivableService.insertReceivable(receivable));
     }
 
