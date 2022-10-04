@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.uuid.PkeyGenerator;
+import com.ruoyi.property.dto.ReceivableListInput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.property.mapper.ReceivableMapper;
@@ -35,12 +36,12 @@ public class ReceivableServiceImpl implements IReceivableService {
     /**
      * 查询应收管理列表
      *
-     * @param receivable 应收管理
+     * @param input 应收管理
      * @return 应收管理
      */
     @Override
-    public List<Receivable> selectReceivableList(Receivable receivable) {
-        return receivableMapper.selectReceivableList(receivable);
+    public List<Receivable> selectReceivableList(ReceivableListInput input) {
+        return receivableMapper.selectReceivableList(input);
     }
 
     /**

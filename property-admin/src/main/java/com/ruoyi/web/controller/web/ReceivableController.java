@@ -1,13 +1,18 @@
 package com.ruoyi.web.controller.web;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletResponse;
 
 import com.ruoyi.property.domain.Contract;
+import com.ruoyi.property.dto.ReceivableListInput;
+import com.ruoyi.property.dto.ReceivableOutput;
 import com.ruoyi.property.service.IContractService;
 import com.ruoyi.web.dto.ReceivableCreateInput;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.modelmapper.ModelMapper;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,16 +48,21 @@ public class ReceivableController extends BaseController {
     @Autowired
     private IContractService contractService;
 
-/**
- * 表查询应收管理列
- */
-@ApiOperation("表查询应收管理列")
-@PreAuthorize("@ss.hasPermi('property:receivable:list')")
-@GetMapping("/list")
-    public TableDataInfo list(Receivable receivable) {
+    /**
+     * 表查询应收管理列
+     */
+    @ApiOperation("表查询应收管理列")
+    @PreAuthorize("@ss.hasPermi('property:receivable:list')")
+    @PostMapping("/list")
+    public TableDataInfo list(@RequestBody ReceivableListInput input) {
         startPage();
-        List<Receivable> list = receivableService.selectReceivableList(receivable);
-        return getDataTable(list);
+        ModelMapper modelMapper = new ModelMapper();
+        List<Receivable> list = receivableService.selectReceivableList(input);
+        List<ReceivableOutput> output = list.stream()
+                .map(r -> modelMapper.map(r, ReceivableOutput.class))
+                .collect(Collectors.toList());
+        modelMapper.map(list, output);
+        return getDataTable(output);
     }
 
     /**
@@ -62,8 +72,8 @@ public class ReceivableController extends BaseController {
     @PreAuthorize("@ss.hasPermi('property:receivable:export')")
     @Log(title = "应收管理", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
-    public void export(HttpServletResponse response, Receivable receivable) {
-        List<Receivable> list = receivableService.selectReceivableList(receivable);
+    public void export(HttpServletResponse response, ReceivableListInput input) {
+        List<Receivable> list = receivableService.selectReceivableList(input);
         ExcelUtil<Receivable> util = new ExcelUtil<Receivable>(Receivable. class);
         util.exportExcel(response, list, "应收管理数据");
     }

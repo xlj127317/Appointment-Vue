@@ -286,20 +286,11 @@
             <if test="contractId != null  and contractId != ''">
                 and contract_id = #{contractId}
             </if>
-            <if test="ownerId != null  and ownerId != ''">
-                and owner_id = #{ownerId}
-            </if>
             <if test="paymentId != null  and paymentId != ''">
                 and payment_id = #{paymentId}
             </if>
             <if test="paymentName != null  and paymentName != ''">
                 and payment_name like concat('%', #{paymentName}, '%')
-            </if>
-            <if test="paymentContent != null  and paymentContent != ''">
-                and payment_content = #{paymentContent}
-            </if>
-            <if test="receivableMoney != null  and receivableMoney != ''">
-                and receivable_money = #{receivableMoney}
             </if>
             <if test="paymentDate != null">
                 and payment_date = #{paymentDate}
@@ -307,52 +298,26 @@
             <if test="advanceStatus != null">
                 and advance_status = #{advanceStatus}
             </if>
-            <if test="deductMoney != null  and deductMoney != ''">
-                and deduct_money = #{deductMoney}
-            </if>
-            <if test="deductAfterMoney != null  and deductAfterMoney != ''">
-                and deduct_after_money = #{deductAfterMoney}
-            </if>
-            <if test="deductDate != null">
-                and deduct_date = #{deductDate}
-            </if>
             <if test="actuallyStatus != null">
                 and actually_status = #{actuallyStatus}
             </if>
-            <if test="actuallyMoney != null  and actuallyMoney != ''">
-                and actually_money = #{actuallyMoney}
+            <if test="actuallyDateBegin != null">
+                and actually_date >= #{actuallyDateBegin}
             </if>
-            <if test="actuallyDate != null">
-                and actually_date = #{actuallyDate}
-            </if>
-            <if test="stopTime != null">
-                and stop_time = #{stopTime}
+            <if test="actuallyDateEnd != null">
+                <![CDATA[and actually_date <= #{actuallyDateEnd}]]>
             </if>
             <if test="arrearsStatus != null">
                 and arrears_status = #{arrearsStatus}
             </if>
-            <if test="arrearsMoney != null  and arrearsMoney != ''">
-                and arrears_money = #{arrearsMoney}
-            </if>
-            <if test="repairDate != null">
-                and repair_date = #{repairDate}
-            </if>
             <if test="paymentType != null">
                 and payment_type = #{paymentType}
             </if>
-            <if test="refundStatus != null">
-                and refund_status = #{refundStatus}
+            <if test="createTimeBegin != null">
+                AND create_time >= #{createTimeBegin}
             </if>
-            <if test="createId != null  and createId != ''">
-                and create_id = #{createId}
-            </if>
-            <if test="params.beginTime != null and params.beginTime != ''">
-                <!-- 开始时间检索 -->
-                AND date_format(create_time, '%y%m%d') &gt;= date_format(#{params.beginTime}, '%y%m%d')
-            </if>
-            <if test="params.endTime != null and params.endTime != ''">
-                <!-- 结束时间检索 -->
-                AND date_format(create_time, '%y%m%d') &lt;= date_format(#{params.endTime}, '%y%m%d')
+            <if test="createTimeEnd != null">
+                <![CDATA[AND create_time <= #{createTimeEnd}]]>
             </if>
         </where>
         order by create_time desc

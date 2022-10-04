@@ -1,6 +1,7 @@
 package com.ruoyi.property.mapper;
 
 import com.ruoyi.property.domain.Receivable;
+import com.ruoyi.property.dto.ReceivableListInput;
 import org.apache.ibatis.annotations.Mapper;import java.util.List;
 
 @Mapper
@@ -48,10 +49,10 @@ public interface ReceivableMapper {
     /**
      * 查询应收管理列表
      *
-     * @param receivable 应收管理
+     * @param input 应收管理
      * @return 应收管理集合
      */
-    List<Receivable> selectReceivableList(Receivable receivable);
+    List<Receivable> selectReceivableList(ReceivableListInput input);
 
     /**
      * 新增应收管理
