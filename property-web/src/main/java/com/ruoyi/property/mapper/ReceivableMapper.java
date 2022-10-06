@@ -2,7 +2,11 @@ package com.ruoyi.property.mapper;
 
 import com.ruoyi.property.domain.Receivable;
 import com.ruoyi.property.dto.ReceivableListInput;
-import org.apache.ibatis.annotations.Mapper;import java.util.List;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.Date;
+import java.util.List;
 
 @Mapper
 public interface ReceivableMapper {
@@ -85,4 +89,9 @@ public interface ReceivableMapper {
      * @return 结果
      */
     int deleteReceivableByIds(String[] ids);
+
+    boolean exists(
+            @Param("contractId") String contractId,
+            @Param("paymentTypeId") String paymentTypeId,
+            @Param("date") Date date);
 }

@@ -1,8 +1,11 @@
 package com.ruoyi.property.mapper;
 
 import com.ruoyi.property.domain.Advance;
+import com.ruoyi.property.dto.AdvanceListInput;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
+import java.util.Date;
 import java.util.List;
 
 @Mapper
@@ -50,10 +53,10 @@ public interface AdvanceMapper {
     /**
      * 查询预收管理列表
      *
-     * @param advance 预收管理
+     * @param input 预收管理
      * @return 预收管理集合
      */
-    List<Advance> selectAdvanceList(Advance advance);
+    List<Advance> selectAdvanceList(AdvanceListInput input);
 
     /**
      * 新增预收管理
@@ -87,4 +90,8 @@ public interface AdvanceMapper {
      */
     int deleteAdvanceByIds(String[] ids);
 
+    boolean checkExists(
+            @Param("contractId") String contractId,
+            @Param("paymentTypeId") String paymentTypeId,
+            @Param("date") Date date);
 }

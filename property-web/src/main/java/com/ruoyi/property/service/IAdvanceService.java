@@ -1,8 +1,10 @@
 package com.ruoyi.property.service;
 
+import java.util.Date;
 import java.util.List;
 
 import com.ruoyi.property.domain.Advance;
+import com.ruoyi.property.dto.AdvanceListInput;
 
 /**
  * 预收管理Service接口
@@ -22,10 +24,10 @@ public interface IAdvanceService {
     /**
      * 查询预收管理列表
      *
-     * @param advance 预收管理
+     * @param input 预收管理
      * @return 预收管理集合
      */
-    public List<Advance> selectAdvanceList(Advance advance);
+    public List<Advance> selectAdvanceList(AdvanceListInput input);
 
     /**
      * 新增预收管理
@@ -58,4 +60,6 @@ public interface IAdvanceService {
      * @return 结果
      */
     public int deleteAdvanceById(String id);
+
+    boolean exists(String contractId, String paymentTypeId, Date date);
 }

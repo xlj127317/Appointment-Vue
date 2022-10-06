@@ -198,11 +198,6 @@
                 and contract_id =
                     #{contractId}
             </if>
-            <if test="ownerId != null  and ownerId != ''">
-                and owner_id
-                    =
-                    #{ownerId}
-            </if>
             <if test="paymentType != null  and paymentType != ''">
                 and payment_type
                     =
@@ -218,21 +213,6 @@
                             '%'
                         )
             </if>
-            <if test="paymentContent != null  and paymentContent != ''">
-                and payment_content
-                    =
-                    #{paymentContent}
-            </if>
-            <if test="advanceMoney != null  and advanceMoney != ''">
-                and advance_money
-                    =
-                    #{advanceMoney}
-            </if>
-            <if test="payType != null  and payType != ''">
-                and pay_type
-                    =
-                    #{payType}
-            </if>
             <if test="advanceDate != null">
                 and advance_date
                     =
@@ -243,23 +223,13 @@
                     =
                     #{deductStatus}
             </if>
-            <if test="deductTime != null">
-                and deduct_time
-                    =
-                    #{deductTime}
-            </if>
-            <if test="createId != null  and createId != ''">
-                and create_id
-                    =
-                    #{createId}
-            </if>
-            <if test="params.beginTime != null and params.beginTime != ''">
+            <if test="createTimeBegin != null">
                 <!-- 开始时间检索 -->
-                AND date_format(create_time, '%y%m%d') &gt;= date_format(#{params.beginTime}, '%y%m%d')
+                AND create_time &gt;= #{createTimeBegin}
             </if>
-            <if test="params.endTime != null and params.endTime != ''">
+            <if test="createTimeEnd != null">
                 <!-- 结束时间检索 -->
-                AND date_format(create_time, '%y%m%d') &lt;= date_format(#{params.endTime}, '%y%m%d')
+                AND create_time &lt;= #{createTimeEnd}
             </if>
         </where>
         order by create_time desc
@@ -436,4 +406,16 @@
             #{id}
         </foreach>
     </update>
+
+    <select id="checkExists" resultType="boolean">
+        <bind name="beginOfMonth" value="@cn.hutool.core.date.DateUtil@beginOfMonth(date)"/>
+        <bind name="endOfMonth" value="@cn.hutool.core.date.DateUtil@endOfMonth(date)"/>
+        SELECT EXISTS (
+            SELECT 1 FROM advance
+                WHERE contract_id = #{contractId}
+                AND payment_type = #{paymentTypeId}
+                AND advance_date BETWEEN #{beginOfMonth} AND #{endOfMonth}
+            LIMIT 1
+        );
+    </select>
 </mapper>

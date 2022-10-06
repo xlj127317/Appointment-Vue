@@ -1,5 +1,6 @@
 package com.ruoyi.property.service;
 
+import java.util.Date;
 import java.util.List;
 
 import com.ruoyi.property.domain.Receivable;
@@ -59,4 +60,6 @@ public interface IReceivableService {
      * @return 结果
      */
     public int deleteReceivableById(String id);
+
+    boolean exists(String contractId, String paymentTypeId, Date date);
 }

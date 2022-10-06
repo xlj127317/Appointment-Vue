@@ -1,5 +1,6 @@
 package com.ruoyi.property.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import com.ruoyi.common.utils.DateUtils;
@@ -88,5 +89,10 @@ public class ReceivableServiceImpl implements IReceivableService {
     @Override
     public int deleteReceivableById(String id) {
         return receivableMapper.deleteReceivableById(id);
+    }
+
+    public boolean exists(String contractId, String paymentTypeId, Date date)
+    {
+        return receivableMapper.exists(contractId, paymentTypeId, date);
     }
 }

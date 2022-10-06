@@ -1,9 +1,11 @@
 package com.ruoyi.property.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.uuid.PkeyGenerator;
+import com.ruoyi.property.dto.AdvanceListInput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.property.mapper.AdvanceMapper;
@@ -35,12 +37,12 @@ public class AdvanceServiceImpl implements IAdvanceService {
     /**
      * 查询预收管理列表
      *
-     * @param advance 预收管理
+     * @param input 预收管理
      * @return 预收管理
      */
     @Override
-    public List<Advance> selectAdvanceList(Advance advance) {
-        return advanceMapper.selectAdvanceList(advance);
+    public List<Advance> selectAdvanceList(AdvanceListInput input) {
+        return advanceMapper.selectAdvanceList(input);
     }
 
     /**
@@ -87,5 +89,10 @@ public class AdvanceServiceImpl implements IAdvanceService {
     @Override
     public int deleteAdvanceById(String id) {
         return advanceMapper.deleteAdvanceById(id);
+    }
+
+    @Override
+    public boolean exists(String contractId, String paymentTypeId, Date date) {
+        return advanceMapper.checkExists(contractId, paymentTypeId, date);
     }
 }

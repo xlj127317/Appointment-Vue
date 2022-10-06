@@ -594,4 +594,16 @@
             #{id}
         </foreach>
     </update>
+
+    <select id="exists" resultType="boolean">
+        <bind name="beginOfMonth" value="@cn.hutool.core.date.DateUtil@beginOfMonth(date)"/>
+        <bind name="endOfMonth" value="@cn.hutool.core.date.DateUtil@endOfMonth(date)"/>
+        SELECT EXISTS (
+            SELECT 1 FROM receivable
+                WHERE contract_id = #{contractId}
+                AND payment_id = #{paymentTypeId}
+                AND payment_date BETWEEN #{beginOfMonth} AND #{endOfMonth}
+            LIMIT 1
+        );
+    </select>
 </mapper>

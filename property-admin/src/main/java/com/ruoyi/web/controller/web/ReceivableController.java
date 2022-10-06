@@ -1,36 +1,30 @@
 package com.ruoyi.web.controller.web;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-import javax.servlet.http.HttpServletResponse;
-
+import com.ruoyi.common.annotation.Log;
+import com.ruoyi.common.core.controller.BaseController;
+import com.ruoyi.common.core.domain.AjaxResult;
+import com.ruoyi.common.core.page.TableDataInfo;
+import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.property.domain.Contract;
+import com.ruoyi.property.domain.PaymentType;
+import com.ruoyi.property.domain.Receivable;
 import com.ruoyi.property.dto.ReceivableListInput;
 import com.ruoyi.property.dto.ReceivableOutput;
 import com.ruoyi.property.service.IContractService;
+import com.ruoyi.property.service.IPaymentTypeService;
+import com.ruoyi.property.service.IReceivableService;
 import com.ruoyi.web.dto.ReceivableCreateInput;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.modelmapper.ModelMapper;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import com.ruoyi.common.annotation.Log;
-import com.ruoyi.common.core.controller.BaseController;
-import com.ruoyi.common.core.domain.AjaxResult;
-import com.ruoyi.common.enums.BusinessType;
-import com.ruoyi.property.domain.Receivable;
-import com.ruoyi.property.service.IReceivableService;
-import com.ruoyi.common.utils.poi.ExcelUtil;
-import com.ruoyi.common.core.page.TableDataInfo;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 应收管理Controller
@@ -48,6 +42,9 @@ public class ReceivableController extends BaseController {
     @Autowired
     private IContractService contractService;
 
+    @Autowired
+    private IPaymentTypeService paymentTypeService;
+
     /**
      * 表查询应收管理列
      */
@@ -61,7 +58,6 @@ public class ReceivableController extends BaseController {
         List<ReceivableOutput> output = list.stream()
                 .map(r -> modelMapper.map(r, ReceivableOutput.class))
                 .collect(Collectors.toList());
-        modelMapper.map(list, output);
         return getDataTable(output);
     }
 
@@ -99,6 +95,11 @@ public class ReceivableController extends BaseController {
         Contract contract = contractService.selectContractById(input.getContractId());
         if (contract == null) {
             return error("合同不存在");
+        }
+
+        PaymentType paymentType = paymentTypeService.selectPaymentTypeById(input.getPaymentTypeId());
+        if (paymentType == null) {
+            return error("款项类别不存在");
         }
 
         Receivable receivable = new Receivable();
