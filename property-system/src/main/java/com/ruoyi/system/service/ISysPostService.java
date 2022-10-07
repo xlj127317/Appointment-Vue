@@ -39,7 +39,7 @@ public interface ISysPostService {
      * @param userId 用户ID
      * @return 选中岗位ID列表
      */
-    public List<Long> selectPostListByUserId(Long userId);
+    public List<String> selectPostListByUserId(String userId);
 
     /**
      * 校验岗位名称

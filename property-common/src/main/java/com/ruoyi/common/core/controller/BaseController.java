@@ -147,7 +147,7 @@ public class BaseController {
     /**
      * 获取登录用户id
      */
-    public Long getUserId() {
+    public String getUserId() {
         return getLoginUser().getUserId();
     }
 

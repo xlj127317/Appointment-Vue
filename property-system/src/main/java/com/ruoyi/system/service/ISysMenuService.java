@@ -19,7 +19,7 @@ public interface ISysMenuService {
      * @param userId 用户ID
      * @return 菜单列表
      */
-    public List<SysMenu> selectMenuList(Long userId);
+    public List<SysMenu> selectMenuList(String userId);
 
     /**
      * 根据用户查询系统菜单列表
@@ -28,7 +28,7 @@ public interface ISysMenuService {
      * @param userId 用户ID
      * @return 菜单列表
      */
-    public List<SysMenu> selectMenuList(SysMenu menu, Long userId);
+    public List<SysMenu> selectMenuList(SysMenu menu, String userId);
 
     /**
      * 根据用户ID查询权限
@@ -36,7 +36,7 @@ public interface ISysMenuService {
      * @param userId 用户ID
      * @return 权限列表
      */
-    public Set<String> selectMenuPermsByUserId(Long userId);
+    public Set<String> selectMenuPermsByUserId(String userId);
 
     /**
      * 根据角色ID查询权限
@@ -52,7 +52,7 @@ public interface ISysMenuService {
      * @param userId 用户ID
      * @return 菜单列表
      */
-    public List<SysMenu> selectMenuTreeByUserId(Long userId);
+    public List<SysMenu> selectMenuTreeByUserId(String userId);
 
     /**
      * 根据角色ID查询菜单树信息

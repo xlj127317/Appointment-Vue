@@ -64,7 +64,7 @@ public class SysPostServiceImpl implements ISysPostService {
      * @return 选中岗位ID列表
      */
     @Override
-    public List<Long> selectPostListByUserId(Long userId) {
+    public List<String> selectPostListByUserId(String userId) {
         return postMapper.selectPostListByUserId(userId);
     }
 

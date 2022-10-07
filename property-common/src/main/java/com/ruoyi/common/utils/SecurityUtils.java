@@ -1,5 +1,7 @@
 package com.ruoyi.common.utils;
 
+import cn.hutool.core.util.StrUtil;
+import com.sun.org.apache.regexp.internal.RE;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,7 +18,7 @@ public class SecurityUtils {
     /**
      * 用户ID
      **/
-    public static Long getUserId() {
+    public static String getUserId() {
         try {
             return getLoginUser().getUserId();
         } catch (Exception e) {
@@ -93,7 +95,10 @@ public class SecurityUtils {
      * @param userId 用户ID
      * @return 结果
      */
-    public static boolean isAdmin(Long userId) {
-        return userId != null && 1L == userId;
+    public static boolean isAdmin(String userId) {
+        if (StrUtil.isNotEmpty(userId) && StrUtil.equals("1",userId)) {
+            return true;
+        }
+        return false;
     }
 }

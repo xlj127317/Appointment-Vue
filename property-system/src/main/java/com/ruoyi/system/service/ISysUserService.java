@@ -2,6 +2,7 @@ package com.ruoyi.system.service;
 
 import java.util.List;
 
+import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.domain.entity.SysUser;
 
 /**
@@ -48,7 +49,7 @@ public interface ISysUserService {
      * @param userId 用户ID
      * @return 用户对象信息
      */
-    public SysUser selectUserById(Long userId);
+    public SysUser selectUserById(String userId);
 
     /**
      * 根据用户ID查询用户所属角色组
@@ -102,7 +103,7 @@ public interface ISysUserService {
      *
      * @param userId 用户id
      */
-    public void checkUserDataScope(Long userId);
+    public void checkUserDataScope(String userId);
 
     /**
      * 新增用户信息
@@ -134,7 +135,7 @@ public interface ISysUserService {
      * @param userId  用户ID
      * @param roleIds 角色组
      */
-    public void insertUserAuth(Long userId, Long[] roleIds);
+    public void insertUserAuth(String userId, Long[] roleIds);
 
     /**
      * 修改用户状态
@@ -184,7 +185,7 @@ public interface ISysUserService {
      * @param userId 用户ID
      * @return 结果
      */
-    public int deleteUserById(Long userId);
+    public int deleteUserById(String userId);
 
     /**
      * 批量删除用户信息
@@ -192,7 +193,7 @@ public interface ISysUserService {
      * @param userIds 需要删除的用户ID
      * @return 结果
      */
-    public int deleteUserByIds(Long[] userIds);
+    public int deleteUserByIds(String[] userIds);
 
     /**
      * 导入用户数据

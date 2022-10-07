@@ -25,7 +25,7 @@ public class SysUser extends BaseEntity {
      * 用户ID
      */
     @Excel(name = "用户序号", cellType = ColumnType.NUMERIC, prompt = "用户编号")
-    private Long userId;
+    private String userId;
 
     /**
      * 部门ID
@@ -129,15 +129,15 @@ public class SysUser extends BaseEntity {
 
     }
 
-    public SysUser(Long userId) {
+    public SysUser(String userId) {
         this.userId = userId;
     }
 
-    public Long getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
@@ -145,8 +145,8 @@ public class SysUser extends BaseEntity {
         return isAdmin(this.userId);
     }
 
-    public static boolean isAdmin(Long userId) {
-        return userId != null && 1L == userId;
+    public static boolean isAdmin(String userId) {
+        return userId != null;
     }
 
     public Long getDeptId() {

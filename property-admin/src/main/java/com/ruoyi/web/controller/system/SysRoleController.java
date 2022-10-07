@@ -211,7 +211,7 @@ public class SysRoleController extends BaseController {
     @PreAuthorize("@ss.hasPermi('system:role:edit')")
     @Log(title = "角色管理", businessType = BusinessType.GRANT)
     @PutMapping("/authUser/cancelAll")
-    public AjaxResult cancelAuthUserAll(Long roleId, Long[] userIds) {
+    public AjaxResult cancelAuthUserAll(Long roleId, String[] userIds) {
         return toAjax(roleService.deleteAuthUsers(roleId, userIds));
     }
 
@@ -221,7 +221,7 @@ public class SysRoleController extends BaseController {
     @PreAuthorize("@ss.hasPermi('system:role:edit')")
     @Log(title = "角色管理", businessType = BusinessType.GRANT)
     @PutMapping("/authUser/selectAll")
-    public AjaxResult selectAuthUserAll(Long roleId, Long[] userIds) {
+    public AjaxResult selectAuthUserAll(Long roleId, String[] userIds) {
         roleService.checkRoleDataScope(roleId);
         return toAjax(roleService.insertAuthUsers(roleId, userIds));
     }

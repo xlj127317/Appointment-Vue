@@ -24,7 +24,7 @@ public interface SysRoleMapper {
      * @param userId 用户ID
      * @return 角色列表
      */
-    public List<SysRole> selectRolePermissionByUserId(Long userId);
+    public List<SysRole> selectRolePermissionByUserId(String userId);
 
     /**
      * 查询所有角色
@@ -39,7 +39,7 @@ public interface SysRoleMapper {
      * @param userId 用户ID
      * @return 选中角色ID列表
      */
-    public List<Long> selectRoleListByUserId(Long userId);
+    public List<Long> selectRoleListByUserId(String userId);
 
     /**
      * 通过角色ID查询角色

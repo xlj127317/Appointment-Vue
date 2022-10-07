@@ -64,7 +64,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
      * @return 角色列表
      */
     @Override
-    public List<SysRole> selectRolesByUserId(Long userId) {
+    public List<SysRole> selectRolesByUserId(String userId) {
         List<SysRole> userRoles = roleMapper.selectRolePermissionByUserId(userId);
         List<SysRole> roles = selectRoleAll();
         for (SysRole role : roles) {
@@ -85,7 +85,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
      * @return 权限列表
      */
     @Override
-    public Set<String> selectRolePermissionByUserId(Long userId) {
+    public Set<String> selectRolePermissionByUserId(String userId) {
         List<SysRole> perms = roleMapper.selectRolePermissionByUserId(userId);
         Set<String> permsSet = new HashSet<>();
         for (SysRole perm : perms) {
@@ -113,7 +113,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
      * @return 选中角色ID列表
      */
     @Override
-    public List<Long> selectRoleListByUserId(Long userId) {
+    public List<Long> selectRoleListByUserId(String userId) {
         return roleMapper.selectRoleListByUserId(userId);
     }
 
@@ -359,7 +359,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
      * @return 结果
      */
     @Override
-    public int deleteAuthUsers(Long roleId, Long[] userIds) {
+    public int deleteAuthUsers(Long roleId, String[] userIds) {
         return userRoleMapper.deleteUserRoleInfos(roleId, userIds);
     }
 
@@ -371,10 +371,10 @@ public class SysRoleServiceImpl implements ISysRoleService {
      * @return 结果
      */
     @Override
-    public int insertAuthUsers(Long roleId, Long[] userIds) {
+    public int insertAuthUsers(Long roleId, String[] userIds) {
         // 新增用户与角色管理
         List<SysUserRole> list = new ArrayList<SysUserRole>();
-        for (Long userId : userIds) {
+        for (String userId : userIds) {
             SysUserRole ur = new SysUserRole();
             ur.setUserId(userId);
             ur.setRoleId(roleId);

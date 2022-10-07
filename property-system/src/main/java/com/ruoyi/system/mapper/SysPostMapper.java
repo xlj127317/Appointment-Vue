@@ -39,7 +39,7 @@ public interface SysPostMapper {
      * @param userId 用户ID
      * @return 选中岗位ID列表
      */
-    public List<Long> selectPostListByUserId(Long userId);
+    public List<String> selectPostListByUserId(String userId);
 
     /**
      * 查询用户所属岗位组

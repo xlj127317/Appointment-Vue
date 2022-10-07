@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletResponse;
 
+import com.ruoyi.common.utils.uuid.PkeyGenerator;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -96,14 +97,14 @@ public class SysUserController extends BaseController {
      */
     @PreAuthorize("@ss.hasPermi('system:user:query')")
     @GetMapping(value = {"/", "/{userId}"})
-    public AjaxResult getInfo(@PathVariable(value = "userId", required = false) Long userId) {
+    public AjaxResult getInfo(@PathVariable(value = "userId", required = false) String userId) {
         userService.checkUserDataScope(userId);
         AjaxResult ajax = AjaxResult.success();
         List<SysRole> roles = roleService.selectRoleAll();
         ajax.put("roles", SysUser.isAdmin(userId) ? roles : roles.stream().filter(r -> !r.isAdmin()).collect(Collectors.toList()));
         ajax.put("posts", postService.selectPostAll());
         if (StringUtils.isNotNull(userId)) {
-            SysUser sysUser = userService.selectUserById(userId);
+            SysUser sysUser = userService.selectUserById(userId.toString());
             ajax.put(AjaxResult.DATA_TAG, sysUser);
             ajax.put("postIds", postService.selectPostListByUserId(userId));
             ajax.put("roleIds", sysUser.getRoles().stream().map(SysRole::getRoleId).collect(Collectors.toList()));
@@ -127,6 +128,7 @@ public class SysUserController extends BaseController {
                 && UserConstants.NOT_UNIQUE.equals(userService.checkEmailUnique(user))) {
             return AjaxResult.error("新增用户'" + user.getUserName() + "'失败，邮箱账号已存在");
         }
+        user.setUserId(PkeyGenerator.getUniqueString());
         user.setCreateBy(getUsername());
         user.setPassword(SecurityUtils.encryptPassword(user.getPassword()));
         return toAjax(userService.insertUser(user));
@@ -160,7 +162,7 @@ public class SysUserController extends BaseController {
     @PreAuthorize("@ss.hasPermi('system:user:remove')")
     @Log(title = "用户管理", businessType = BusinessType.DELETE)
     @DeleteMapping("/{userIds}")
-    public AjaxResult remove(@PathVariable Long[] userIds) {
+    public AjaxResult remove(@PathVariable String[] userIds) {
         if (ArrayUtils.contains(userIds, getUserId())) {
             return error("当前用户不能删除");
         }
@@ -199,9 +201,9 @@ public class SysUserController extends BaseController {
      */
     @PreAuthorize("@ss.hasPermi('system:user:query')")
     @GetMapping("/authRole/{userId}")
-    public AjaxResult authRole(@PathVariable("userId") Long userId) {
+    public AjaxResult authRole(@PathVariable("userId") String userId) {
         AjaxResult ajax = AjaxResult.success();
-        SysUser user = userService.selectUserById(userId);
+        SysUser user = userService.selectUserById(userId.toString());
         List<SysRole> roles = roleService.selectRolesByUserId(userId);
         ajax.put("user", user);
         ajax.put("roles", SysUser.isAdmin(userId) ? roles : roles.stream().filter(r -> !r.isAdmin()).collect(Collectors.toList()));
@@ -214,7 +216,7 @@ public class SysUserController extends BaseController {
     @PreAuthorize("@ss.hasPermi('system:user:edit')")
     @Log(title = "用户管理", businessType = BusinessType.GRANT)
     @PutMapping("/authRole")
-    public AjaxResult insertAuthRole(Long userId, Long[] roleIds) {
+    public AjaxResult insertAuthRole(String userId, Long[] roleIds) {
         userService.checkUserDataScope(userId);
         userService.insertUserAuth(userId, roleIds);
         return success();
