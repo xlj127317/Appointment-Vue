@@ -37,12 +37,12 @@ public class RepairController extends BaseController {
     @Autowired
     private RepairService repairService;
 
-/**
- * 查询物业报修申请列表
- */
-@ApiOperation("查询物业报修申请列表")
-@PreAuthorize("@ss.hasPermi('property:repair:list')")
-@GetMapping("/list")
+    /**
+     * 查询物业报修申请列表
+     */
+    @ApiOperation("查询物业报修申请列表")
+    @PreAuthorize("@ss.hasPermi('property:repair:list')")
+    @GetMapping("/list")
     public TableDataInfo list(Repair repair) {
         startPage();
         List<Repair> list = repairService.selectRepairList(repair);
@@ -58,7 +58,7 @@ public class RepairController extends BaseController {
     @PostMapping("/export")
     public void export(HttpServletResponse response, Repair repair) {
         List<Repair> list = repairService.selectRepairList(repair);
-        ExcelUtil<Repair> util = new ExcelUtil<Repair>(Repair. class);
+        ExcelUtil<Repair> util = new ExcelUtil<Repair>(Repair.class);
         util.exportExcel(response, list, "物业报修申请数据");
     }
 

@@ -13,6 +13,7 @@
         <result column="applicant_time" jdbcType="TIMESTAMP" property="applicantTime"/>
         <result column="audit_status" jdbcType="INTEGER" property="auditStatus"/>
         <result column="audit_id" jdbcType="VARCHAR" property="auditId"/>
+        <result column="is_parking" jdbcType="INTEGER" property="isParking"/>
         <result column="create_id" jdbcType="VARCHAR" property="createId"/>
         <result column="is_flag" jdbcType="INTEGER" property="isFlag"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
@@ -28,6 +29,7 @@
         applicant_time,
         audit_status,
         audit_id,
+        is_parking,
         create_id,
         is_flag,
         create_time
@@ -76,6 +78,9 @@
             <if test="auditId != null">
                 audit_id,
             </if>
+            <if test="isParking != null">
+                is_parking,
+            </if>
             <if test="createId != null">
                 create_id,
             </if>
@@ -113,6 +118,9 @@
             </if>
             <if test="auditId != null">
                 #{auditId,jdbcType=VARCHAR},
+            </if>
+            <if test="isParking != null">
+                #{isParking,jdbcType=INTEGER},
             </if>
             <if test="createId != null">
                 #{createId,jdbcType=VARCHAR},
@@ -152,6 +160,9 @@
             </if>
             <if test="auditId != null">
                 audit_id = #{auditId,jdbcType=VARCHAR},
+            </if>
+            <if test="isParking != null">
+                is_parking = #{isParking,jdbcType=INTEGER},
             </if>
             <if test="createId != null">
                 create_id = #{createId,jdbcType=VARCHAR},
@@ -212,6 +223,9 @@
                     =
                     #{auditId}
             </if>
+            <if test="auditId != null and auditId != ''">
+                and is_parking = #{isParking}
+            </if>
             <if test="createId != null  and createId != ''">
                 and create_id
                     =
@@ -259,6 +273,9 @@
             </if>
             <if test="auditId != null">
                 audit_id,
+            </if>
+            <if test="auditId != null and auditId != ''">
+                is_parking,
             </if>
             <if test="createId != null and createId != ''">
                 create_id,
@@ -344,6 +361,9 @@
             <if test="auditId != null">
                 audit_id =
                     #{auditId},
+            </if>
+            <if test="isParking != null">
+                is_parking = #{isParking},
             </if>
             <if test="createId != null and createId != ''">
                 create_id =

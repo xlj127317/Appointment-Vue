@@ -52,6 +52,7 @@ public class VisitServiceImpl implements VisitService {
     @Override
     public int insertVisit(Visit visit) {
         visit.setId(PkeyGenerator.getUniqueString());
+        visit.setApplicantTime(DateUtils.getNowDate());
         visit.setCreateTime(DateUtils.getNowDate());
         return visitMapper.insertVisit(visit);
     }
