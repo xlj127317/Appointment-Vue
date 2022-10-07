@@ -2,7 +2,16 @@ package com.ruoyi.framework.web.service;
 
 import javax.annotation.Resource;
 
+import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.core.util.StrUtil;
+import com.alibaba.fastjson2.JSONObject;
+import com.ruoyi.common.core.domain.AjaxResult;
+import com.ruoyi.common.utils.*;
+import com.ruoyi.common.utils.uuid.PkeyGenerator;
+import com.ruoyi.system.mapper.SysUserMapper;
+import com.ruoyi.framework.util.Jcode2SessionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,10 +26,6 @@ import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.exception.user.CaptchaException;
 import com.ruoyi.common.exception.user.CaptchaExpireException;
 import com.ruoyi.common.exception.user.UserPasswordNotMatchException;
-import com.ruoyi.common.utils.DateUtils;
-import com.ruoyi.common.utils.MessageUtils;
-import com.ruoyi.common.utils.ServletUtils;
-import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.ip.IpUtils;
 import com.ruoyi.framework.manager.AsyncManager;
 import com.ruoyi.framework.manager.factory.AsyncFactory;
@@ -49,6 +54,32 @@ public class SysLoginService {
 
     @Autowired
     private ISysConfigService configService;
+
+    @Autowired
+    private SysPermissionService permissionService;
+
+    @Autowired
+    private SysUserMapper userMapper;
+
+    /**
+     * 小程序appid
+     */
+    @Value("${wx.appId}")
+    private String appid;
+
+    /**
+     * 小程序密钥
+     */
+    @Value("${wx.secret}")
+    private String secret;
+
+    public String getAppid() {
+        return appid;
+    }
+
+    public String getSecret() {
+        return secret;
+    }
 
     /**
      * 登录验证
@@ -117,11 +148,64 @@ public class SysLoginService {
      *
      * @param userId 用户ID
      */
-    public void recordLoginInfo(Long userId) {
+    public void recordLoginInfo(String userId) {
         SysUser sysUser = new SysUser();
         sysUser.setUserId(userId);
         sysUser.setLoginIp(IpUtils.getIpAddr(ServletUtils.getRequest()));
         sysUser.setLoginDate(DateUtils.getNowDate());
         userService.updateUserProfile(sysUser);
+    }
+
+    public AjaxResult wxLogin(String code) {
+        JSONObject sessionInfo = JSONObject.parseObject(jcode2Session(code));
+        if (sessionInfo == null) {
+            return AjaxResult.error("code 无效");
+        }
+        // 判断返回值中是否有errcode
+        if (sessionInfo.get("errcode") != null) {
+            return AjaxResult.error(sessionInfo.getString("errmsg"));
+        }
+        String openid = sessionInfo.getString("openid");
+        if (StrUtil.isEmpty(openid)) {
+            return AjaxResult.error("openid 异常");
+        }
+        SysUser sysUser = userMapper.selectUserById(openid);
+        // 如果用户并未从小程序登录过，则添加
+        if (ObjectUtil.isEmpty(sysUser)) {
+            sysUser.setUserId(openid);
+            //此处用随机方式生成用户名和昵称
+            String name = PkeyGenerator.getUniqueString();
+            sysUser.setUserName(name);
+            sysUser.setNickName(name);
+            sysUser.setPassword(SecurityUtils.encryptPassword("123456"));
+            sysUser.setStatus("1");
+            sysUser.setDelFlag("0");
+            sysUser.setCreateBy(name);
+        }
+        LoginUser loginUser = new LoginUser();
+        loginUser.setUserId(sysUser.getUserId());
+        loginUser.setDeptId(sysUser.getDeptId());
+        loginUser.setUser(sysUser);
+        loginUser.setPermissions(permissionService.getMenuPermission(sysUser));
+        recordLoginInfo(sysUser.getUserId());
+        String token = tokenService.createToken(loginUser);
+        return AjaxResult.success(token);
+    }
+
+    /**
+     * 登录凭证校验
+     *
+     * @param code code
+     * @return String
+     * @throws Exception exception
+     */
+    private String jcode2Session(String code) {
+        try {
+            //登录grantType固定
+            return Jcode2SessionUtil.jscode2session(appid, secret, code, "authorization_code");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

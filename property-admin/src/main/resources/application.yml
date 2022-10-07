@@ -133,3 +133,8 @@ xss:
   excludes: /system/notice
   # 匹配链接
   urlPatterns: /system/*,/monitor/*,/tool/*
+
+# 微信小程序
+wx:
+  appId: wx9eeb96adefa79d80
+  secret: d905e10819f08339ce859c6fcb47ecd4
