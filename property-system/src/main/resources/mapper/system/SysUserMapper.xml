@@ -220,7 +220,7 @@
 
     <insert id="insertUser" parameterType="com.ruoyi.common.core.domain.entity.SysUser" useGeneratedKeys="true" keyProperty="userId">
         insert into sys_user(
-        <if test="userId != null and userId != 0">
+        <if test="userId != null">
             user_id,
         </if>
         <if test="deptId != null and deptId != 0">

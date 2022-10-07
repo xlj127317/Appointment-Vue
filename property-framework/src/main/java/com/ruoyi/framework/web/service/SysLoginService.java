@@ -170,19 +170,29 @@ public class SysLoginService {
             return AjaxResult.error("openid 异常");
         }
         SysUser sysUser = userMapper.selectUserById(openid);
-        // 如果用户并未从小程序登录过，则添加
-        if (ObjectUtil.isEmpty(sysUser)) {
-            sysUser.setUserId(openid);
-            //此处用随机方式生成用户名和昵称
-            String name = PkeyGenerator.getUniqueString();
-            sysUser.setUserName(name);
-            sysUser.setNickName(name);
-            sysUser.setPassword(SecurityUtils.encryptPassword("123456"));
-            sysUser.setStatus("1");
-            sysUser.setDelFlag("0");
-            sysUser.setCreateBy(name);
-        }
         LoginUser loginUser = new LoginUser();
+        // 如果用户并未从小程序登录过，则添加
+        try {
+            if (ObjectUtil.isNull(sysUser)) {
+                sysUser = new SysUser();
+                sysUser.setUserId(openid);
+                //此处用随机方式生成用户名和昵称
+                String name = PkeyGenerator.getUniqueString();
+                sysUser.setUserName(name);
+                sysUser.setNickName(name);
+                sysUser.setPassword(SecurityUtils.encryptPassword("123456"));
+                sysUser.setStatus("1");
+                sysUser.setDelFlag("0");
+                sysUser.setCreateBy(name);
+                userMapper.insertUser(sysUser);
+                loginUser.setUserId(openid);
+                loginUser.setDeptId(-1L);
+                loginUser.setUser(sysUser);
+                return AjaxResult.success(tokenService.createToken(loginUser));
+            }
+        }catch (NullPointerException exception) {
+            System.out.println("空指针");
+        }
         loginUser.setUserId(sysUser.getUserId());
         loginUser.setDeptId(sysUser.getDeptId());
         loginUser.setUser(sysUser);
