@@ -52,6 +52,7 @@ public class ThingOutServiceImpl implements ThingOutService {
     @Override
     public int insertThingOut(ThingOut thingOut) {
         thingOut.setId(PkeyGenerator.getUniqueString());
+        thingOut.setApplicantTime(DateUtils.getNowDate());
         thingOut.setCreateTime(DateUtils.getNowDate());
         return thingOutMapper.insertThingOut(thingOut);
     }

@@ -1,5 +1,7 @@
 package com.ruoyi.property.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.ruoyi.common.core.domain.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -10,6 +12,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.Future;
+import javax.validation.constraints.NotNull;
+
 /**
  * 物品出入申请表
  */
@@ -18,7 +23,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ThingOut {
+public class ThingOut extends BaseEntity {
     /**
      * 主键
      */
@@ -29,6 +34,7 @@ public class ThingOut {
     /**
      * 申请物品
      */
+    @NotNull(message = "申请物品不能为空")
     @ApiModelProperty(value = "申请物品")
     @Schema(description = "申请物品")
     private String thing;
@@ -36,6 +42,7 @@ public class ThingOut {
     /**
      * 申请理由
      */
+    @NotNull(message = "申请理由不能为空")
     @ApiModelProperty(value = "申请理由")
     @Schema(description = "申请理由")
     private String reason;
@@ -43,6 +50,9 @@ public class ThingOut {
     /**
      * 放行时间
      */
+    @NotNull(message = "放行时间不能为空")
+    @Future(message = "放心时间不能早于当前时间")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @ApiModelProperty(value = "放行时间")
     @Schema(description = "放行时间")
     private Date outDate;
@@ -57,6 +67,7 @@ public class ThingOut {
     /**
      * 申请时间
      */
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @ApiModelProperty(value = "申请时间")
     @Schema(description = "申请时间")
     private Date applicantTime;
@@ -92,6 +103,7 @@ public class ThingOut {
     /**
      * 创建时间
      */
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @ApiModelProperty(value = "创建时间")
     @Schema(description = "创建时间")
     private Date createTime;

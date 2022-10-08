@@ -1,4 +1,4 @@
-package com.ruoyi.web.controller.web;
+package com.ruoyi.web.controller.weixin;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;

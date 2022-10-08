@@ -53,6 +53,7 @@ public class RepairServiceImpl implements RepairService {
     @Override
     public int insertRepair(Repair repair) {
         repair.setId(PkeyGenerator.getUniqueString());
+        repair.setApplicantTime(DateUtils.getNowDate());
         repair.setCreateTime(DateUtils.getNowDate());
         return repairMapper.insertRepair(repair);
     }

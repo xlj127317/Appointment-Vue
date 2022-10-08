@@ -1,5 +1,7 @@
 package com.ruoyi.property.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.ruoyi.common.core.domain.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -21,7 +23,7 @@ import javax.validation.constraints.NotBlank;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Furnish {
+public class Furnish extends BaseEntity {
     /**
      * 主键
      */
@@ -41,6 +43,7 @@ public class Furnish {
      * 装修开始时间
      */
     @NotBlank(message = "装修开始时间不能为空")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @ApiModelProperty(value = "装修开始时间")
     @Schema(description = "装修开始时间")
     private Date startTime;
@@ -50,6 +53,7 @@ public class Furnish {
      */
     @NotBlank(message = "装修结束时间不能为空")
     @ApiModelProperty(value = "装修结束时间")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @Schema(description = "装修结束时间")
     private Date stopTime;
 
@@ -65,6 +69,7 @@ public class Furnish {
      */
     @Future
     @NotBlank(message = "申请时间不能为空")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @ApiModelProperty(value = "申请时间")
     @Schema(description = "申请时间")
     private Date applicantTime;
@@ -100,6 +105,7 @@ public class Furnish {
     /**
      * 创建时间
      */
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @ApiModelProperty(value = "创建时间")
     @Schema(description = "创建时间")
     private Date createTime;

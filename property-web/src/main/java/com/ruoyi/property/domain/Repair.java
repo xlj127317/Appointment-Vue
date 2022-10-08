@@ -1,5 +1,7 @@
 package com.ruoyi.property.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.ruoyi.common.core.domain.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -7,6 +9,9 @@ import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import javax.validation.constraints.Future;
+import javax.validation.constraints.NotNull;
 
 /**
  * 物业报修申请表
@@ -16,7 +21,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Repair {
+public class Repair extends BaseEntity {
     /**
      * 主键
      */
@@ -27,6 +32,7 @@ public class Repair {
     /**
      * 报修内容
      */
+    @NotNull(message = "报修内容不能为空")
     @ApiModelProperty(value = "报修内容")
     @Schema(description = "报修内容")
     private String repairContent;
@@ -41,6 +47,8 @@ public class Repair {
     /**
      * 申请时间
      */
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @Future(message = "申请时间不能早于当前时间")
     @ApiModelProperty(value = "申请时间")
     @Schema(description = "申请时间")
     private Date applicantTime;
@@ -76,6 +84,7 @@ public class Repair {
     /**
      * 创建时间
      */
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @ApiModelProperty(value = "创建时间")
     @Schema(description = "创建时间")
     private Date createTime;
