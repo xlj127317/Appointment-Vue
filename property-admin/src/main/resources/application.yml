@@ -9,7 +9,7 @@ ruoyi:
   # 实例演示开关
   demoEnabled: true
   # 文件路径 示例（ Windows配置D:/ruoyi/uploadPath，Linux配置 /home/ruoyi/uploadPath）
-  profile: D:/ruoyi/uploadPath
+  profile: /www/javaProject/property/file/
   # 获取ip地址开关
   addressEnabled: false
   # 验证码类型 math 数组计算 char 字符验证
@@ -49,6 +49,10 @@ user:
 
 # Spring配置
 spring:
+  # jackson 日期格式化
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
   # 资源信息
   messages:
     # 国际化资源文件路径
@@ -138,3 +142,9 @@ xss:
 wx:
   appId: wx9eeb96adefa79d80
   secret: d905e10819f08339ce859c6fcb47ecd4
+
+file:
+  path: /www/javaProject/property/file/
+  url: https://dev.property.hcxtec.com
+#  path: F:/files/
+#  url: http://localhost:8080/files
