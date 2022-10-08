@@ -52,7 +52,7 @@ public class Visit extends BaseEntity {
      * 来访日期
      */
     @Future
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "GMT+8")
     @ApiModelProperty(value = "来访日期")
     @Schema(description = "来访日期")
     private Date visitDate;
@@ -76,7 +76,7 @@ public class Visit extends BaseEntity {
      * 申请时间
      */
     @Future
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "GMT+8")
     @ApiModelProperty(value = "申请时间")
     @Schema(description = "申请时间")
     private Date applicantTime;

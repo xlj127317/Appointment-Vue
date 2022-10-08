@@ -52,7 +52,7 @@ public class ThingOut extends BaseEntity {
      */
     @NotNull(message = "放行时间不能为空")
     @Future(message = "放心时间不能早于当前时间")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "GMT+8")
     @ApiModelProperty(value = "放行时间")
     @Schema(description = "放行时间")
     private Date outDate;
@@ -67,7 +67,7 @@ public class ThingOut extends BaseEntity {
     /**
      * 申请时间
      */
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "GMT+8")
     @ApiModelProperty(value = "申请时间")
     @Schema(description = "申请时间")
     private Date applicantTime;
@@ -103,7 +103,7 @@ public class ThingOut extends BaseEntity {
     /**
      * 创建时间
      */
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "GMT+8")
     @ApiModelProperty(value = "创建时间")
     @Schema(description = "创建时间")
     private Date createTime;

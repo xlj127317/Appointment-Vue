@@ -43,7 +43,7 @@ public class Furnish extends BaseEntity {
      * 装修开始时间
      */
     @NotBlank(message = "装修开始时间不能为空")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "GMT+8")
     @ApiModelProperty(value = "装修开始时间")
     @Schema(description = "装修开始时间")
     private Date startTime;
@@ -69,7 +69,7 @@ public class Furnish extends BaseEntity {
      */
     @Future
     @NotBlank(message = "申请时间不能为空")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "GMT+8")
     @ApiModelProperty(value = "申请时间")
     @Schema(description = "申请时间")
     private Date applicantTime;
@@ -105,7 +105,7 @@ public class Furnish extends BaseEntity {
     /**
      * 创建时间
      */
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "GMT+8")
     @ApiModelProperty(value = "创建时间")
     @Schema(description = "创建时间")
     private Date createTime;

@@ -47,7 +47,7 @@ public class Repair extends BaseEntity {
     /**
      * 申请时间
      */
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "GMT+8")
     @Future(message = "申请时间不能早于当前时间")
     @ApiModelProperty(value = "申请时间")
     @Schema(description = "申请时间")
@@ -84,7 +84,7 @@ public class Repair extends BaseEntity {
     /**
      * 创建时间
      */
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "GMT+8")
     @ApiModelProperty(value = "创建时间")
     @Schema(description = "创建时间")
     private Date createTime;
