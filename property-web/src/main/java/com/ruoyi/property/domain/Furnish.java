@@ -53,7 +53,7 @@ public class Furnish extends BaseEntity {
      */
     @NotBlank(message = "装修结束时间不能为空")
     @ApiModelProperty(value = "装修结束时间")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "GMT+8")
     @Schema(description = "装修结束时间")
     private Date stopTime;
 

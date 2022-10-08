@@ -52,6 +52,7 @@ public class FurnishServiceImpl implements FurnishService {
     @Override
     public int insertFurnish(Furnish furnish) {
         furnish.setId(PkeyGenerator.getUniqueString());
+        furnish.setApplicantTime(DateUtils.getNowDate());
         furnish.setCreateTime(DateUtils.getNowDate());
         return furnishMapper.insertFurnish(furnish);
     }

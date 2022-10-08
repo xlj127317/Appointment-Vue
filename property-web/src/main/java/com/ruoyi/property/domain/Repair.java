@@ -68,6 +68,13 @@ public class Repair extends BaseEntity {
     private String auditId;
 
     /**
+     * 报修单位
+     */
+    @ApiModelProperty(value = "报修单位")
+    @Schema(description = "报修单位")
+    private String repairUnit;
+
+    /**
      * 创建人id
      */
     @ApiModelProperty(value = "创建人id")
