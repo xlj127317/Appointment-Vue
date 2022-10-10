@@ -22,7 +22,8 @@
         <result property="updateBy" column="update_by"/>
         <result property="updateTime" column="update_time"/>
         <result property="remark" column="remark"/>
-        <association property="dept" column="dept_id" javaType="com.ruoyi.common.core.domain.entity.SysDept" resultMap="deptResult"/>
+        <association property="dept" column="dept_id" javaType="com.ruoyi.common.core.domain.entity.SysDept"
+                     resultMap="deptResult"/>
         <collection property="roles" javaType="java.util.List" resultMap="RoleResult"/>
     </resultMap>
 
@@ -102,7 +103,7 @@
         from sys_user u
                  left join sys_dept d on u.dept_id = d.dept_id
         where u.del_flag = '0'
-        <if test="userId != null and userId != 0">
+        <if test="userId != null">
             AND u.user_id = #{userId}
         </if>
         <if test="userName != null and userName != ''">
@@ -130,7 +131,8 @@
         ${params.dataScope}
     </select>
 
-    <select id="selectAllocatedList" parameterType="com.ruoyi.common.core.domain.entity.SysUser" resultMap="SysUserResult">
+    <select id="selectAllocatedList" parameterType="com.ruoyi.common.core.domain.entity.SysUser"
+            resultMap="SysUserResult">
         select distinct u.user_id,
                         u.dept_id,
                         u.user_name,
@@ -155,7 +157,8 @@
         ${params.dataScope}
     </select>
 
-    <select id="selectUnallocatedList" parameterType="com.ruoyi.common.core.domain.entity.SysUser" resultMap="SysUserResult">
+    <select id="selectUnallocatedList" parameterType="com.ruoyi.common.core.domain.entity.SysUser"
+            resultMap="SysUserResult">
         select distinct u.user_id,
                         u.dept_id,
                         u.user_name,
@@ -218,7 +221,8 @@
         limit 1
     </select>
 
-    <insert id="insertUser" parameterType="com.ruoyi.common.core.domain.entity.SysUser" useGeneratedKeys="true" keyProperty="userId">
+    <insert id="insertUser" parameterType="com.ruoyi.common.core.domain.entity.SysUser" useGeneratedKeys="true"
+            keyProperty="userId">
         insert into sys_user(
         <if test="userId != null">
             user_id,
@@ -375,4 +379,9 @@
         </foreach>
     </delete>
 
+    <update id="updateNickNameById">
+        update sys_user
+        set nick_name = #{nickName,jdbcType=VARCHAR}
+        where user_id = #{id,jdbcType=VARCHAR}
+    </update>
 </mapper>

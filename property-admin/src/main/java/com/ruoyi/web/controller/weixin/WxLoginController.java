@@ -2,6 +2,7 @@ package com.ruoyi.web.controller.weixin;
 
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.framework.web.service.SysLoginService;
+import com.ruoyi.system.service.ISysUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +21,19 @@ import org.springframework.web.bind.annotation.RestController;
 public class WxLoginController {
     @Autowired
     private SysLoginService loginService;
+    @Autowired
+    private ISysUserService userService;
 
     @ApiOperation("微信登录")
     @GetMapping("/login")
     public AjaxResult wxLogin(@RequestParam String code) {
         return loginService.wxLogin(code);
+    }
+
+    @GetMapping(value = "/updateUserName")
+    @ApiOperation(value = "微信登录成功后根据微信用户名设置用户名")
+    public AjaxResult renewUserNameById(@RequestParam String id,
+                                        @RequestParam String userName) {
+        return userService.updateUserNameById(id,userName);
     }
 }

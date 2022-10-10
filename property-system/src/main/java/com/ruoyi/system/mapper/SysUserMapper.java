@@ -1,6 +1,7 @@
 package com.ruoyi.system.mapper;
 
 import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 import com.ruoyi.common.core.domain.entity.SysUser;
 
@@ -9,8 +10,7 @@ import com.ruoyi.common.core.domain.entity.SysUser;
  *
  * @author ruoyi
  */
-public interface SysUserMapper
-{
+public interface SysUserMapper {
     /**
      * 根据条件分页查询用户列表
      *
@@ -71,7 +71,7 @@ public interface SysUserMapper
      * 修改用户头像
      *
      * @param userName 用户名
-     * @param avatar 头像地址
+     * @param avatar   头像地址
      * @return 结果
      */
     public int updateUserAvatar(@Param("userName") String userName, @Param("avatar") String avatar);
@@ -124,4 +124,13 @@ public interface SysUserMapper
      * @return 结果
      */
     public SysUser checkEmailUnique(String email);
+
+    /**
+     * 微信登录后修改昵称
+     *
+     * @param id       id
+     * @param nickName 昵称
+     * @return int
+     */
+    int updateNickNameById(@Param("id") String id, @Param("nickName") String nickName);
 }
