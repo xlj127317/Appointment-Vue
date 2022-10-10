@@ -50,6 +50,9 @@ public class TokenService {
     @Autowired
     private RedisCache redisCache;
 
+    @Autowired
+    private HttpServletRequest request;
+
     /**
      * 获取用户身份信息
      *
@@ -202,5 +205,12 @@ public class TokenService {
 
     private String getTokenKey(String uuid) {
         return CacheConstants.LOGIN_TOKEN_KEY + uuid;
+    }
+
+    public String getUserId() {
+        String token = getToken(request);
+        Claims claims = parseToken(token);
+        String userId = (String) claims.get("userId");
+        return userId;
     }
 }
