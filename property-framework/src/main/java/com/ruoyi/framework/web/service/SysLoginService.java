@@ -73,6 +73,9 @@ public class SysLoginService {
     @Value("${wx.secret}")
     private String secret;
 
+    public static final long ORDINARY_DEPT_NUM = 110;
+
+
     public String getAppid() {
         return appid;
     }
@@ -178,6 +181,7 @@ public class SysLoginService {
                 sysUser.setUserId(openid);
                 //此处用随机方式生成用户名和昵称
                 String name = PkeyGenerator.getUniqueString();
+                sysUser.setDeptId(ORDINARY_DEPT_NUM);
                 sysUser.setUserName(name);
                 sysUser.setNickName(name);
                 sysUser.setPassword(SecurityUtils.encryptPassword("123456"));
