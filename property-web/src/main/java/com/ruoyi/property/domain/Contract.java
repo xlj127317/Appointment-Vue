@@ -65,7 +65,7 @@ public class Contract extends BaseEntity {
      */
     @ApiModelProperty(value = "合同状态")
     @Schema(description = "合同状态")
-    private String contractStatus;
+    private Integer contractStatus;
 
     /**
      * 厂房面积 平方米 m2

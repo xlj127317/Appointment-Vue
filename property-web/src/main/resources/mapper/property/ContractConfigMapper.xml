@@ -288,7 +288,7 @@
         update contract_config
         set is_flag = 1 where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
-            id = #{id}
+            #{id}
         </foreach>
     </update>
 </mapper>

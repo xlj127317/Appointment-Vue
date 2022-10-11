@@ -192,9 +192,10 @@ public class SysLoginService {
                 loginUser.setUserId(openid);
                 loginUser.setDeptId(-1L);
                 loginUser.setUser(sysUser);
-                return AjaxResult.success(tokenService.createToken(loginUser));
+                AjaxResult success = getAjaxResult(openid, loginUser);
+                return success;
             }
-        }catch (NullPointerException exception) {
+        } catch (NullPointerException exception) {
             System.out.println("空指针");
         }
         loginUser.setUserId(sysUser.getUserId());
@@ -202,8 +203,23 @@ public class SysLoginService {
         loginUser.setUser(sysUser);
         loginUser.setPermissions(permissionService.getMenuPermission(sysUser));
         recordLoginInfo(sysUser.getUserId());
+        AjaxResult success = getAjaxResult(openid, loginUser);
+        return success;
+    }
+
+    /**
+     * 生成token 返回token和openId
+     *
+     * @param openid    微信登录成功后的openId 也是userId
+     * @param loginUser 登录用户信息
+     * @return AjaxResult
+     */
+    private AjaxResult getAjaxResult(String openid, LoginUser loginUser) {
+        AjaxResult success = AjaxResult.success();
         String token = tokenService.createToken(loginUser);
-        return AjaxResult.success(token);
+        success.put("token", token);
+        success.put("openId", openid);
+        return success;
     }
 
     /**

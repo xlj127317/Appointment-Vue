@@ -116,7 +116,7 @@
                 #{contractMoney,jdbcType=VARCHAR},
             </if>
             <if test="contractStatus != null">
-                #{contractStatus,jdbcType=VARCHAR},
+                #{contractStatus,jdbcType=INTEGER},
             </if>
             <if test="area != null">
                 #{area,jdbcType=VARCHAR},
@@ -161,7 +161,7 @@
                 contract_money = #{contractMoney,jdbcType=VARCHAR},
             </if>
             <if test="contractStatus != null">
-                contract_status = #{contractStatus,jdbcType=VARCHAR},
+                contract_status = #{contractStatus,jdbcType=INTEGER},
             </if>
             <if test="area != null">
                 area = #{area,jdbcType=VARCHAR},
