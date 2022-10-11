@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.property.mapper.ContractConfigMapper">
+    <resultMap id="BaseResultMap" type="com.ruoyi.property.domain.ContractConfig">
+        <!--@mbg.generated-->
+        <!--@Table contract_config-->
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="toll_project" jdbcType="VARCHAR" property="tollProject"/>
+        <result column="toll_money" jdbcType="VARCHAR" property="tollMoney"/>
+        <result column="pay_stand" jdbcType="VARCHAR" property="payStand"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="create_id" jdbcType="VARCHAR" property="createId"/>
+        <result column="is_flag" jdbcType="INTEGER" property="isFlag"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        id,
+        toll_project,
+        toll_money,
+        pay_stand,
+        remark,
+        create_id,
+        is_flag,
+        create_time
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        <!--@mbg.generated-->
+        select
+        <include refid="Base_Column_List"/>
+        from contract_config
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        <!--@mbg.generated-->
+        delete
+        from contract_config
+        where id = #{id,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insertSelective" parameterType="com.ruoyi.property.domain.ContractConfig">
+        <!--@mbg.generated-->
+        insert into contract_config
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="tollProject != null">
+                toll_project,
+            </if>
+            <if test="tollMoney != null">
+                toll_money,
+            </if>
+            <if test="payStand != null">
+                pay_stand,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="createId != null">
+                create_id,
+            </if>
+            <if test="isFlag != null">
+                is_flag,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="tollProject != null">
+                #{tollProject,jdbcType=VARCHAR},
+            </if>
+            <if test="tollMoney != null">
+                #{tollMoney,jdbcType=VARCHAR},
+            </if>
+            <if test="payStand != null">
+                #{payStand,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="createId != null">
+                #{createId,jdbcType=VARCHAR},
+            </if>
+            <if test="isFlag != null">
+                #{isFlag,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ruoyi.property.domain.ContractConfig">
+        <!--@mbg.generated-->
+        update contract_config
+        <set>
+            <if test="tollProject != null">
+                toll_project = #{tollProject,jdbcType=VARCHAR},
+            </if>
+            <if test="tollMoney != null">
+                toll_money = #{tollMoney,jdbcType=VARCHAR},
+            </if>
+            <if test="payStand != null">
+                pay_stand = #{payStand,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="createId != null">
+                create_id = #{createId,jdbcType=VARCHAR},
+            </if>
+            <if test="isFlag != null">
+                is_flag = #{isFlag,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <select id="selectContractConfigList" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from contract_config
+        <where>
+            is_flag = 0
+            <if test="tollProject != null  and tollProject != ''">
+                and toll_project =
+                    #{tollProject}
+            </if>
+            <if test="tollMoney != null  and tollMoney != ''">
+                and toll_money
+                    =
+                    #{tollMoney}
+            </if>
+            <if test="payStand != null  and payStand != ''">
+                and pay_stand
+                    =
+                    #{payStand}
+            </if>
+            <if test="createId != null  and createId != ''">
+                and create_id
+                    =
+                    #{createId}
+            </if>
+            <if test="params.beginTime != null and params.beginTime != ''">
+                <!-- 开始时间检索 -->
+                AND date_format
+                        (
+                            create_time,
+                            '%y%m%d'
+                        )
+                    &gt;=
+                    date_format
+                        (
+                            #{params.beginTime},
+                            '%y%m%d'
+                        )
+            </if>
+            <if test="params.endTime != null and params.endTime != ''">
+                <!-- 结束时间检索 -->
+                AND date_format
+                        (
+                            create_time,
+                            '%y%m%d'
+                        )
+                    &lt;=
+                    date_format
+                        (
+                            #{params.endTime},
+                            '%y%m%d'
+                        )
+            </if>
+        </where>
+    </select>
+
+    <select id="selectContractConfigById"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from contract_config
+        where id =
+              #{id}
+    </select>
+
+    <insert id="insertContractConfig">
+        insert into contract_config
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="tollProject != null and tollProject != ''">
+                toll_project,
+            </if>
+            <if test="tollMoney != null and tollMoney != ''">
+                toll_money,
+            </if>
+            <if test="payStand != null and payStand != ''">
+                pay_stand,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="createId != null and createId != ''">
+                create_id,
+            </if>
+            <if test="isFlag != null">
+                is_flag,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="tollProject != null and tollProject != ''">
+                #{tollProject},
+            </if>
+            <if test="tollMoney != null and tollMoney != ''">
+                #{tollMoney},
+            </if>
+            <if test="payStand != null and payStand != ''">
+                #{payStand},
+            </if>
+            <if test="remark != null">
+                #{remark},
+            </if>
+            <if test="createId != null and createId != ''">
+                #{createId},
+            </if>
+            <if test="isFlag != null">
+                #{isFlag},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateContractConfig">
+        update contract_config
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="tollProject != null and tollProject != ''">
+                toll_project =
+                    #{tollProject},
+            </if>
+            <if test="tollMoney != null and tollMoney != ''">
+                toll_money =
+                    #{tollMoney},
+            </if>
+            <if test="payStand != null and payStand != ''">
+                pay_stand =
+                    #{payStand},
+            </if>
+            <if test="remark != null">
+                remark =
+                    #{remark},
+            </if>
+            <if test="createId != null and createId != ''">
+                create_id =
+                    #{createId},
+            </if>
+            <if test="isFlag != null">
+                is_flag =
+                    #{isFlag},
+            </if>
+            <if test="createTime != null">
+                create_time =
+                    #{createTime},
+            </if>
+        </trim>
+        where id = #{id}
+          and is_flag = 0
+    </update>
+
+    <delete id="deleteContractConfigById" parameterType="String">
+        delete
+        from contract_config
+        where id = #{id}
+    </delete>
+
+    <update id="deleteContractConfigByIds" parameterType="String">
+        update contract_config
+        set is_flag = 1 where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            id = #{id}
+        </foreach>
+    </update>
+</mapper>
