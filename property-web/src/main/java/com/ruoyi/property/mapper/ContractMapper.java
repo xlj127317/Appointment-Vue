@@ -86,4 +86,6 @@ public interface ContractMapper {
      * @return 结果
      */
     int deleteContractByIds(String[] ids);
+
+    List<Contract> checkContract(String[] id);
 }

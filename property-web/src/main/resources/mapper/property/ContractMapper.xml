@@ -13,6 +13,8 @@
         <result column="contract_status" jdbcType="VARCHAR" property="contractStatus"/>
         <result column="area" jdbcType="VARCHAR" property="area"/>
         <result column="deposit" jdbcType="VARCHAR" property="deposit"/>
+        <result column="file_src" jdbcType="VARCHAR" property="fileSrc"/>
+        <result column="configure_id" jdbcType="VARCHAR" property="configureId"/>
         <result column="create_id" jdbcType="VARCHAR" property="createId"/>
         <result column="is_flag" jdbcType="INTEGER" property="isFlag"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
@@ -28,6 +30,8 @@
         contract_status,
         area,
         deposit,
+        file_src,
+        configure_id,
         create_id,
         is_flag,
         create_time
@@ -76,6 +80,12 @@
             <if test="deposit != null">
                 deposit,
             </if>
+            <if test="fileSrc != null">
+                file_src,
+            </if>
+            <if test="configureId != null">
+                configure_id,
+            </if>
             <if test="createId != null">
                 create_id,
             </if>
@@ -113,6 +123,12 @@
             </if>
             <if test="deposit != null">
                 #{deposit,jdbcType=VARCHAR},
+            </if>
+            <if test="fileSrc != null">
+                #{fileSrc,jdbcType=VARCHAR},
+            </if>
+            <if test="configureId != null">
+                #{configureId,jdbcType=VARCHAR},
             </if>
             <if test="createId != null">
                 #{createId,jdbcType=VARCHAR},
@@ -153,6 +169,12 @@
             <if test="deposit != null">
                 deposit = #{deposit,jdbcType=VARCHAR},
             </if>
+            <if test="fileSrc != null">
+                file_src = #{fileSrc,jdbcType=VARCHAR},
+            </if>
+            <if test="configureId != null">
+                configure_id = #{configureId,jdbcType=VARCHAR},
+            </if>
             <if test="createId != null">
                 create_id = #{createId,jdbcType=VARCHAR},
             </if>
@@ -175,82 +197,78 @@
                 and type_id = #{typeId}
             </if>
             <if test="partyA != null  and partyA != ''">
-                and
-                party_a
-                =
-                #{partyA}
+                and party_a
+                    =
+                    #{partyA}
             </if>
             <if test="ownerId != null  and ownerId != ''">
-                and
-                owner_id
-                =
-                #{ownerId}
+                and owner_id
+                    =
+                    #{ownerId}
             </if>
             <if test="partyB != null  and partyB != ''">
-                and
-                party_b
-                =
-                #{partyB}
+                and party_b
+                    =
+                    #{partyB}
             </if>
             <if test="contractMoney != null  and contractMoney != ''">
-                and
-                contract_money
-                =
-                #{contractMoney}
+                and contract_money
+                    =
+                    #{contractMoney}
             </if>
             <if test="contractStatus != null  and contractStatus != ''">
-                and
-                contract_status
-                =
-                #{contractStatus}
+                and contract_status
+                    =
+                    #{contractStatus}
             </if>
             <if test="area != null  and area != ''">
-                and
-                area
-                =
-                #{area}
+                and area
+                    =
+                    #{area}
             </if>
             <if test="deposit != null  and deposit != ''">
-                and
-                deposit
-                =
-                #{deposit}
+                and deposit
+                    =
+                    #{deposit}
+            </if>
+            <if test="fileSrc != null and fileSrc != ''">
+                and file_src = #{fileSrc}
+            </if>
+            <if test="configureId != null and configureId != ''">
+                and configure_id = #{configureId,jdbcType=VARCHAR}
             </if>
             <if test="createId != null  and createId != ''">
-                and
-                create_id
-                =
-                #{createId}
+                and create_id
+                    =
+                    #{createId}
             </if>
             <if test="params.beginTime != null and params.beginTime != ''">
                 <!-- 开始时间检索 -->
-                AND
-                date_format
-                (
-                create_time,
-                '%y%m%d'
-                )
-                &gt;=
-                date_format
-                (
-                #{params.beginTime},
-                '%y%m%d'
-                )
+                AND date_format
+                        (
+                            create_time,
+                            '%y%m%d'
+                        )
+                    &gt;=
+                    date_format
+                        (
+                            #{params.beginTime},
+                            '%y%m%d'
+                        )
             </if>
             <if test="params.endTime != null and params.endTime != ''">
                 <!-- 结束时间检索 -->
-                AND
-                date_format
-                (
-                create_time,
-                '%y%m%d'
-                )
-                &lt;=
-                date_format
-                (
-                #{params.endTime},
-                '%y%m%d'
-                )
+                AND date_format
+                        (
+                            create_time,
+                            '%y%m%d'
+                        )
+                    &lt;=
+                    date_format
+                        (
+                            #{params.endTime},
+                            '%y%m%d'
+                        )
             </if>
         </where>
     </select>
@@ -292,6 +310,12 @@
             <if test="deposit != null and deposit != ''">
                 deposit,
             </if>
+            <if test="fileSrc != null and fileSrc != ''">
+                file_src,
+            </if>
+            <if test="configureId != null and configureId != ''">
+                configure_id,
+            </if>
             <if test="createId != null and createId != ''">
                 create_id,
             </if>
@@ -329,6 +353,12 @@
             </if>
             <if test="deposit != null and deposit != ''">
                 #{deposit},
+            </if>
+            <if test="fileSrc != null and fileSrc != ''">
+                #{fileSrc},
+            </if>
+            <if test="configureId != null and configureId != ''">
+                #{configureId},
             </if>
             <if test="createId != null and createId != ''">
                 #{createId},
@@ -377,6 +407,12 @@
                 deposit =
                     #{deposit},
             </if>
+            <if test="fileSrc != null and fileSrc != ''">
+                file_src = #{fileSrc,jdbcType=VARCHAR},
+            </if>
+            <if test="configureId != null and configureId != ''">
+                configure_id = #{configureId,jdbcType=VARCHAR},
+            </if>
             <if test="createId != null and createId != ''">
                 create_id =
                     #{createId},
@@ -402,8 +438,19 @@
     <update id="deleteContractByIds" parameterType="String">
         update contract
         set is_flag = 1 where id in
-        <foreach item="id" collection="array" open="(" separator="," close=")">
+        <foreach close=")" collection="array" item="id" open="(" separator=",">
             #{id}
         </foreach>
     </update>
+
+    <select id="checkContract" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from contract
+        where configure_id in
+        <foreach open="(" close=")" collection="array" separator="," item="configureId">
+            #{configureId}
+        </foreach>
+        and is_flag = 0
+    </select>
 </mapper>
