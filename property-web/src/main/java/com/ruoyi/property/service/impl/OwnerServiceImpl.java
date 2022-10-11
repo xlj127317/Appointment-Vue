@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 import com.ruoyi.property.mapper.OwnerMapper;
 import com.ruoyi.property.domain.Owner;
 import com.ruoyi.property.service.IOwnerService;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 /**
  * 业主管理Service业务层处理
@@ -20,6 +23,12 @@ import com.ruoyi.property.service.IOwnerService;
 public class OwnerServiceImpl implements IOwnerService {
     @Autowired
     private OwnerMapper ownerMapper;
+
+    @Autowired
+    private WalletService walletService;
+
+    @Autowired
+    private PlatformTransactionManager transactionManager;
 
     /**
      * 查询业主管理
@@ -51,9 +60,23 @@ public class OwnerServiceImpl implements IOwnerService {
      */
     @Override
     public int insertOwner(Owner owner) {
-        owner.setId(PkeyGenerator.getUniqueString());
-        owner.setCreateTime(DateUtils.getNowDate());
-        return ownerMapper.insertOwner(owner);
+        TransactionStatus transactionStatus = transactionManager.getTransaction(new DefaultTransactionDefinition());
+
+        try {
+            owner.setId(PkeyGenerator.getUniqueString());
+            owner.setCreateTime(DateUtils.getNowDate());
+
+            walletService.createIfNotExists(owner.getId());
+
+            int result = ownerMapper.insertOwner(owner);
+
+            transactionManager.commit(transactionStatus);
+
+            return result;
+        } catch (Exception exception) {
+            transactionManager.rollback(transactionStatus);
+            return 0;
+        }
     }
 
     /**

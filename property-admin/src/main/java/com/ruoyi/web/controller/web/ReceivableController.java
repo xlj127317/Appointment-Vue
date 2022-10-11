@@ -12,6 +12,7 @@ import com.ruoyi.property.domain.Receivable;
 import com.ruoyi.property.dto.ReceivableListInput;
 import com.ruoyi.property.dto.ReceivableOutput;
 import com.ruoyi.property.service.IContractService;
+import com.ruoyi.property.service.IFeeTradeService;
 import com.ruoyi.property.service.IPaymentTypeService;
 import com.ruoyi.property.service.IReceivableService;
 import com.ruoyi.web.dto.ReceivableCreateInput;
@@ -23,7 +24,10 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -44,6 +48,9 @@ public class ReceivableController extends BaseController {
 
     @Autowired
     private IPaymentTypeService paymentTypeService;
+
+    @Autowired
+    private IFeeTradeService feeTradeService;
 
     /**
      * 表查询应收管理列
@@ -112,8 +119,20 @@ public class ReceivableController extends BaseController {
         receivable.setPaymentContent(input.getPaymentContent());
         receivable.setStopTime(input.getExpiresDate());
         receivable.setPaymentType(0);
-        receivable.setCreateId(getUserId().toString());
-        return toAjax(receivableService.insertReceivable(receivable));
+        receivable.setCreateId(getUserId());
+        int result = receivableService.insertReceivable(receivable);
+
+        Map feeTradeCreateParams = new HashMap<String, Object>();
+        feeTradeCreateParams.put("ownerId", contract.getOwnerId());
+        feeTradeCreateParams.put("subject", input.getPaymentName());
+        feeTradeCreateParams.put("description", input.getPaymentContent());
+        feeTradeCreateParams.put("price", input.getReceivableMoney());
+        feeTradeCreateParams.put("count", new BigDecimal(1));
+        feeTradeCreateParams.put("outScope", "receivable");
+        feeTradeCreateParams.put("outId", receivable.getId());
+        feeTradeService.createTrade(feeTradeCreateParams);
+
+        return toAjax(result);
     }
 
     /**

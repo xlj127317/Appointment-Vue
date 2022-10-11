@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.property.mapper.FeeTradeMapper">
+    <resultMap id="BaseResultMap" type="com.ruoyi.property.domain.FeeTrade">
+        <!--@mbg.generated-->
+        <!--@Table visit-->
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="user_id" jdbcType="VARCHAR" property="userId"/>
+        <result column="no" jdbcType="VARCHAR" property="no"/>
+        <result column="subject" jdbcType="VARCHAR" property="subject"/>
+        <result column="description" jdbcType="VARCHAR" property="description" />
+        <result column="price" jdbcType="DECIMAL" property="price"/>
+        <result column="count" jdbcType="DECIMAL" property="count"/>
+        <result column="amount" jdbcType="DECIMAL" property="amount"/>
+        <result column="state" property="state" typeHandler="com.ruoyi.common.enums.FeeTradeStatusTypeHandler" />
+        <result column="paid_at" jdbcType="TIMESTAMP" property="paidAt" />
+        <result column="paid_amount" jdbcType="DECIMAL" property="paidAmount" />
+        <result column="refunded_at" jdbcType="TIMESTAMP" property="refundedAt" />
+        <result column="refunded_amount" jdbcType="DECIMAL" property="refundedAmount" />
+        <result column="biz_channel" jdbcType="VARCHAR" property="bizChannel"/>
+        <result column="biz_trade_no" jdbcType="VARCHAR" property="bizTradeNo"/>
+        <result column="out_scope" jdbcType="VARCHAR" property="outScope"/>
+        <result column="out_id" jdbcType="VARCHAR" property="outId"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        owner_id,
+        balance,
+        frozen,
+        checked_at
+    </sql>
+    <insert id="create" parameterType="java.util.Map">
+        INSERT IGNORE INTO fee_trades
+        (
+            id,
+            owner_id,
+            no,
+            subject,
+            description,
+            price,
+            count,
+            amount,
+            state,
+            out_scope,
+            out_id,
+            create_time
+        ) VALUES (
+            #{id},
+            #{ownerId},
+            #{no},
+            #{subject},
+            #{description},
+            #{price},
+            #{count},
+            #{amount},
+            #{state},
+            #{outScope},
+            #{outId},
+            CURRENT_TIMESTAMP
+        );
+    </insert>
+    <select id="listUserTrades" parameterType="java.lang.String" resultType="java.util.Map">
+        SELECT * FROM fee_trades WHERE owner_id = #{ownerId}
+    </select>
+    <select id="listAllTrades" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT * FROM fee_trades
+        WHERE 1 = 1
+        <if test="contractId != null">
+
+        </if>
+        <if test="outScope != null">
+            AND out_scope = #{outScope}
+        </if>
+        <if test="outId != null">
+            AND out_id = #{outId}
+        </if>
+        <if test="paidAtBegin != null">
+            AND paid_at >= #{paidAtBegin}
+        </if>
+        <if test="paidAtEnd != null">
+            <![CDATA[AND paid_at <= #{paidAtEnd}]]>
+        </if>
+        <if test="createTimeBegin != null">
+            AND create_time >= #{createTimeBegin}
+        </if>
+        <if test="createTimeEnd != null">
+            <![CDATA[AND create_time <= #{createTimeEnd}]]>
+        </if>
+    </select>
+    <select id="getTradeByNo" parameterType="java.lang.String" resultType="java.util.Map">
+        SELECT * FROM fee_trades WHERE no = #{no} LIMIT 1;
+    </select>
+    <select id="getTrade" resultType="java.util.Map">
+        SELECT * FROM fee_trades WHERE
+        <if test="no != null">
+            no = #{no}
+        </if>
+        <if test="ownerId != null">
+            owner_id = #{ownerId}
+        </if>
+        LIMIT 1;
+    </select>
+</mapper>

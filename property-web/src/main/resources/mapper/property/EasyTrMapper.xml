@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.property.mapper.EasyTrMapper">
+    <select id="userIdToOwnerId" resultType="java.lang.String">
+        SELECT
+          `owner`.id 
+        FROM
+          `owner`
+          LEFT JOIN sys_user ON sys_user.phonenumber = `owner`.phone 
+        WHERE
+          sys_user.user_id = #{userId}
+        <if test="lockType == 1">
+          FOR SHARED
+        </if>
+        <if test="lockType == 2">
+          FOR UPDATE;
+        </if>
+        LIMIT 1;
+    </select>
+</mapper>

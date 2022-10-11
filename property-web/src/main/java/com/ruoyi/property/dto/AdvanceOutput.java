@@ -17,4 +17,9 @@ public class AdvanceOutput {
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date advanceDate;
+
+    private Integer deductStatus;
+    private Date deductTime;
+    private String creatorName;
+    private Date createTime;
 }

@@ -1,7 +1,6 @@
 package com.ruoyi.common.utils;
 
 import cn.hutool.core.util.StrUtil;
-import com.sun.org.apache.regexp.internal.RE;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
