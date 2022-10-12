@@ -1,10 +1,8 @@
 package com.ruoyi.property.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.convert.Convert;
 import com.ruoyi.common.enums.FeeTradeState;
 import com.ruoyi.common.utils.uuid.PkeyGenerator;
-import com.ruoyi.property.domain.FeeTrade;
 import com.ruoyi.property.dto.FeeTradeListInputDto;
 import com.ruoyi.property.mapper.FeeTradeMapper;
 import com.ruoyi.property.service.IFeeTradeService;
@@ -25,8 +23,8 @@ public class FeeTradeServiceImpl implements IFeeTradeService {
     public void createTrade(Map params) {
         params.put("id", PkeyGenerator.getUniqueString());
         params.put("no", PkeyGenerator.getUniqueString());
-        BigDecimal price = (BigDecimal)params.get("price");
-        BigDecimal count = (BigDecimal)params.get("count");
+        BigDecimal price = (BigDecimal) params.get("price");
+        BigDecimal count = (BigDecimal) params.get("count");
         BigDecimal amount = price.multiply(count);
         params.put("amount", amount);
         params.put("state", FeeTradeState.WAIT_PAY);
@@ -34,27 +32,23 @@ public class FeeTradeServiceImpl implements IFeeTradeService {
     }
 
     @Override
-    public List<Map> listUserTrades(String ownerId)
-    {
+    public List<Map> listUserTrades(String ownerId) {
         return feeTradeMapper.listUserTrades(ownerId);
     }
 
     @Override
-    public List<Map> listAllTrades(FeeTradeListInputDto input)
-    {
+    public List<Map> listTrades(FeeTradeListInputDto input) {
         Map params = BeanUtil.beanToMap(input);
-        return feeTradeMapper.listAllTrades(params);
+        return feeTradeMapper.listTrades(params);
     }
 
     @Override
-    public Map getTradeByNo(String no)
-    {
+    public Map getTradeByNo(String no) {
         return feeTradeMapper.getTradeByNo(no);
     }
 
     @Override
-    public Map getTrade(Map params)
-    {
+    public Map getTrade(Map params) {
         return feeTradeMapper.getTrade(params);
     }
 

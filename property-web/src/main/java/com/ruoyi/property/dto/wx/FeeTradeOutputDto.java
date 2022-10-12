@@ -13,6 +13,7 @@ import java.util.Date;
 public class FeeTradeOutputDto {
     private String no;
     private String subject;
+    private String description;
     private BigDecimal amount;
 
     @JsonSerialize(using = FeeTradeStateSerializer.class)
