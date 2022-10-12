@@ -6,6 +6,9 @@ import com.ruoyi.property.service.IEasyTrService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Service
 public class EasyTrServiceImpl implements IEasyTrService {
     @Autowired
@@ -18,7 +21,10 @@ public class EasyTrServiceImpl implements IEasyTrService {
 
     @Override
     public String userIdToOwnerId(String userId, int lockType) {
-        return mapper.userIdToOwnerId(userId, lockType);
+        Map params = new HashMap();
+        params.put("userId", userId);
+        params.put("withLock", lockType);
+        return mapper.userIdToOwnerId(params);
     }
 
     @Override

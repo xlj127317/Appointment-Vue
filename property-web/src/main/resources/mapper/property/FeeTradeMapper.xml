@@ -92,13 +92,39 @@
         SELECT * FROM fee_trades WHERE no = #{no} LIMIT 1;
     </select>
     <select id="getTrade" resultType="java.util.Map">
-        SELECT * FROM fee_trades WHERE
+        SELECT * FROM fee_trades WHERE 1= 1
         <if test="no != null">
-            no = #{no}
+            AND no = #{no}
         </if>
         <if test="ownerId != null">
-            owner_id = #{ownerId}
+            AND owner_id = #{ownerId}
         </if>
-        LIMIT 1;
+        LIMIT 1
+        <choose>
+            <when test="withLock == 1">
+                FOR SHARED
+            </when>
+            <when test="withLock == 2">
+                FOR UPDATE
+            </when>
+        </choose>
     </select>
+    <update id="completeTrade">
+        UPDATE fee_trades SET
+            paid_at = CURRENT_TIMESTAMP,
+            paid_amount = #{paidAmount},
+            biz_channel = #{bizChannel},
+            biz_trade_no = #{bizTradeNo},
+            state = #{stateSucceedValue}
+        WHERE
+        <choose>
+            <when test="no != null">
+                no = #{no}
+            </when>
+            <otherwise>
+                id = #{id}
+            </otherwise>
+        </choose>
+        AND state = 0
+    </update>
 </mapper>

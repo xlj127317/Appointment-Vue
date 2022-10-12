@@ -13,5 +13,7 @@ public interface FeeTradeMapper {
 
     Map getTradeByNo(String tradeNo);
 
-    FeeTrade getTrade(Map params, int lockType);
+    Map getTrade(Map params);
+
+    int completeTrade(Map params);
 }

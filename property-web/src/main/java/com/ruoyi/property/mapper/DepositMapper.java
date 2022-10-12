@@ -4,6 +4,7 @@ import com.ruoyi.property.domain.Deposit;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface DepositMapper {
@@ -94,4 +95,6 @@ public interface DepositMapper {
      * @return 结果
      */
     int deleteDepositByIds(String[] ids);
+
+    Deposit get(Map params);
 }

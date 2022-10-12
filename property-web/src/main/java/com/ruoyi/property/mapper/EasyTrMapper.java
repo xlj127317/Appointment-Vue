@@ -1,5 +1,7 @@
 package com.ruoyi.property.mapper;
 
+import java.util.Map;
+
 public interface EasyTrMapper {
-    String userIdToOwnerId(String userId, int lockType);
+    String userIdToOwnerId(Map params);
 }

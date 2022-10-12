@@ -1,6 +1,7 @@
 package com.ruoyi.property.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.uuid.PkeyGenerator;
@@ -88,5 +89,10 @@ public class DepositServiceImpl implements IDepositService {
     @Override
     public int deleteDepositById(String id) {
         return depositMapper.deleteDepositById(id);
+    }
+
+    public Deposit get(Map params)
+    {
+        return depositMapper.get(params);
     }
 }

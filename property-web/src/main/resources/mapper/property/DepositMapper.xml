@@ -300,4 +300,28 @@
             #{id}
         </foreach>
     </update>
+    <select id="get" resultMap="BaseResultMap">
+      SELECT * FROM deposit WHERE 1 = 1
+      <if test="id != null">
+        AND id = #{id}
+      </if>
+      <if test="userId != null">
+        AND user_id = #{userId}
+      </if>
+      <if test="contractId != null">
+        AND contract_id = #{contractId}
+      </if>
+      <choose>
+        <when test="isFlag != null">
+          AND is_flag = #{isFlag}
+        </when>
+        <otherwise>
+          AND is_flag = 0
+        </otherwise>
+      </choose>
+      LIMIT 1
+      <if test="forUpdate != null and forUpdate">
+        FOR UPDATE
+      </if>
+    </select>
 </mapper>

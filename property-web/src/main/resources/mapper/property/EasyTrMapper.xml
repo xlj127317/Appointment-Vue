@@ -9,12 +9,14 @@
           LEFT JOIN sys_user ON sys_user.phonenumber = `owner`.phone 
         WHERE
           sys_user.user_id = #{userId}
-        <if test="lockType == 1">
-          FOR SHARED
-        </if>
-        <if test="lockType == 2">
-          FOR UPDATE;
-        </if>
-        LIMIT 1;
+        LIMIT 1
+        <choose>
+            <when test="withLock == 1">
+                FOR SHARED
+            </when>
+            <when test="withLock == 2">
+                FOR UPDATE
+            </when>
+        </choose>
     </select>
 </mapper>

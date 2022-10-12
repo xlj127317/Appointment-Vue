@@ -1,6 +1,7 @@
 package com.ruoyi.property.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.ruoyi.property.domain.Deposit;
 
@@ -58,4 +59,6 @@ public interface IDepositService {
      * @return 结果
      */
     public int deleteDepositById(String id);
+
+    Deposit get(Map params);
 }

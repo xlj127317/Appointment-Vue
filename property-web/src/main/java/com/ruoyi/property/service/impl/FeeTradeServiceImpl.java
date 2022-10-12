@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -52,14 +53,15 @@ public class FeeTradeServiceImpl implements IFeeTradeService {
     }
 
     @Override
-    public FeeTrade getTrade(Map params)
+    public Map getTrade(Map params)
     {
-        return getTrade(params, 0);
+        return feeTradeMapper.getTrade(params);
     }
 
     @Override
-    public FeeTrade getTrade(Map params, int lockType)
-    {
-        return feeTradeMapper.getTrade(params, lockType);
+    public int completeTrade(Map params) {
+        params = new HashMap(params);
+        params.put("stateSucceedValue", FeeTradeState.SUCCEED.getValue());
+        return feeTradeMapper.completeTrade(params);
     }
 }

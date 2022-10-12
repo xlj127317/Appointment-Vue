@@ -11,6 +11,6 @@ public interface IFeeTradeService {
     List<Map> listUserTrades(String ownerId);
     List<Map> listAllTrades(FeeTradeListInputDto input);
     Map getTradeByNo(String no);
-    FeeTrade getTrade(Map params);
-    FeeTrade getTrade(Map params, int lockType);
+    Map getTrade(Map params);
+    int completeTrade(Map params);
 }
