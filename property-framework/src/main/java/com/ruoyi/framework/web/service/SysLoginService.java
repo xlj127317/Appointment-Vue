@@ -62,6 +62,11 @@ public class SysLoginService {
     private SysUserMapper userMapper;
 
     /**
+     *
+     */
+    public static final long DEPT_ID = 110;
+
+    /**
      * 小程序appid
      */
     @Value("${wx.appId}")
@@ -190,7 +195,7 @@ public class SysLoginService {
                 sysUser.setCreateBy(name);
                 userMapper.insertUser(sysUser);
                 loginUser.setUserId(openid);
-                loginUser.setDeptId(-1L);
+                loginUser.setDeptId(DEPT_ID);
                 loginUser.setUser(sysUser);
                 AjaxResult success = getAjaxResult(openid, loginUser);
                 return success;

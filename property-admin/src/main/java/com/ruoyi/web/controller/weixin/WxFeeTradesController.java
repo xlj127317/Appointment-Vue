@@ -56,9 +56,8 @@ public class WxFeeTradesController extends BaseController {
         return getDataTable(output);
     }
 
-    @GetMapping("/{tradeNo}")
-    public FeeTradeOutputDto getFeeTrade(@PathVariable String tradeNo)
-    {
+    @GetMapping("/getFeeTrade")
+    public FeeTradeOutputDto getFeeTrade(@RequestParam String tradeNo) {
         Map trade = feeTradeService.getTradeByNo(tradeNo);
         FeeTradeOutputDto dto = BeanUtil.mapToBean(trade, FeeTradeOutputDto.class, false, new CopyOptions());
         return dto;
@@ -66,13 +65,12 @@ public class WxFeeTradesController extends BaseController {
 
     @PreAuthorize("@ss.hasPermi('property:feetrades:paydeposit')")
     @PostMapping("/pay/deposit")
-    public AjaxResult depositPay(@RequestBody Map params)
-    {
+    public AjaxResult depositPay(@RequestBody Map params) {
         TransactionStatus transactionStatus = transactionManager.getTransaction(null);
 
         try {
             String ownerId = easyTrService.userIdToOwnerId(getUserId(), 2);
-            String tradeNo = (String)params.get("tradeNo");
+            String tradeNo = (String) params.get("tradeNo");
 
             Map queryTradeParams = new HashMap();
             queryTradeParams.put("no", tradeNo);
