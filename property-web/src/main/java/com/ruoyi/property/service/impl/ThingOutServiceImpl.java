@@ -1,9 +1,15 @@
 package com.ruoyi.property.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
+import com.ruoyi.common.enums.ReportTypeEnum;
+import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.uuid.PkeyGenerator;
+import com.ruoyi.property.domain.Repair;
+import com.ruoyi.property.domain.Report;
+import com.ruoyi.property.mapper.ReportMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.property.mapper.ThingOutMapper;
@@ -20,6 +26,9 @@ import com.ruoyi.property.service.ThingOutService;
 public class ThingOutServiceImpl implements ThingOutService {
     @Autowired
     private ThingOutMapper thingOutMapper;
+
+    @Autowired
+    private ReportMapper reportMapper;
 
     /**
      * 查询物品出入申请
@@ -51,9 +60,13 @@ public class ThingOutServiceImpl implements ThingOutService {
      */
     @Override
     public int insertThingOut(ThingOut thingOut) {
+        Date nowDate = DateUtils.getNowDate();
         thingOut.setId(PkeyGenerator.getUniqueString());
-        thingOut.setApplicantTime(DateUtils.getNowDate());
+        thingOut.setApplicantTime(nowDate);
         thingOut.setCreateTime(DateUtils.getNowDate());
+        if (insertReport(thingOut,nowDate) != 1) {
+            throw new ServiceException("添加工单失败");
+        }
         return thingOutMapper.insertThingOut(thingOut);
     }
 
@@ -88,5 +101,23 @@ public class ThingOutServiceImpl implements ThingOutService {
     @Override
     public int deleteThingOutById(String id) {
         return thingOutMapper.deleteThingOutById(id);
+    }
+
+    /**
+     * 添加工单信息
+     *
+     * @param thingOut 物品出入实体
+     * @param nowDate 当前时间
+     * @return int
+     */
+    private int insertReport(ThingOut thingOut, Date nowDate) {
+        Report report = new Report();
+        report.setId(thingOut.getId());
+        report.setTypeId(ReportTypeEnum.THING_OUT.getValue());
+        report.setReportContent(thingOut.getThing());
+        report.setAuditStatus(0);
+        report.setCreateTime(nowDate);
+        report.setCreateId(thingOut.getCreateId());
+        return reportMapper.insertReport(report);
     }
 }

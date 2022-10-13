@@ -1,9 +1,15 @@
 package com.ruoyi.property.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
+import com.ruoyi.common.enums.ReportTypeEnum;
+import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.uuid.PkeyGenerator;
+import com.ruoyi.property.domain.Report;
+import com.ruoyi.property.domain.ThingOut;
+import com.ruoyi.property.mapper.ReportMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.property.mapper.VisitMapper;
@@ -20,6 +26,9 @@ import com.ruoyi.property.service.VisitService;
 public class VisitServiceImpl implements VisitService {
     @Autowired
     private VisitMapper visitMapper;
+
+    @Autowired
+    private ReportMapper reportMapper;
 
     /**
      * 查询来访出入申请
@@ -51,9 +60,13 @@ public class VisitServiceImpl implements VisitService {
      */
     @Override
     public int insertVisit(Visit visit) {
+        Date nowDate = DateUtils.getNowDate();
         visit.setId(PkeyGenerator.getUniqueString());
-        visit.setApplicantTime(DateUtils.getNowDate());
+        visit.setApplicantTime(nowDate);
         visit.setCreateTime(DateUtils.getNowDate());
+        if (insertReport(visit, nowDate) != 1) {
+            throw new ServiceException("添加工单失败");
+        }
         return visitMapper.insertVisit(visit);
     }
 
@@ -88,5 +101,23 @@ public class VisitServiceImpl implements VisitService {
     @Override
     public int deleteVisitById(String id) {
         return visitMapper.deleteVisitById(id);
+    }
+
+    /**
+     * 添加工单信息
+     *
+     * @param visit   来访出入实体
+     * @param nowDate 当前时间
+     * @return int
+     */
+    private int insertReport(Visit visit, Date nowDate) {
+        Report report = new Report();
+        report.setId(visit.getId());
+        report.setTypeId(ReportTypeEnum.VISIT.getValue());
+        report.setReportContent(visit.getVisitName());
+        report.setAuditStatus(0);
+        report.setCreateTime(nowDate);
+        report.setCreateId(visit.getCreateId());
+        return reportMapper.insertReport(report);
     }
 }

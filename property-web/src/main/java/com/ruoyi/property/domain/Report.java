@@ -32,7 +32,7 @@ public class Report extends BaseEntity {
      */
     @ApiModelProperty(value = "工单类别id")
     @Schema(description = "工单类别id")
-    private Integer typeId;
+    private String typeId;
 
     /**
      * 工单内容

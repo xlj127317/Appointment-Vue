@@ -1,9 +1,14 @@
 package com.ruoyi.property.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
+import com.ruoyi.common.enums.ReportTypeEnum;
+import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.uuid.PkeyGenerator;
+import com.ruoyi.property.domain.Report;
+import com.ruoyi.property.mapper.ReportMapper;
 import com.ruoyi.property.service.RepairService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +26,9 @@ import com.ruoyi.property.domain.Repair;
 public class RepairServiceImpl implements RepairService {
     @Autowired
     private RepairMapper repairMapper;
+
+    @Autowired
+    private ReportMapper reportMapper;
 
     /**
      * 查询物业报修申请
@@ -52,9 +60,13 @@ public class RepairServiceImpl implements RepairService {
      */
     @Override
     public int insertRepair(Repair repair) {
+        Date nowDate = DateUtils.getNowDate();
         repair.setId(PkeyGenerator.getUniqueString());
-        repair.setApplicantTime(DateUtils.getNowDate());
+        repair.setApplicantTime(nowDate);
         repair.setCreateTime(DateUtils.getNowDate());
+        if (insertReport(repair, nowDate) != 1) {
+            throw new ServiceException("添加工单失败");
+        }
         return repairMapper.insertRepair(repair);
     }
 
@@ -89,5 +101,23 @@ public class RepairServiceImpl implements RepairService {
     @Override
     public int deleteRepairById(String id) {
         return repairMapper.deleteRepairById(id);
+    }
+
+    /**
+     * 添加工单信息
+     *
+     * @param repair  物业报修实体
+     * @param nowDate 当前时间
+     * @return int
+     */
+    private int insertReport(Repair repair, Date nowDate) {
+        Report report = new Report();
+        report.setId(repair.getId());
+        report.setTypeId(ReportTypeEnum.REPAIR.getValue());
+        report.setReportContent(repair.getRepairContent());
+        report.setAuditStatus(0);
+        report.setCreateTime(nowDate);
+        report.setCreateId(repair.getCreateId());
+        return reportMapper.insertReport(report);
     }
 }

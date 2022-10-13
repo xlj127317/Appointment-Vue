@@ -25,7 +25,7 @@ public interface IReportService {
      * @param report 工单管理
      * @return 工单管理集合
      */
-    public List<Report> selectReportList(Report report);
+    List<Report> selectReportList(Report report);
 
     /**
      * 新增工单管理

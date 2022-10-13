@@ -1,14 +1,21 @@
 package com.ruoyi.property.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
+import com.ruoyi.common.enums.ReportTypeEnum;
+import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.uuid.PkeyGenerator;
+import com.ruoyi.property.domain.Report;
+import com.ruoyi.property.mapper.ReportMapper;
 import com.ruoyi.property.service.FurnishService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.property.mapper.FurnishMapper;
 import com.ruoyi.property.domain.Furnish;
+
+import javax.annotation.Resource;
 
 /**
  * 装修办理申请Service业务层处理
@@ -18,8 +25,11 @@ import com.ruoyi.property.domain.Furnish;
  */
 @Service
 public class FurnishServiceImpl implements FurnishService {
-    @Autowired
+    @Resource
     private FurnishMapper furnishMapper;
+
+    @Autowired
+    private ReportMapper reportMapper;
 
     /**
      * 查询装修办理申请
@@ -51,9 +61,13 @@ public class FurnishServiceImpl implements FurnishService {
      */
     @Override
     public int insertFurnish(Furnish furnish) {
+        Date nowDate = DateUtils.getNowDate();
         furnish.setId(PkeyGenerator.getUniqueString());
         furnish.setApplicantTime(DateUtils.getNowDate());
-        furnish.setCreateTime(DateUtils.getNowDate());
+        furnish.setCreateTime(nowDate);
+        if (insertReport(furnish, nowDate) != 1) {
+            throw new ServiceException("添加工单失败");
+        }
         return furnishMapper.insertFurnish(furnish);
     }
 
@@ -88,5 +102,23 @@ public class FurnishServiceImpl implements FurnishService {
     @Override
     public int deleteFurnishById(String id) {
         return furnishMapper.deleteFurnishById(id);
+    }
+
+    /**
+     * 添加工单信息
+     *
+     * @param furnish 装修办理实体
+     * @param nowDate 当前时间
+     * @return int
+     */
+    private int insertReport(Furnish furnish, Date nowDate) {
+        Report report = new Report();
+        report.setId(furnish.getId());
+        report.setTypeId(ReportTypeEnum.FURNISH.getValue());
+        report.setReportContent(furnish.getProjectName());
+        report.setAuditStatus(0);
+        report.setCreateTime(nowDate);
+        report.setCreateId(furnish.getCreateId());
+        return reportMapper.insertReport(report);
     }
 }

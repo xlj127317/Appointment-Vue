@@ -37,12 +37,12 @@ public class CruiseController extends BaseController {
     @Autowired
     private CruiseService cruiseService;
 
-/**
- * 查询巡航管理列表
- */
-@ApiOperation("查询巡航管理列表")
-@PreAuthorize("@ss.hasPermi('property:cruise:list')")
-@GetMapping("/list")
+    /**
+     * 查询巡航管理列表
+     */
+    @ApiOperation("查询巡航管理列表")
+    @PreAuthorize("@ss.hasPermi('property:cruise:list')")
+    @GetMapping("/list")
     public TableDataInfo list(Cruise cruise) {
         startPage();
         List<Cruise> list = cruiseService.selectCruiseList(cruise);
@@ -58,7 +58,7 @@ public class CruiseController extends BaseController {
     @PostMapping("/export")
     public void export(HttpServletResponse response, Cruise cruise) {
         List<Cruise> list = cruiseService.selectCruiseList(cruise);
-        ExcelUtil<Cruise> util = new ExcelUtil<Cruise>(Cruise. class);
+        ExcelUtil<Cruise> util = new ExcelUtil<Cruise>(Cruise.class);
         util.exportExcel(response, list, "巡航管理数据");
     }
 
