@@ -49,6 +49,13 @@ public class Worker extends BaseEntity {
     private String jobNum;
 
     /**
+     * 任务内容
+     */
+    @ApiModelProperty(value = "任务内容")
+    @Schema(description = "任务内容")
+    private String taskContent;
+
+    /**
      * 推送状态 默认0 0为未推送 1，已推送，2推送失败
      */
     @ApiModelProperty(value = "推送状态 默认0 0为未推送 1，已推送，2推送失败")

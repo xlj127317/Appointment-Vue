@@ -8,6 +8,7 @@
         <result column="username" jdbcType="VARCHAR" property="username"/>
         <result column="dept_id" jdbcType="BIGINT" property="deptId"/>
         <result column="job_num" jdbcType="VARCHAR" property="jobNum"/>
+        <result column="task_content" jdbcType="VARCHAR" property="taskContent"/>
         <result column="push_status" jdbcType="INTEGER" property="pushStatus"/>
         <result column="finish_status" jdbcType="INTEGER" property="finishStatus"/>
         <result column="finish_date" jdbcType="TIMESTAMP" property="finishDate"/>
@@ -21,6 +22,7 @@
         username,
         dept_id,
         job_num,
+        task_content,
         push_status,
         finish_status,
         finish_date,
@@ -57,6 +59,9 @@
             <if test="jobNum != null">
                 job_num,
             </if>
+            <if test="taskContent != null">
+                task_content,
+            </if>
             <if test="pushStatus != null">
                 push_status,
             </if>
@@ -88,6 +93,9 @@
             </if>
             <if test="jobNum != null">
                 #{jobNum,jdbcType=VARCHAR},
+            </if>
+            <if test="taskContent != null">
+                #{taskContent,jdbcType=VARCHAR},
             </if>
             <if test="pushStatus != null">
                 #{pushStatus,jdbcType=INTEGER},
@@ -165,6 +173,9 @@
                     =
                     #{jobNum}
             </if>
+            <if test="taskContent != null and taskContent != ''">
+                and task_content like concat('%', #{taskContent}, '%')
+            </if>
             <if test="pushStatus != null">
                 and push_status
                     =
@@ -216,6 +227,9 @@
             <if test="jobNum != null and jobNum != ''">
                 job_num,
             </if>
+            <if test="taskContent != null and taskContent != ''">
+                task_content,
+            </if>
             <if test="pushStatus != null">
                 push_status,
             </if>
@@ -247,6 +261,9 @@
             </if>
             <if test="jobNum != null and jobNum != ''">
                 #{jobNum},
+            </if>
+            <if test="taskContent != null and taskContent != ''">
+                #{taskContent},
             </if>
             <if test="pushStatus != null">
                 #{pushStatus},
@@ -283,6 +300,9 @@
             <if test="jobNum != null and jobNum != ''">
                 job_num =
                     #{jobNum},
+            </if>
+            <if test="taskContent != null and taskContent != ''">
+                task_content = #{taskContent},
             </if>
             <if test="pushStatus != null">
                 push_status =
