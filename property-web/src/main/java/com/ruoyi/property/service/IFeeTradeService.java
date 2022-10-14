@@ -8,7 +8,7 @@ import java.util.Map;
 public interface IFeeTradeService {
     void createTrade(Map params);
     List<Map> listUserTrades(String ownerId);
-    List<Map> listTrades(FeeTradeListInputDto input);
+    List<Map> listTrades(Map params);
     Map getTradeByNo(String no);
     Map getTrade(Map params);
     int completeTrade(Map params);

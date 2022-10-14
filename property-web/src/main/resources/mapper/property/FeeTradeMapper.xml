@@ -70,8 +70,18 @@
         FROM fee_trades
         LEFT JOIN sys_user ON sys_user.user_id = fee_trades.owner_id
         WHERE 1 = 1
+        <if test="multiIdValues != null">
+            <foreach item="id" collection="multiIdValues" open="AND id IN (" separator="," close=")" nullable="false">
+                #{id}
+            </foreach>
+        </if>
         <if test="ownerId != null">
             AND owner_id = #{ownerId}
+        </if>
+        <if test="multiStateValues != null">
+            <foreach item="stateValue" collection="multiStateValues" open="AND state IN (" separator="," close=")" nullable="false">
+                #{stateValue}
+            </foreach>
         </if>
         <if test="contractId != null">
 

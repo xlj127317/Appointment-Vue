@@ -37,8 +37,7 @@ public class FeeTradeServiceImpl implements IFeeTradeService {
     }
 
     @Override
-    public List<Map> listTrades(FeeTradeListInputDto input) {
-        Map params = BeanUtil.beanToMap(input);
+    public List<Map> listTrades(Map params) {
         return feeTradeMapper.listTrades(params);
     }
 
