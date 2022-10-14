@@ -327,4 +327,13 @@
             #{id}
         </foreach>
     </update>
+
+    <update id="updateAuditStatus">
+        update report r
+        set r.audit_status  = #{auditStatus,jdbcType=INTEGER},
+            r.audit_content = #{auditContent,jdbcType=VARCHAR},
+            r.audit_time    = #{auditTime,jdbcType=TIMESTAMP},
+            r.audit_user_id = #{auditId,jdbcType=VARCHAR}
+        where r.id = #{id,jdbcType=VARCHAR}
+    </update>
 </mapper>

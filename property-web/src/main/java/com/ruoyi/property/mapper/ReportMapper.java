@@ -1,6 +1,7 @@
 package com.ruoyi.property.mapper;
 
 import com.ruoyi.property.domain.Report;
+import com.ruoyi.property.vo.req.ReportAuditReq;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -86,4 +87,6 @@ public interface ReportMapper {
      * @return 结果
      */
     int deleteReportByIds(String[] ids);
+
+    int updateAuditStatus(ReportAuditReq reportAuditReq);
 }

@@ -2,6 +2,7 @@ package com.ruoyi.property.mapper;
 
 import com.ruoyi.property.domain.ThingOut;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -86,4 +87,13 @@ public interface ThingOutMapper {
      * @return 结果
      */
     int deleteThingOutByIds(String[] ids);
+
+    /**
+     * 审核状态
+     *
+     * @param id          id
+     * @param auditStatus 状态
+     * @return int
+     */
+    int updateAudit(@Param("id") String id, @Param("auditStatus") Integer auditStatus);
 }

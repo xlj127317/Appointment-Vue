@@ -1,7 +1,10 @@
 package com.ruoyi.property.mapper;
 
 import com.ruoyi.property.domain.Furnish;
-import org.apache.ibatis.annotations.Mapper;import java.util.List;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 @Mapper
 public interface FurnishMapper {
@@ -84,4 +87,13 @@ public interface FurnishMapper {
      * @return 结果
      */
     int deleteFurnishByIds(String[] ids);
+
+    /**
+     * 审核状态
+     *
+     * @param id          id
+     * @param auditStatus 状态
+     * @return int
+     */
+    int updateAuditStatus(@Param("id") String id, @Param("auditStatus") Integer auditStatus);
 }

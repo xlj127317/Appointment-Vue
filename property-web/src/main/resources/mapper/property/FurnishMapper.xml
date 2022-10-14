@@ -324,4 +324,10 @@
             id = #{id}
         </foreach>
     </update>
+
+    <update id="updateAuditStatus">
+        update furnish f
+        set f.audit_status = #{auditStatus}
+        where id = #{id}
+    </update>
 </mapper>

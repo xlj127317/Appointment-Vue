@@ -346,4 +346,10 @@
             id = #{id}
         </foreach>
     </update>
+
+    <update id="updateAudit">
+        update thing_out t
+        set t.audit_status = #{auditStatus}
+        where t.id = #{id}
+    </update>
 </mapper>

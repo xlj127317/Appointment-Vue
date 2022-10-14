@@ -2,7 +2,9 @@ package com.ruoyi.property.service;
 
 import java.util.List;
 
+import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.property.domain.Report;
+import com.ruoyi.property.vo.req.ReportAuditReq;
 
 /**
  * 工单管理Service接口
@@ -58,4 +60,6 @@ public interface IReportService {
      * @return 结果
      */
     public int deleteReportById(String id);
+
+    AjaxResult auditReport(ReportAuditReq reportAuditReq);
 }
