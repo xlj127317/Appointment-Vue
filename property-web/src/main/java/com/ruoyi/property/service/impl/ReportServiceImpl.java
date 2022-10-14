@@ -129,7 +129,6 @@ public class ReportServiceImpl implements IReportService {
         reportAuditReq.setAuditTime(DateUtils.getNowDate());
         int reportAudit = reportMapper.updateAuditStatus(reportAuditReq);
         ajaxResult.put("reportAudit", reportAudit);
-
-        return ajaxResult;
+        return AjaxResult.success(ajaxResult);
     }
 }
