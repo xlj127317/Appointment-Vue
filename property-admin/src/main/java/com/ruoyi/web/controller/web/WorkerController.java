@@ -58,7 +58,7 @@ public class WorkerController extends BaseController {
     @PostMapping("/export")
     public void export(HttpServletResponse response, Worker worker) {
         List<Worker> list = workerService.selectWorkerList(worker);
-        ExcelUtil<Worker> util = new ExcelUtil<Worker>(Worker.class);
+        ExcelUtil<Worker> util = new ExcelUtil<>(Worker.class);
         util.exportExcel(response, list, "用工管理数据");
     }
 

@@ -10,6 +10,7 @@
         <result column="job_num" jdbcType="VARCHAR" property="jobNum"/>
         <result column="task_content" jdbcType="VARCHAR" property="taskContent"/>
         <result column="push_status" jdbcType="INTEGER" property="pushStatus"/>
+        <result column="push_date" jdbcType="TIMESTAMP" property="pushDate"/>
         <result column="finish_status" jdbcType="INTEGER" property="finishStatus"/>
         <result column="finish_date" jdbcType="TIMESTAMP" property="finishDate"/>
         <result column="create_id" jdbcType="VARCHAR" property="createId"/>
@@ -24,6 +25,7 @@
         job_num,
         task_content,
         push_status,
+        push_date,
         finish_status,
         finish_date,
         create_id,
@@ -65,6 +67,9 @@
             <if test="pushStatus != null">
                 push_status,
             </if>
+            <if test="pushDate != null">
+                push_date,
+            </if>
             <if test="finishStatus != null">
                 finish_status,
             </if>
@@ -100,6 +105,9 @@
             <if test="pushStatus != null">
                 #{pushStatus,jdbcType=INTEGER},
             </if>
+            <if test="pushDate != null">
+                #{pushDate,jdbcType=TIMESTAMP},
+            </if>
             <if test="finishStatus != null">
                 #{finishStatus,jdbcType=INTEGER},
             </if>
@@ -133,6 +141,9 @@
             <if test="pushStatus != null">
                 push_status = #{pushStatus,jdbcType=INTEGER},
             </if>
+            <if test="pushDate != null">
+                push_date = #{pushDate,jdbcType=TIMESTAMP},
+            </if>
             <if test="finishStatus != null">
                 finish_status = #{finishStatus,jdbcType=INTEGER},
             </if>
@@ -158,10 +169,7 @@
         from worker
         <where>
             <if test="username != null  and username != ''">
-                and username like concat('%',
-                                         #{username},
-                                         '%'
-                )
+                and username like concat('%', #{username}, '%')
             </if>
             <if test="deptId != null">
                 and dept_id
@@ -180,6 +188,9 @@
                 and push_status
                     =
                     #{pushStatus}
+            </if>
+            <if test="pushDate != null">
+                and push_date = #{pushDate}
             </if>
             <if test="finishStatus != null">
                 and finish_status
@@ -233,6 +244,9 @@
             <if test="pushStatus != null">
                 push_status,
             </if>
+            <if test="pushDate != null">
+                push_date,
+            </if>
             <if test="finishStatus != null">
                 finish_status,
             </if>
@@ -267,6 +281,9 @@
             </if>
             <if test="pushStatus != null">
                 #{pushStatus},
+            </if>
+            <if test="pushDate != null">
+                #{pushDate},
             </if>
             <if test="finishStatus != null">
                 #{finishStatus},
@@ -307,6 +324,9 @@
             <if test="pushStatus != null">
                 push_status =
                     #{pushStatus},
+            </if>
+            <if test="pushDate != null ">
+                push_date = #{pushDate},
             </if>
             <if test="finishStatus != null">
                 finish_status =
