@@ -1,6 +1,7 @@
 package com.ruoyi.property.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.ruoyi.property.domain.Houses;
 
@@ -58,4 +59,6 @@ import com.ruoyi.property.domain.Houses;
      * @return 结果
      */
      int deleteHousesById(String id);
+
+    Map<String,String> selectOwnerInfo(String id);
 }

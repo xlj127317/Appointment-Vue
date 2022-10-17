@@ -100,4 +100,6 @@ public interface HousesMapper {
      * @return 结果
      */
     int deleteHousesByIds(String[] ids);
+
+    List<Houses> selectHousesByNo(String housesNo);
 }

@@ -17,7 +17,7 @@ public interface IRentSellService {
      * @param id 租售管理主键
      * @return 租售管理
      */
-    public RentSell selectRentSellById(String id);
+    RentSell selectRentSellById(String id);
 
     /**
      * 查询租售管理列表
@@ -25,7 +25,7 @@ public interface IRentSellService {
      * @param rentSell 租售管理
      * @return 租售管理集合
      */
-    public List<RentSell> selectRentSellList(RentSell rentSell);
+    List<RentSell> selectRentSellList(RentSell rentSell);
 
     /**
      * 新增租售管理
@@ -33,7 +33,7 @@ public interface IRentSellService {
      * @param rentSell 租售管理
      * @return 结果
      */
-    public int insertRentSell(RentSell rentSell);
+    int insertRentSell(RentSell rentSell);
 
     /**
      * 修改租售管理
@@ -41,7 +41,7 @@ public interface IRentSellService {
      * @param rentSell 租售管理
      * @return 结果
      */
-    public int updateRentSell(RentSell rentSell);
+    int updateRentSell(RentSell rentSell);
 
     /**
      * 批量删除租售管理
@@ -49,7 +49,7 @@ public interface IRentSellService {
      * @param ids 需要删除的租售管理主键集合
      * @return 结果
      */
-    public int deleteRentSellByIds(String[] ids);
+    int deleteRentSellByIds(String[] ids);
 
     /**
      * 删除租售管理信息
@@ -57,5 +57,5 @@ public interface IRentSellService {
      * @param id 租售管理主键
      * @return 结果
      */
-    public int deleteRentSellById(String id);
+    int deleteRentSellById(String id);
 }

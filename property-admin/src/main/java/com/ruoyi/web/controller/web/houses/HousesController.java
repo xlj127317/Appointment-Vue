@@ -95,4 +95,15 @@ public class HousesController extends BaseController {
     public AjaxResult remove(@PathVariable String[] ids) {
         return toAjax(housesService.deleteHousesByIds(ids));
     }
+
+    /**
+     * 获取房屋管理详细信息
+     */
+    @ApiOperation("根据id返回业主信息")
+    @PreAuthorize("@ss.hasPermi('property:houses:query')")
+    @GetMapping(value = "/getOwnerInfo/{id}")
+    public AjaxResult getOwnerInfo(@PathVariable("id") String id) {
+        return AjaxResult.success(housesService.selectOwnerInfo(id));
+    }
+
 }

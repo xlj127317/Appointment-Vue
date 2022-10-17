@@ -37,12 +37,12 @@ public class RentSellController extends BaseController {
     @Autowired
     private IRentSellService rentSellService;
 
-/**
- * 表查询租售管理列
- */
-@ApiOperation("表查询租售管理列")
-@PreAuthorize("@ss.hasPermi('property:sell:list')")
-@GetMapping("/list")
+    /**
+     * 表查询租售管理列
+     */
+    @ApiOperation("表查询租售管理列")
+    @PreAuthorize("@ss.hasPermi('property:sell:list')")
+    @GetMapping("/list")
     public TableDataInfo list(RentSell rentSell) {
         startPage();
         List<RentSell> list = rentSellService.selectRentSellList(rentSell);
@@ -58,7 +58,7 @@ public class RentSellController extends BaseController {
     @PostMapping("/export")
     public void export(HttpServletResponse response, RentSell rentSell) {
         List<RentSell> list = rentSellService.selectRentSellList(rentSell);
-        ExcelUtil<RentSell> util = new ExcelUtil<RentSell>(RentSell. class);
+        ExcelUtil<RentSell> util = new ExcelUtil<>(RentSell.class);
         util.exportExcel(response, list, "租售管理数据");
     }
 
