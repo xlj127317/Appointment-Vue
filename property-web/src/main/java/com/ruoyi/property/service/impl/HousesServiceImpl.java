@@ -3,14 +3,14 @@ package com.ruoyi.property.service.impl;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.ObjUtil;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.uuid.PkeyGenerator;
+import com.ruoyi.property.domain.Owner;
 import com.ruoyi.property.mapper.OwnerMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.property.mapper.HousesMapper;
 import com.ruoyi.property.domain.Houses;
@@ -111,10 +111,19 @@ public class HousesServiceImpl implements IHousesService {
      */
     @Override
     public Map<String, String> selectOwnerInfo(String id) {
-        Houses houses = this.selectHousesById(id);
-        String ownerId = houses.getOwnerId();
         Map<String, String> map = new ConcurrentHashMap<>();
-        String ownerName = ownerMapper.selectOwnerById(ownerId).getUsername();
+        Houses houses = this.selectHousesById(id);
+        if (ObjUtil.isNull(houses)) {
+            map.put("msg", "无该房屋");
+            return map;
+        }
+        String ownerId = houses.getOwnerId();
+        Owner owner = ownerMapper.selectOwnerById(ownerId);
+        if (ObjUtil.isNull(owner)) {
+            map.put("msg", "无该业主");
+            return map;
+        }
+        String ownerName = owner.getUsername();
         map.put("ownerId", ownerId);
         map.put("ownerName", ownerName);
         return map;

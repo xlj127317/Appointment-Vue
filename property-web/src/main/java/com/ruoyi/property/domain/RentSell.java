@@ -47,6 +47,13 @@ public class RentSell extends BaseEntity {
     private String ownerId;
 
     /**
+     * 业主姓名
+     */
+    @ApiModelProperty(value = "业主姓名")
+    @Schema(description = "业主姓名")
+    private String ownerName;
+
+    /**
      * 销售时间
      */
     @ApiModelProperty(value = "销售时间")

@@ -67,7 +67,7 @@ public class Worker extends BaseEntity {
      */
     @ApiModelProperty(value = "推送时间")
     @Schema(description = "推送时间")
-    private Integer pushDate;
+    private Date pushDate;
 
     /**
      * 完成状态 默认0 0，未完成 1，已完成
