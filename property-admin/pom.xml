@@ -74,9 +74,9 @@
         </dependency>
 
         <dependency>
-            <groupId>cn.felord</groupId>
-            <artifactId>payment-spring-boot-starter</artifactId>
-            <version>1.0.12.RELEASE</version>
+            <groupId>com.github.binarywang</groupId>
+            <artifactId>weixin-java-pay</artifactId>
+            <version>4.4.0</version>
         </dependency>
 
         <dependency>

@@ -11,6 +11,7 @@ import java.util.Date;
 
 @Data
 public class FeeTradeOutputDto {
+    private String id;
     private String no;
     private String subject;
     private String description;

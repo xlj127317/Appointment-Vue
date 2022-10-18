@@ -1,6 +1,7 @@
 package com.ruoyi.property.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import com.ruoyi.common.enums.DbLockStrength;
 import com.ruoyi.common.enums.FeeTradeState;
 import com.ruoyi.common.utils.uuid.PkeyGenerator;
 import com.ruoyi.property.dto.FeeTradeListInputDto;
@@ -49,6 +50,23 @@ public class FeeTradeServiceImpl implements IFeeTradeService {
     @Override
     public Map getTrade(Map params) {
         return feeTradeMapper.getTrade(params);
+    }
+
+    @Override
+    public Map getTradeByNo(String no, DbLockStrength withLock) {
+        Map params = new HashMap();
+        params.put("no", no);
+        params.put("withLock", withLock);
+        return getTrade(params);
+    }
+
+    @Override
+    public Map getOwnedTradeByNo(String ownerId, String no, DbLockStrength withLock) {
+        Map params = new HashMap();
+        params.put("ownerId", ownerId);
+        params.put("no", no);
+        params.put("withLock", withLock);
+        return getTrade(params);
     }
 
     @Override

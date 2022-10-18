@@ -121,10 +121,10 @@
         </if>
         LIMIT 1
         <choose>
-            <when test="withLock == 1">
-                FOR SHARED
+            <when test="withLock == @com.ruoyi.common.enums.DbLockStrength@SHARE">
+                FOR SHARE
             </when>
-            <when test="withLock == 2">
+            <when test="withLock == @com.ruoyi.common.enums.DbLockStrength@UPDATE">
                 FOR UPDATE
             </when>
         </choose>

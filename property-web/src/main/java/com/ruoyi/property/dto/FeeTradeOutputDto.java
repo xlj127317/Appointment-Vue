@@ -7,7 +7,6 @@ import java.util.Date;
 
 @Data
 public class FeeTradeOutputDto extends com.ruoyi.property.dto.wx.FeeTradeOutputDto {
-    private String id;
     private String contractId;
     private String ownerId;
     private String outScope;

@@ -143,8 +143,24 @@ wx:
   appId: wx9eeb96adefa79d80
   secret: d905e10819f08339ce859c6fcb47ecd4
 
+wxpay:
+  appId: wx9eeb96adefa79d80
+  mchId: 1600304800
+  mchKey: HCXTEC88HCXTEC88HCXTEC88HCXTEC88
+  keyPath: wxpay/apiclient_cert.p12
+
 file:
   path: /www/javaProject/property/file/
   url: https://dev.property.hcxtec.com
 #  path: F:/files/
 #  url: http://localhost:8080/files
+
+wechat:
+  pay:
+    v3:
+      miniapp:
+        app-id: wx9eeb96adefa79d80
+        app-secret: HCXTEC88HCXTEC88HCXTEC88HCXTEC88
+        mch-id: 1600304800
+        domain: https://dev.property.hcxtec.com/
+        cert-path: wxpay/apiclient_cert.p12
