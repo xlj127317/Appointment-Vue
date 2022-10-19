@@ -66,8 +66,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     /**
      * 解决 无法直接注入 AuthenticationManager
      *
-     * @return
-     * @throws Exception
+     * @return AuthenticationManager
      */
     @Bean
     @Override
@@ -110,6 +109,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/hcx/property/wx/login").anonymous()
                 //对于文件上传删除允许匿名访问
                 .antMatchers("/hcx/property/file/**").permitAll()
+                .antMatchers("/websocket/**").permitAll()
                 // 静态资源，可匿名访问
                 .antMatchers(HttpMethod.GET, "/", "/*.html", "/**/*.html", "/**/*.css", "/**/*.js", "/profile/**","/**/3PxC6rPrSW.txt").permitAll()
                 .antMatchers("/swagger-ui.html", "/swagger-resources/**", "/webjars/**", "/*/api-docs", "/druid/**").permitAll()
