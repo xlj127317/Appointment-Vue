@@ -325,7 +325,7 @@
                 push_status =
                     #{pushStatus},
             </if>
-            <if test="pushDate != null ">
+            <if test="pushDate != null">
                 push_date = #{pushDate},
             </if>
             <if test="finishStatus != null">
@@ -362,7 +362,7 @@
         update worker
         set is_flag = 1 where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
-            id = #{id}
+            #{id}
         </foreach>
     </update>
 </mapper>

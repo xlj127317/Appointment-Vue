@@ -26,6 +26,7 @@
         <include refid="Base_Column_List"/>
         from park_resource
         <where>
+            is_flag = 0
             <if test="resourceName != null  and resourceName != ''">
                 and resource_name like concat('%', #{resourceName}, '%')
             </if>
@@ -34,9 +35,6 @@
             </if>
             <if test="createId != null  and createId != ''">
                 and create_id = #{createId}
-            </if>
-            <if test="isFlag != null">
-                and is_flag = #{isFlag}
             </if>
         </where>
     </select>
@@ -130,7 +128,7 @@
         update park_resource
         set is_flag = 1 where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
-            id = #{id}
+            #{id}
         </foreach>
     </update>
 </mapper>

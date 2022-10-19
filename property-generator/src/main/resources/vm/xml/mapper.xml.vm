@@ -138,7 +138,7 @@
     <update id="delete${ClassName}By${pkColumn.capJavaField}s" parameterType="String">
         update ${tableName} set is_flag = 1 where ${pkColumn.columnName} in
         <foreach item="${pkColumn.javaField}" collection="array" open="(" separator="," close=")">
-            ${pkColumn.javaField} = #{${pkColumn.javaField}}
+            #{${pkColumn.javaField}}
         </foreach>
     </update>
     #if($table.sub)

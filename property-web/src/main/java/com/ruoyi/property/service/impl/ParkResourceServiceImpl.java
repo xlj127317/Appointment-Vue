@@ -3,6 +3,7 @@ package com.ruoyi.property.service.impl;
 import java.util.List;
 
 import com.ruoyi.common.utils.DateUtils;
+import com.ruoyi.common.utils.uuid.PkeyGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.property.mapper.ParkResourceMapper;
@@ -50,6 +51,7 @@ public class ParkResourceServiceImpl implements ParkResourceService {
      */
     @Override
     public int insertParkResource(ParkResource parkResource) {
+        parkResource.setId(PkeyGenerator.getUniqueString());
         parkResource.setCreateTime(DateUtils.getNowDate());
         return parkResourceMapper.insertParkResource(parkResource);
     }

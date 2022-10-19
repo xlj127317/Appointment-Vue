@@ -38,6 +38,7 @@
         <include refid="Base_Column_List"/>
         from park_reserve
         <where>
+            is_flag = 0
             <if test="resId != null  and resId != ''">
                 and res_id =
                     #{resId}
@@ -81,11 +82,6 @@
                 and create_id
                     =
                     #{createId}
-            </if>
-            <if test="isFlag != null">
-                and is_flag
-                    =
-                    #{isFlag}
             </if>
         </where>
     </select>
@@ -239,7 +235,7 @@
         update park_reserve
         set is_flag = 1 where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
-            id = #{id}
+            #{id}
         </foreach>
     </update>
 </mapper>
