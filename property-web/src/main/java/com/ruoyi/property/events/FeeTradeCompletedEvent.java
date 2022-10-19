@@ -5,5 +5,8 @@ import lombok.Data;
 
 @Data
 public class FeeTradeCompletedEvent {
-    private FeeTradeOutputDto feeTrade;
+    private String id;
+    private String bizChannel;
+    private String outScope;
+    private String outId;
 }

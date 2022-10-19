@@ -122,7 +122,7 @@
         LIMIT 1
         <choose>
             <when test="withLock == @com.ruoyi.common.enums.DbLockStrength@SHARE">
-                FOR SHARE
+                LOCK IN SHARE MODE
             </when>
             <when test="withLock == @com.ruoyi.common.enums.DbLockStrength@UPDATE">
                 FOR UPDATE
