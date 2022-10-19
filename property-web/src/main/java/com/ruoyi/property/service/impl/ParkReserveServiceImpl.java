@@ -54,10 +54,10 @@ public class ParkReserveServiceImpl implements ParkReserveService {
     @Override
     public int insertParkReserve(ParkReserve parkReserve) {
         if (DateUtil.compare(parkReserve.getStatTime(), DateUtil.date()) <= 0) {
-            throw new ServiceException("开始时间不能大于或等于当前时间时间");
+            throw new ServiceException("开始时间不能小于于或等于当前时间时间");
         }
-        if (DateUtil.compare(parkReserve.getStatTime(), parkReserve.getStopTime()) <= 0) {
-            throw new ServiceException("结束时间不能大于或等于开始时间");
+        if (DateUtil.compare(parkReserve.getStatTime(), parkReserve.getStopTime()) >= 0) {
+            throw new ServiceException("结束时间不能小于或等于开始时间");
         }
         parkReserve.setId(PkeyGenerator.getUniqueString());
         parkReserve.setCreateTime(DateUtils.getNowDate());

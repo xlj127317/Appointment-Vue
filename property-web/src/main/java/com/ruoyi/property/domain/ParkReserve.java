@@ -1,5 +1,6 @@
 package com.ruoyi.property.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ruoyi.common.core.domain.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -42,15 +43,9 @@ public class ParkReserve extends BaseEntity {
     private String resName;
 
     /**
-     * 资源状态，0 为未启用 1 已启用
-     */
-    @ApiModelProperty(value = "资源状态，0 为未启用 1 已启用")
-    @Schema(description = "资源状态，0 为未启用 1 已启用")
-    private String reserveName;
-
-    /**
      * 预约起止时间
      */
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT+8")
     @ApiModelProperty(value = "预约起止时间")
     @Schema(description = "预约起止时间")
     private Date statTime;
@@ -58,6 +53,7 @@ public class ParkReserve extends BaseEntity {
     /**
      * 预约结束时间
      */
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT+8")
     @ApiModelProperty(value = "预约结束时间")
     @Schema(description = "预约结束时间")
     private Date stopTime;

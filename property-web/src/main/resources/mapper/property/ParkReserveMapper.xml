@@ -7,7 +7,6 @@
         <id column="id" jdbcType="VARCHAR" property="id"/>
         <result column="res_id" jdbcType="VARCHAR" property="resId"/>
         <result column="res_name" jdbcType="VARCHAR" property="resName"/>
-        <result column="reserve_name" jdbcType="VARCHAR" property="reserveName"/>
         <result column="stat_time" jdbcType="TIMESTAMP" property="statTime"/>
         <result column="stop_time" jdbcType="TIMESTAMP" property="stopTime"/>
         <result column="reason" jdbcType="VARCHAR" property="reason"/>
@@ -22,7 +21,6 @@
         id,
         res_id,
         res_name,
-        reserve_name,
         stat_time,
         stop_time,
         reason,
@@ -47,16 +45,6 @@
                 and res_name
                     like
                     concat('%', #{resName}, '%')
-            </if>
-            <if test="reserveName != null  and reserveName != ''">
-                and reserve_name
-                    like
-                    concat
-                        (
-                            '%',
-                            #{reserveName},
-                            '%'
-                        )
             </if>
             <if test="statTime != null">
                 and stat_time
@@ -107,9 +95,6 @@
             <if test="resName != null and resName != ''">
                 res_name,
             </if>
-            <if test="reserveName != null and reserveName != ''">
-                reserve_name,
-            </if>
             <if test="statTime != null">
                 stat_time,
             </if>
@@ -144,9 +129,6 @@
             </if>
             <if test="resName != null and resName != ''">
                 #{resName},
-            </if>
-            <if test="reserveName != null and reserveName != ''">
-                #{reserveName},
             </if>
             <if test="statTime != null">
                 #{statTime},
@@ -185,10 +167,6 @@
             <if test="resName != null and resName != ''">
                 res_name =
                     #{resName},
-            </if>
-            <if test="reserveName != null and reserveName != ''">
-                reserve_name =
-                    #{reserveName},
             </if>
             <if test="statTime != null">
                 stat_time =
