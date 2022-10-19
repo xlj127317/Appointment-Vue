@@ -157,12 +157,12 @@ public class WxFeeTradesController extends BaseController {
                 .attach(feeTrade.getId())
                 .outTradeNo(PkeyGenerator.getUniqueString())
                 .totalFee(feeTrade.getAmount().multiply(new BigDecimal(100)).intValueExact())
-                .notifyUrl("/hcx/property/wx/pay/notify/completeOrder")
+                .notifyUrl("https://dev.property.hcxtec.com/hcx/property/wx/pay/notify/completeOrder")
                 .spbillCreateIp(remoteAddr)
                 .tradeType(WxPayConstants.TradeType.JSAPI)
                 .openid(wxOpenId)
                 .build();
-        wxRequest.setSignType(WxPayConstants.SignType.HMAC_SHA256);
+        wxRequest.setSignType(WxPayConstants.SignType.MD5);
         WxPayUnifiedOrderResult result = wxPayService.unifiedOrder(wxRequest);
 
         UnifiedOrderOutputDto output = new UnifiedOrderOutputDto();
