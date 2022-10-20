@@ -63,7 +63,7 @@ public class TransactionListener {
         String feeTradeNo = event.getAttach();
         Map feeTradeMap = feeTradeService.getTradeById(feeTradeNo, DbLockStrength.UPDATE);
         FeeTradeOutputDto feeTrade = BeanUtil.mapToBean(feeTradeMap, FeeTradeOutputDto.class, true, CopyOptions.create());
-        if (feeTrade.getState() != FeeTradeState.WAIT_PAY) {
+        if (feeTrade.getState() != FeeTradeState.WAIT_PAY || true) {
             logger.warn("账单[{}]已支付，关联支付单号{}，自动发起退款", feeTradeNo, event.getOutTradeNo());
             WxPayRefundRequest request = WxPayRefundRequest
                     .newBuilder()
