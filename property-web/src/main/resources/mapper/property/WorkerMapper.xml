@@ -212,6 +212,25 @@
                     =
                     #{isFlag}
             </if>
+            <!--推送 开始和结束 时间查询-->
+            <if test="params.pushBeginTime != null and params.pushBeginTime != ''">
+                <!-- 推送 开始时间检索 -->
+                AND date_format(push_date, '%y%m%d') &gt;= date_format(#{params.pushBeginTime}, '%y%m%d')
+            </if>
+            <if test="params.pushEndTime != null and params.pushEndTime != ''">
+                <!-- 推送 结束时间检索 -->
+                AND date_format(push_date, '%y%m%d') &lt;= date_format(#{params.pushEndTime}, '%y%m%d')
+            </if>
+
+            <!--完成 开始和结束 时间查询-->
+            <if test="params.finishBeginTime != null and params.finishBeginTime != ''">
+                <!-- 完成 开始时间检索 -->
+                AND date_format(finish_date, '%y%m%d') &gt;= date_format(#{params.finishBeginTime}, '%y%m%d')
+            </if>
+            <if test="params.finishEndTime != null and params.finishEndTime != ''">
+                <!-- 完成 结束时间检索 -->
+                AND date_format(finish_date, '%y%m%d') &lt;= date_format(#{params.finishEndTime}, '%y%m%d')
+            </if>
         </where>
     </select>
 
@@ -219,8 +238,7 @@
         select
         <include refid="Base_Column_List"/>
         from worker
-        where id =
-              #{id}
+        where id = #{id}
     </select>
 
     <insert id="insertWorker">

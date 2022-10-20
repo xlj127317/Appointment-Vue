@@ -274,7 +274,7 @@
             <if test="auditId != null">
                 audit_id,
             </if>
-            <if test="isParking != null and isParking != ''">
+            <if test="isParking != null">
                 is_parking,
             </if>
             <if test="createId != null and createId != ''">
@@ -315,7 +315,7 @@
             <if test="auditId != null">
                 #{auditId},
             </if>
-            <if test="isParking">
+            <if test="isParking != null">
                 #{isParking},
             </if>
             <if test="createId != null and createId != ''">
