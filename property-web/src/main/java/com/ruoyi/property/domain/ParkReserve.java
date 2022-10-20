@@ -80,6 +80,13 @@ public class ParkReserve extends BaseEntity {
     private Date auditDate;
 
     /**
+     * 审核人id
+     */
+    @ApiModelProperty(value = "审核人id")
+    @Schema(description = "审核人id")
+    private String auditId;
+
+    /**
      * 创建人id
      */
     @ApiModelProperty(value = "创建人id")

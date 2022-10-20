@@ -12,6 +12,7 @@
         <result column="reason" jdbcType="VARCHAR" property="reason"/>
         <result column="audit_status" jdbcType="INTEGER" property="auditStatus"/>
         <result column="audit_date" jdbcType="TIMESTAMP" property="auditDate"/>
+        <result column="audit_id" jdbcType="VARCHAR" property="auditId"/>
         <result column="create_id" jdbcType="VARCHAR" property="createId"/>
         <result column="is_flag" jdbcType="INTEGER" property="isFlag"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
@@ -26,6 +27,7 @@
         reason,
         audit_status,
         audit_date,
+        audit_id,
         create_id,
         is_flag,
         create_time
@@ -65,6 +67,9 @@
                 and audit_status
                     =
                     #{auditStatus}
+            </if>
+            <if test="auditId != null">
+                and audit_id = #{auditId,jdbcType=VARCHAR}
             </if>
             <if test="createId != null  and createId != ''">
                 and create_id
@@ -110,6 +115,9 @@
             <if test="auditDate != null">
                 audit_date,
             </if>
+            <if test="auditId != null">
+                audit_id,
+            </if>
             <if test="createId != null and createId != ''">
                 create_id,
             </if>
@@ -144,6 +152,9 @@
             </if>
             <if test="auditDate != null">
                 #{auditDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="auditId != null">
+                #{auditId,jdbcType=VARCHAR},
             </if>
             <if test="createId != null and createId != ''">
                 #{createId},
@@ -186,6 +197,9 @@
             </if>
             <if test="auditDate != null">
                 audit_date = #{auditDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="auditId != null">
+                audit_id = #{auditId,jdbcType=VARCHAR},
             </if>
             <if test="createId != null and createId != ''">
                 create_id =

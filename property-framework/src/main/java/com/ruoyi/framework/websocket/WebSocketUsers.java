@@ -102,7 +102,7 @@ public class WebSocketUsers {
      * 发送文本消息
      *
      * @param session 自己的用户名
-     * @param message  消息内容
+     * @param message 消息内容
      */
     public static void sendMessageToUserByText(Session session, String message) {
         if (session != null) {
