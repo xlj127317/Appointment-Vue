@@ -4,6 +4,7 @@ import javax.annotation.Resource;
 
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson2.JSONObject;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.utils.*;
@@ -135,7 +136,6 @@ public class SysLoginService {
      * @param username 用户名
      * @param code     验证码
      * @param uuid     唯一标识
-     * @return 结果
      */
     public void validateCaptcha(String username, String code, String uuid) {
         String verifyKey = CacheConstants.CAPTCHA_CODE_KEY + StringUtils.nvl(uuid, "");
@@ -197,8 +197,7 @@ public class SysLoginService {
                 loginUser.setUserId(openid);
                 loginUser.setDeptId(DEPT_ID);
                 loginUser.setUser(sysUser);
-                AjaxResult success = getAjaxResult(openid, loginUser);
-                return success;
+                return getAjaxResult(openid, loginUser);
             }
         } catch (NullPointerException exception) {
             System.out.println("空指针");
@@ -208,8 +207,7 @@ public class SysLoginService {
         loginUser.setUser(sysUser);
         loginUser.setPermissions(permissionService.getMenuPermission(sysUser));
         recordLoginInfo(sysUser.getUserId());
-        AjaxResult success = getAjaxResult(openid, loginUser);
-        return success;
+        return getAjaxResult(openid, loginUser);
     }
 
     /**
@@ -232,7 +230,6 @@ public class SysLoginService {
      *
      * @param code code
      * @return String
-     * @throws Exception exception
      */
     private String jcode2Session(String code) {
         try {
@@ -242,5 +239,37 @@ public class SysLoginService {
             e.printStackTrace();
         }
         return null;
+    }
+
+    /**
+     * 获取授权手机号
+     *
+     * @param code   code
+     * @param userId userId
+     * @return ajaxResult
+     */
+    public AjaxResult getPhone(String code, String userId) {
+        SysUser sysUser = userMapper.selectUserById(userId);
+        if (ObjectUtil.isNull(sysUser)) {
+            throw new ServiceException("该用户未曾登录过小程序，请先登录");
+        }
+        String accessToken = Jcode2SessionUtil.getAccessToken(appid, secret);
+        String access_token = (String) JSONUtil.parseObj(accessToken).get("access_token");
+        String phoneNum = Jcode2SessionUtil.getPhoneNum(access_token, code);
+        cn.hutool.json.JSONObject info = JSONUtil.parseObj(phoneNum);
+        if (!info.get("errcode").equals(0)) {
+            throw new ServiceException((String) info.get("errmsg"));
+        }
+        cn.hutool.json.JSONObject phoneInfo = (cn.hutool.json.JSONObject) info.get("phone_info");
+        String phoneNumber = (String) phoneInfo.get("phoneNumber");
+        sysUser.setPhonenumber(phoneNumber);
+        int updateNum = userMapper.updateUser(sysUser);
+        AjaxResult ajaxResult = new AjaxResult();
+        ajaxResult.put("phoneNumber", phoneNumber);
+        ajaxResult.put("userId", userId);
+        ajaxResult.put("username", sysUser.getUserName());
+        ajaxResult.put("nickname", sysUser.getNickName());
+        ajaxResult.put("updateNum", updateNum);
+        return AjaxResult.success(ajaxResult);
     }
 }

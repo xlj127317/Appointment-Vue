@@ -36,4 +36,10 @@ public class WxLoginController {
                                         @RequestParam String userName) {
         return userService.updateUserNameById(id,userName);
     }
+
+    @GetMapping(value = "/getPhone")
+    @ApiOperation(value = "获取授权手机号")
+    public AjaxResult getPhone(@RequestParam String code,@RequestParam String userId) {
+        return loginService.getPhone(code,userId);
+    }
 }

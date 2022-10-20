@@ -7,7 +7,9 @@ package com.ruoyi.common.enums;
 public enum WeChatUrl {
     JS_CODE_2_SESSION("https://api.weixin.qq.com/sns/jscode2session"),
     GET_ACCESS_TOKEN("https://api.weixin.qq.com/cgi-bin/token"),
-    SEND_TEMPLATE_MESSAGE("https://api.weixin.qq.com/cgi-bin/message/subscribe/send");
+    SEND_TEMPLATE_MESSAGE("https://api.weixin.qq.com/cgi-bin/message/subscribe/send"),
+
+    GET_PHONE_NUM("https://api.weixin.qq.com/wxa/business/getuserphonenumber");
 
     private String url;
 

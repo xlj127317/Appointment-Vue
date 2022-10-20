@@ -1,6 +1,7 @@
 package com.ruoyi.framework.util;
 
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson2.JSONObject;
 import com.ruoyi.common.enums.WeChatUrl;
@@ -157,5 +158,18 @@ public class Jcode2SessionUtil {
             throw new GlobalException("获取接口调用凭据失败");
         }
         return sendTemplateMessage(access, touser, "", null, data, "", "zh_CN");
+    }
+
+    /**
+     * 获取授权手机号
+     *
+     * @param access_token 许可
+     * @param code         code
+     * @return String
+     */
+    public static String getPhoneNum(String access_token, String code) {
+        JSONObject params = new JSONObject();
+        params.put("code", code);
+        return HttpUtils.sendPost(WeChatUrl.GET_PHONE_NUM.getUrl() + "?access_token=" + access_token, params.toString());
     }
 }
