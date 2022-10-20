@@ -53,6 +53,14 @@ public class FeeTradeServiceImpl implements IFeeTradeService {
     }
 
     @Override
+    public Map getTradeById(String id, DbLockStrength withLock) {
+        Map params = new HashMap();
+        params.put("id", id);
+        params.put("withLock", withLock);
+        return getTrade(params);
+    }
+
+    @Override
     public Map getTradeByNo(String no, DbLockStrength withLock) {
         Map params = new HashMap();
         params.put("no", no);

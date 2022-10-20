@@ -12,7 +12,7 @@ public class UnifiedOrderOutputDto {
     private String signType;
     private String paySign;
     private String nonceStr;
-    private long timestamp;
+    private String timeStamp;
     @JsonProperty("package")
     private String packageStr;
 }

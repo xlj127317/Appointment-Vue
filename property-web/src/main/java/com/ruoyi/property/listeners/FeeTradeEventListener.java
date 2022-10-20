@@ -1,5 +1,6 @@
 package com.ruoyi.property.listeners;
 
+import cn.hutool.core.date.DateUtil;
 import com.ruoyi.property.domain.Receivable;
 import com.ruoyi.property.events.FeeTradeCompletedEvent;
 import com.ruoyi.property.service.IReceivableService;
@@ -26,6 +27,9 @@ public class FeeTradeEventListener {
 
         Receivable receivable = receivableService.selectReceivableById(receivableId);
         receivable.setActuallyStatus(1);
-        // receivable.setActuallyMoney();
+        receivable.setActuallyMoney(event.getPaidAmount().toString());
+        receivable.setActuallyDate(event.getPaidAt());
+        receivable.setPaymentType(0);
+        receivableService.updateReceivable(receivable);
     }
 }

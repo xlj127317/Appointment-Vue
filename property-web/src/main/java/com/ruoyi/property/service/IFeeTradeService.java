@@ -11,6 +11,7 @@ public interface IFeeTradeService {
     List<Map> listUserTrades(String ownerId);
     List<Map> listTrades(Map params);
     Map getTrade(Map params);
+    Map getTradeById(String id, DbLockStrength withLock);
     Map getTradeByNo(String no);
     Map getTradeByNo(String no, DbLockStrength withLock);
     Map getOwnedTradeByNo(String ownerId, String no, DbLockStrength withLock);

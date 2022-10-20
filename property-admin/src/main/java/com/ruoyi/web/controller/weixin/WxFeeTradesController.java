@@ -3,10 +3,13 @@ package com.ruoyi.web.controller.weixin;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
 import cn.hutool.core.date.DateUtil;
+import com.github.binarywang.wxpay.bean.request.WxPayOrderQueryRequest;
 import com.github.binarywang.wxpay.bean.request.WxPayUnifiedOrderRequest;
 import com.github.binarywang.wxpay.bean.result.WxPayUnifiedOrderResult;
+import com.github.binarywang.wxpay.config.WxPayConfig;
 import com.github.binarywang.wxpay.constant.WxPayConstants;
 import com.github.binarywang.wxpay.service.WxPayService;
+import com.github.binarywang.wxpay.util.SignUtils;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.page.TableDataInfo;
@@ -22,6 +25,7 @@ import com.ruoyi.property.service.IDepositService;
 import com.ruoyi.property.service.IEasyTrService;
 import com.ruoyi.property.service.IFeeTradeService;
 import com.ruoyi.property.service.IWalletService;
+import me.chanjar.weixin.common.util.crypto.WxCryptUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -141,7 +145,7 @@ public class WxFeeTradesController extends BaseController {
             throw new Exception("账单号不能为空");
         }
         String wxOpenId = getUserId();
-        // wxOpenId = "oyM1S41LqTlqnbX_oIK5hjr70Efw";
+        wxOpenId = "oyM1S41LqTlqnbX_oIK5hjr70Efw";
         String ownerId = easyTrService.mustUserIdToOwnerId(wxOpenId);
         Map feeTradeMap = feeTradeService.getOwnedTradeByNo(ownerId, input.getNo(), DbLockStrength.SHARE);
         if (feeTradeMap == null) {
@@ -157,7 +161,7 @@ public class WxFeeTradesController extends BaseController {
                 .attach(feeTrade.getId())
                 .outTradeNo(PkeyGenerator.getUniqueString())
                 .totalFee(feeTrade.getAmount().multiply(new BigDecimal(100)).intValueExact())
-                .notifyUrl("https://dev.property.hcxtec.com/hcx/property/wx/pay/notify/completeOrder")
+                .notifyUrl("https://dev.property.hcxtec.com/hcx/property/wx/pay/notify/pay")
                 .spbillCreateIp(remoteAddr)
                 .tradeType(WxPayConstants.TradeType.JSAPI)
                 .openid(wxOpenId)
@@ -170,7 +174,17 @@ public class WxFeeTradesController extends BaseController {
         output.setPaySign(result.getSign());
         output.setNonceStr(result.getNonceStr());
         output.setPackageStr("prepay_id=" + result.getPrepayId());
-        output.setTimestamp(DateUtil.currentSeconds());
+        output.setTimeStamp(Long.toString(DateUtil.currentSeconds()));
+
+        WxPayConfig payConfig = wxPayService.getConfig();
+
+        Map signParams = BeanUtil.beanToMap(output);
+        signParams.remove("paySign");
+        signParams.put("package", signParams.get("packageStr"));
+        signParams.remove("packageStr");
+        signParams.put("appId", payConfig.getAppId());
+        output.setPaySign(SignUtils.createSign(signParams, WxPayConstants.SignType.MD5, payConfig.getMchKey(), null));
+
         return output;
     }
 }
