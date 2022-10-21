@@ -1,11 +1,16 @@
 package com.ruoyi.property.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import cn.hutool.core.date.DateUtil;
+import com.ruoyi.common.enums.ReportTypeEnum;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.uuid.PkeyGenerator;
+import com.ruoyi.property.domain.Furnish;
+import com.ruoyi.property.domain.Report;
+import com.ruoyi.property.mapper.ReportMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.property.mapper.ParkReserveMapper;
@@ -22,6 +27,9 @@ import com.ruoyi.property.service.ParkReserveService;
 public class ParkReserveServiceImpl implements ParkReserveService {
     @Autowired
     private ParkReserveMapper parkReserveMapper;
+
+    @Autowired
+    private ReportMapper reportMapper;
 
     /**
      * 查询园区资源预约
@@ -59,8 +67,12 @@ public class ParkReserveServiceImpl implements ParkReserveService {
         if (DateUtil.compare(parkReserve.getStatTime(), parkReserve.getStopTime()) >= 0) {
             throw new ServiceException("结束时间不能小于或等于开始时间");
         }
+        Date nowDate = DateUtils.getNowDate();
         parkReserve.setId(PkeyGenerator.getUniqueString());
-        parkReserve.setCreateTime(DateUtils.getNowDate());
+        parkReserve.setCreateTime(nowDate);
+        if (insertReport(parkReserve, nowDate) != 1) {
+            throw new ServiceException("添加工单失败");
+        }
         return parkReserveMapper.insertParkReserve(parkReserve);
     }
 
@@ -95,5 +107,23 @@ public class ParkReserveServiceImpl implements ParkReserveService {
     @Override
     public int deleteParkReserveById(String id) {
         return parkReserveMapper.deleteParkReserveById(id);
+    }
+
+    /**
+     * 添加工单信息
+     *
+     * @param parkReserve 装修办理实体
+     * @param nowDate 当前时间
+     * @return int
+     */
+    private int insertReport(ParkReserve parkReserve, Date nowDate) {
+        Report report = new Report();
+        report.setId(parkReserve.getId());
+        report.setTypeId(ReportTypeEnum.FURNISH.getValue());
+        report.setReportContent(parkReserve.getReason());
+        report.setAuditStatus(0);
+        report.setCreateTime(nowDate);
+        report.setCreateId(parkReserve.getCreateId());
+        return reportMapper.insertReport(report);
     }
 }
