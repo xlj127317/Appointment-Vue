@@ -75,7 +75,7 @@ public class TransactionListener {
                     .notifyUrl("https://dev.property.hcxtec.com/hcx/property/wx/pay/notify/refund")
                     .build();
             wxPayService.refundV2(request);
-            return;
+            // return;
         }
 
         Map params = new HashMap();
