@@ -11,7 +11,6 @@ import com.ruoyi.common.utils.*;
 import com.ruoyi.common.utils.uuid.PkeyGenerator;
 import com.ruoyi.system.mapper.SysUserMapper;
 import com.ruoyi.framework.util.Jcode2SessionUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -41,25 +40,25 @@ import com.ruoyi.system.service.ISysUserService;
  */
 @Component
 public class SysLoginService {
-    @Autowired
+    @Resource
     private TokenService tokenService;
 
     @Resource
     private AuthenticationManager authenticationManager;
 
-    @Autowired
+    @Resource
     private RedisCache redisCache;
 
-    @Autowired
+    @Resource
     private ISysUserService userService;
 
-    @Autowired
+    @Resource
     private ISysConfigService configService;
 
-    @Autowired
+    @Resource
     private SysPermissionService permissionService;
 
-    @Autowired
+    @Resource
     private SysUserMapper userMapper;
 
     /**
@@ -106,7 +105,7 @@ public class SysLoginService {
             validateCaptcha(username, code, uuid);
         }
         // 用户验证
-        Authentication authentication = null;
+        Authentication authentication;
         try {
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
             AuthenticationContextHolder.setContext(authenticationToken);
@@ -262,6 +261,9 @@ public class SysLoginService {
         }
         cn.hutool.json.JSONObject phoneInfo = (cn.hutool.json.JSONObject) info.get("phone_info");
         String phoneNumber = (String) phoneInfo.get("phoneNumber");
+        if (!StrUtil.equals(sysUser.getUserName(), phoneNumber)) {
+            sysUser.setUserName(phoneNumber);
+        }
         sysUser.setPhonenumber(phoneNumber);
         int updateNum = userMapper.updateUser(sysUser);
         AjaxResult ajaxResult = new AjaxResult();

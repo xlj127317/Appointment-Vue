@@ -31,7 +31,7 @@ public class WxLoginController {
     }
 
     @GetMapping(value = "/updateUserName")
-    @ApiOperation(value = "微信登录成功后根据微信用户名设置用户名")
+    @ApiOperation(value = "微信登录成功后根据微信用户名设置昵称")
     public AjaxResult renewUserNameById(@RequestParam String id,
                                         @RequestParam String userName) {
         return userService.updateUserNameById(id,userName);
