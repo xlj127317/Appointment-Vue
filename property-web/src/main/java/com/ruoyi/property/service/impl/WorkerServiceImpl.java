@@ -2,13 +2,19 @@ package com.ruoyi.property.service.impl;
 
 import java.util.List;
 
+import cn.hutool.core.util.ObjectUtil;
+import com.ruoyi.common.core.domain.entity.SysUser;
+import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.uuid.PkeyGenerator;
+import com.ruoyi.system.mapper.SysUserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.property.mapper.WorkerMapper;
 import com.ruoyi.property.domain.Worker;
 import com.ruoyi.property.service.WorkerService;
+
+import javax.annotation.Resource;
 
 /**
  * 用工管理Service业务层处理
@@ -20,7 +26,8 @@ import com.ruoyi.property.service.WorkerService;
 public class WorkerServiceImpl implements WorkerService {
     @Autowired
     private WorkerMapper workerMapper;
-
+    @Resource
+    private SysUserMapper sysUserMapper;
     /**
      * 查询用工管理
      *
@@ -40,7 +47,15 @@ public class WorkerServiceImpl implements WorkerService {
      */
     @Override
     public List<Worker> selectWorkerList(Worker worker) {
-        return workerMapper.selectWorkerList(worker);
+        List<Worker> list = workerMapper.selectWorkerList(worker);
+        for (Worker wor : list) {
+            SysUser sysUser = sysUserMapper.selectUserById(wor.getCreateId());
+            if (ObjectUtil.isNull(sysUser)) {
+                throw new ServiceException("无该对象：" + wor.getCreateId());
+            }
+            wor.setCreateId(sysUser.getNickName());
+        }
+        return list;
     }
 
     /**

@@ -2,14 +2,18 @@ package com.ruoyi.property.service.impl;
 
 import java.util.List;
 
+import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.ruoyi.common.core.domain.AjaxResult;
+import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.enums.ReportTypeEnum;
+import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.uuid.PkeyGenerator;
 import com.ruoyi.property.mapper.*;
 import com.ruoyi.property.vo.req.ReportAuditReq;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.ruoyi.system.mapper.SysUserMapper;
+
 import org.springframework.stereotype.Service;
 import com.ruoyi.property.domain.Report;
 import com.ruoyi.property.service.IReportService;
@@ -24,7 +28,7 @@ import javax.annotation.Resource;
  */
 @Service
 public class ReportServiceImpl implements IReportService {
-    @Autowired
+    @Resource
     private ReportMapper reportMapper;
 
     @Resource
@@ -38,6 +42,9 @@ public class ReportServiceImpl implements IReportService {
 
     @Resource
     private VisitMapper visitMapper;
+
+    @Resource
+    private SysUserMapper sysUserMapper;
 
     /**
      * 查询工单管理
@@ -58,7 +65,22 @@ public class ReportServiceImpl implements IReportService {
      */
     @Override
     public List<Report> selectReportList(Report report) {
-        return reportMapper.selectReportList(report);
+        List<Report> list = reportMapper.selectReportList(report);
+        for (Report rep : list) {
+            SysUser createUser = sysUserMapper.selectUserById(rep.getCreateId());
+            if (ObjectUtil.isNull(createUser)) {
+                throw new ServiceException("无该对象：" + rep.getCreateId());
+            }
+            if (StrUtil.isNotBlank(rep.getAuditUserId())) {
+                SysUser auditUser = sysUserMapper.selectUserById(rep.getCreateId());
+                if (ObjectUtil.isNull(auditUser)) {
+                    throw new ServiceException("无该对象：" + rep.getCreateId());
+                }
+                rep.setAuditUserId(auditUser.getNickName());
+            }
+            rep.setCreateId(createUser.getNickName());
+        }
+        return list;
     }
 
     /**

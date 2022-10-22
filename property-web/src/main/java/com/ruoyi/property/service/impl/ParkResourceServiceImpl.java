@@ -2,13 +2,18 @@ package com.ruoyi.property.service.impl;
 
 import java.util.List;
 
+import cn.hutool.core.util.ObjectUtil;
+import com.ruoyi.common.core.domain.entity.SysUser;
+import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.uuid.PkeyGenerator;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.ruoyi.system.mapper.SysUserMapper;
 import org.springframework.stereotype.Service;
 import com.ruoyi.property.mapper.ParkResourceMapper;
 import com.ruoyi.property.domain.ParkResource;
 import com.ruoyi.property.service.ParkResourceService;
+
+import javax.annotation.Resource;
 
 /**
  * 园区资源Service业务层处理
@@ -18,8 +23,11 @@ import com.ruoyi.property.service.ParkResourceService;
  */
 @Service
 public class ParkResourceServiceImpl implements ParkResourceService {
-    @Autowired
+    @Resource
     private ParkResourceMapper parkResourceMapper;
+
+    @Resource
+    private SysUserMapper sysUserMapper;
 
     /**
      * 查询园区资源
@@ -40,7 +48,15 @@ public class ParkResourceServiceImpl implements ParkResourceService {
      */
     @Override
     public List<ParkResource> selectParkResourceList(ParkResource parkResource) {
-        return parkResourceMapper.selectParkResourceList(parkResource);
+        List<ParkResource> list = parkResourceMapper.selectParkResourceList(parkResource);
+        for (ParkResource resource : list) {
+            SysUser sysUser = sysUserMapper.selectUserById(resource.getCreateId());
+            if (ObjectUtil.isNull(sysUser)) {
+                throw new ServiceException("无该对象：" + resource.getCreateId());
+            }
+            resource.setCreateId(sysUser.getNickName());
+        }
+        return list;
     }
 
     /**

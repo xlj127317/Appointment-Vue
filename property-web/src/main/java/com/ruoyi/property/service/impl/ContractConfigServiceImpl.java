@@ -3,12 +3,15 @@ package com.ruoyi.property.service.impl;
 import java.util.List;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.ObjectUtil;
+import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.uuid.PkeyGenerator;
 import com.ruoyi.property.domain.Contract;
 import com.ruoyi.property.mapper.ContractMapper;
 import com.ruoyi.property.service.ContractConfigService;
+import com.ruoyi.system.mapper.SysUserMapper;
 import org.springframework.stereotype.Service;
 import com.ruoyi.property.mapper.ContractConfigMapper;
 import com.ruoyi.property.domain.ContractConfig;
@@ -29,6 +32,9 @@ public class ContractConfigServiceImpl implements ContractConfigService {
     @Resource
     private ContractMapper contractMapper;
 
+    @Resource
+    private SysUserMapper sysUserMapper;
+
     /**
      * 查询合同配置
      *
@@ -48,7 +54,15 @@ public class ContractConfigServiceImpl implements ContractConfigService {
      */
     @Override
     public List<ContractConfig> selectContractConfigList(ContractConfig contractConfig) {
-        return contractConfigMapper.selectContractConfigList(contractConfig);
+        List<ContractConfig> list = contractConfigMapper.selectContractConfigList(contractConfig);
+        for (ContractConfig config : list) {
+            SysUser sysUser = sysUserMapper.selectUserById(config.getCreateId());
+            if (ObjectUtil.isNull(sysUser)) {
+                throw new ServiceException("无该对象：" + config.getCreateId());
+            }
+            config.setCreateId(sysUser.getNickName());
+        }
+        return list;
     }
 
     /**

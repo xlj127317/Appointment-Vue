@@ -2,13 +2,18 @@ package com.ruoyi.property.service.impl;
 
 import java.util.List;
 
+import cn.hutool.core.util.ObjectUtil;
+import com.ruoyi.common.core.domain.entity.SysUser;
+import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.uuid.PkeyGenerator;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.ruoyi.system.mapper.SysUserMapper;
 import org.springframework.stereotype.Service;
 import com.ruoyi.property.mapper.RentSellMapper;
 import com.ruoyi.property.domain.RentSell;
 import com.ruoyi.property.service.IRentSellService;
+
+import javax.annotation.Resource;
 
 /**
  * 租售管理Service业务层处理
@@ -18,8 +23,11 @@ import com.ruoyi.property.service.IRentSellService;
  */
 @Service
 public class RentSellServiceImpl implements IRentSellService {
-    @Autowired
+    @Resource
     private RentSellMapper rentSellMapper;
+
+    @Resource
+    private SysUserMapper sysUserMapper;
 
     /**
      * 查询租售管理
@@ -40,7 +48,15 @@ public class RentSellServiceImpl implements IRentSellService {
      */
     @Override
     public List<RentSell> selectRentSellList(RentSell rentSell) {
-        return rentSellMapper.selectRentSellList(rentSell);
+        List<RentSell> list = rentSellMapper.selectRentSellList(rentSell);
+        for (RentSell rent : list) {
+            SysUser sysUser = sysUserMapper.selectUserById(rent.getCreateId());
+            if (ObjectUtil.isNull(sysUser)) {
+                throw new ServiceException("无该对象：" + rent.getCreateId());
+            }
+            rent.setCreateId(sysUser.getNickName());
+        }
+        return list;
     }
 
     /**

@@ -3,6 +3,9 @@ package com.ruoyi.property.service.impl;
 import java.util.Date;
 import java.util.List;
 
+import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.core.util.StrUtil;
+import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.enums.ReportTypeEnum;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.DateUtils;
@@ -10,10 +13,12 @@ import com.ruoyi.common.utils.uuid.PkeyGenerator;
 import com.ruoyi.property.domain.Report;
 import com.ruoyi.property.mapper.ReportMapper;
 import com.ruoyi.property.service.RepairService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.ruoyi.system.mapper.SysUserMapper;
 import org.springframework.stereotype.Service;
 import com.ruoyi.property.mapper.RepairMapper;
 import com.ruoyi.property.domain.Repair;
+
+import javax.annotation.Resource;
 
 
 /**
@@ -24,11 +29,14 @@ import com.ruoyi.property.domain.Repair;
  */
 @Service
 public class RepairServiceImpl implements RepairService {
-    @Autowired
+    @Resource
     private RepairMapper repairMapper;
 
-    @Autowired
+    @Resource
     private ReportMapper reportMapper;
+
+    @Resource
+    private SysUserMapper sysUserMapper;
 
     /**
      * 查询物业报修申请
@@ -49,7 +57,22 @@ public class RepairServiceImpl implements RepairService {
      */
     @Override
     public List<Repair> selectRepairList(Repair repair) {
-        return repairMapper.selectRepairList(repair);
+        List<Repair> list = repairMapper.selectRepairList(repair);
+        for (Repair rep : list) {
+            SysUser sysUser = sysUserMapper.selectUserById(rep.getCreateId());
+            if (ObjectUtil.isNull(sysUser)) {
+                throw new ServiceException("无该对象：" + rep.getCreateId());
+            }
+            if (StrUtil.isNotBlank(rep.getAuditId())) {
+                SysUser auditUser = sysUserMapper.selectUserById(rep.getAuditId());
+                if (ObjectUtil.isNull(auditUser)) {
+                    throw new ServiceException("无该对象：" + rep.getAuditId());
+                }
+                rep.setAuditId(auditUser.getNickName());
+            }
+            rep.setCreateId(sysUser.getNickName());
+        }
+        return list;
     }
 
     /**

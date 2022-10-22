@@ -2,10 +2,14 @@ package com.ruoyi.property.service.impl;
 
 import cn.hutool.core.date.CalendarUtil;
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.ObjectUtil;
+import com.ruoyi.common.core.domain.entity.SysUser;
+import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.uuid.PkeyGenerator;
 import com.ruoyi.property.domain.Actually;
 import com.ruoyi.property.mapper.ActuallyMapper;
 import com.ruoyi.common.core.domain.AjaxResult;
+import com.ruoyi.system.mapper.SysUserMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 import com.ruoyi.property.service.ActuallyService;
@@ -22,6 +26,9 @@ public class ActuallyServiceImpl implements ActuallyService {
 
     @Resource
     private ActuallyMapper actuallyMapper;
+
+    @Resource
+    private SysUserMapper sysUserMapper;
 
     @Override
     public AjaxResult insertActually(@Validated Actually actually) {
@@ -42,7 +49,15 @@ public class ActuallyServiceImpl implements ActuallyService {
 
     @Override
     public List<Actually> queryList(Actually actually) {
-        return actuallyMapper.selectActuallyList(actually);
+        List<Actually> actuallies = actuallyMapper.selectActuallyList(actually);
+        for (Actually act : actuallies) {
+            SysUser sysUser = sysUserMapper.selectUserById(act.getCreateId());
+            if (ObjectUtil.isNull(sysUser)) {
+                throw new ServiceException("无该对象：" + act.getCreateId());
+            }
+            act.setCreateId(sysUser.getNickName());
+        }
+        return actuallies;
     }
 
     @Override

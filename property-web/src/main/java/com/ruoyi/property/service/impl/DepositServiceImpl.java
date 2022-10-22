@@ -3,13 +3,19 @@ package com.ruoyi.property.service.impl;
 import java.util.List;
 import java.util.Map;
 
+import cn.hutool.core.util.ObjectUtil;
+import com.ruoyi.common.core.domain.entity.SysUser;
+import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.uuid.PkeyGenerator;
+import com.ruoyi.system.mapper.SysUserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.property.mapper.DepositMapper;
 import com.ruoyi.property.domain.Deposit;
 import com.ruoyi.property.service.IDepositService;
+
+import javax.annotation.Resource;
 
 /**
  * 押金Service业务层处理
@@ -21,6 +27,9 @@ import com.ruoyi.property.service.IDepositService;
 public class DepositServiceImpl implements IDepositService {
     @Autowired
     private DepositMapper depositMapper;
+
+    @Resource
+    private SysUserMapper sysUserMapper;
 
     /**
      * 查询押金
@@ -41,7 +50,15 @@ public class DepositServiceImpl implements IDepositService {
      */
     @Override
     public List<Deposit> selectDepositList(Deposit deposit) {
-        return depositMapper.selectDepositList(deposit);
+        List<Deposit> list = depositMapper.selectDepositList(deposit);
+        for (Deposit dep : list) {
+            SysUser sysUser = sysUserMapper.selectUserById(dep.getCreateId());
+            if (ObjectUtil.isNull(sysUser)) {
+                throw new ServiceException("无该对象：" + dep.getCreateId());
+            }
+            dep.setCreateId(sysUser.getNickName());
+        }
+        return list;
     }
 
     /**
@@ -91,8 +108,7 @@ public class DepositServiceImpl implements IDepositService {
         return depositMapper.deleteDepositById(id);
     }
 
-    public Deposit get(Map params)
-    {
+    public Deposit get(Map<String, Object> params) {
         return depositMapper.get(params);
     }
 }

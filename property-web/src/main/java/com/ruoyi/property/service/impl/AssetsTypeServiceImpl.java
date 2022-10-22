@@ -1,14 +1,17 @@
 package com.ruoyi.property.service.impl;
 
+import cn.hutool.core.util.ObjectUtil;
+import com.ruoyi.common.core.domain.entity.SysUser;
+import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.DateUtils;
-import com.ruoyi.common.utils.uuid.IdUtils;
 import com.ruoyi.common.utils.uuid.PkeyGenerator;
 import com.ruoyi.property.domain.AssetsType;
 import com.ruoyi.property.mapper.AssetsTypeMapper;
 import com.ruoyi.property.service.IAssetsTypeService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.ruoyi.system.mapper.SysUserMapper;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -18,8 +21,11 @@ import java.util.List;
 @Service
 public class AssetsTypeServiceImpl implements IAssetsTypeService {
 
-    @Autowired
+    @Resource
     private AssetsTypeMapper assetsTypeMapper;
+
+    @Resource
+    private SysUserMapper sysUserMapper;
 
     /**
      * 查询资产类别管理
@@ -40,7 +46,15 @@ public class AssetsTypeServiceImpl implements IAssetsTypeService {
      */
     @Override
     public List<AssetsType> selectAssetsTypeList(AssetsType assetsType) {
-        return assetsTypeMapper.selectAssetsTypeList(assetsType);
+        List<AssetsType> list = assetsTypeMapper.selectAssetsTypeList(assetsType);
+        for (AssetsType assType : list) {
+            SysUser sysUser = sysUserMapper.selectUserById(assType.getCreateId());
+            if (ObjectUtil.isNull(sysUser)) {
+                throw new ServiceException("无该对象：" + assType.getCreateId());
+            }
+            assType.setCreateId(sysUser.getNickName());
+        }
+        return list;
     }
 
     /**

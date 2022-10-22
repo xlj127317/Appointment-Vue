@@ -3,18 +3,22 @@ package com.ruoyi.property.service.impl;
 import java.util.Date;
 import java.util.List;
 
+import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.core.util.StrUtil;
+import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.enums.ReportTypeEnum;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.uuid.PkeyGenerator;
-import com.ruoyi.property.domain.Repair;
 import com.ruoyi.property.domain.Report;
 import com.ruoyi.property.mapper.ReportMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.ruoyi.system.mapper.SysUserMapper;
 import org.springframework.stereotype.Service;
 import com.ruoyi.property.mapper.ThingOutMapper;
 import com.ruoyi.property.domain.ThingOut;
 import com.ruoyi.property.service.ThingOutService;
+
+import javax.annotation.Resource;
 
 /**
  * 物品出入申请Service业务层处理
@@ -24,11 +28,14 @@ import com.ruoyi.property.service.ThingOutService;
  */
 @Service
 public class ThingOutServiceImpl implements ThingOutService {
-    @Autowired
+    @Resource
     private ThingOutMapper thingOutMapper;
 
-    @Autowired
+    @Resource
     private ReportMapper reportMapper;
+
+    @Resource
+    private SysUserMapper sysUserMapper;
 
     /**
      * 查询物品出入申请
@@ -49,7 +56,22 @@ public class ThingOutServiceImpl implements ThingOutService {
      */
     @Override
     public List<ThingOut> selectThingOutList(ThingOut thingOut) {
-        return thingOutMapper.selectThingOutList(thingOut);
+        List<ThingOut> list = thingOutMapper.selectThingOutList(thingOut);
+        for (ThingOut out : list) {
+            SysUser sysUser = sysUserMapper.selectUserById(out.getCreateId());
+            if (ObjectUtil.isNull(sysUser)) {
+                throw new ServiceException("无该对象：" + out.getCreateId());
+            }
+            if (StrUtil.isNotBlank(out.getAuditId())) {
+                SysUser auditUser = sysUserMapper.selectUserById(out.getAuditId());
+                if (ObjectUtil.isNull(auditUser)) {
+                    throw new ServiceException("无该对象：" + out.getAuditId());
+                }
+                out.setAuditId(auditUser.getNickName());
+            }
+            out.setCreateId(sysUser.getNickName());
+        }
+        return list;
     }
 
     /**
@@ -64,7 +86,7 @@ public class ThingOutServiceImpl implements ThingOutService {
         thingOut.setId(PkeyGenerator.getUniqueString());
         thingOut.setApplicantTime(nowDate);
         thingOut.setCreateTime(DateUtils.getNowDate());
-        if (insertReport(thingOut,nowDate) != 1) {
+        if (insertReport(thingOut, nowDate) != 1) {
             throw new ServiceException("添加工单失败");
         }
         return thingOutMapper.insertThingOut(thingOut);
@@ -107,7 +129,7 @@ public class ThingOutServiceImpl implements ThingOutService {
      * 添加工单信息
      *
      * @param thingOut 物品出入实体
-     * @param nowDate 当前时间
+     * @param nowDate  当前时间
      * @return int
      */
     private int insertReport(ThingOut thingOut, Date nowDate) {

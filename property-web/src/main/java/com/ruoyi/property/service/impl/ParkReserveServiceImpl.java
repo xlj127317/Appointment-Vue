@@ -4,18 +4,22 @@ import java.util.Date;
 import java.util.List;
 
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.core.util.StrUtil;
+import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.enums.ReportTypeEnum;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.uuid.PkeyGenerator;
-import com.ruoyi.property.domain.Furnish;
 import com.ruoyi.property.domain.Report;
 import com.ruoyi.property.mapper.ReportMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.ruoyi.system.mapper.SysUserMapper;
 import org.springframework.stereotype.Service;
 import com.ruoyi.property.mapper.ParkReserveMapper;
 import com.ruoyi.property.domain.ParkReserve;
 import com.ruoyi.property.service.ParkReserveService;
+
+import javax.annotation.Resource;
 
 /**
  * 园区资源预约Service业务层处理
@@ -25,11 +29,14 @@ import com.ruoyi.property.service.ParkReserveService;
  */
 @Service
 public class ParkReserveServiceImpl implements ParkReserveService {
-    @Autowired
+    @Resource
     private ParkReserveMapper parkReserveMapper;
 
-    @Autowired
+    @Resource
     private ReportMapper reportMapper;
+
+    @Resource
+    private SysUserMapper sysUserMapper;
 
     /**
      * 查询园区资源预约
@@ -50,7 +57,22 @@ public class ParkReserveServiceImpl implements ParkReserveService {
      */
     @Override
     public List<ParkReserve> selectParkReserveList(ParkReserve parkReserve) {
-        return parkReserveMapper.selectParkReserveList(parkReserve);
+        List<ParkReserve> list = parkReserveMapper.selectParkReserveList(parkReserve);
+        for (ParkReserve reserve : list) {
+            SysUser sysUser = sysUserMapper.selectUserById(reserve.getCreateId());
+            if (ObjectUtil.isNull(sysUser)) {
+                throw new ServiceException("无该对象：" + reserve.getCreateId());
+            }
+            if (StrUtil.isNotBlank(reserve.getAuditId())) {
+                SysUser auditUser = sysUserMapper.selectUserById(reserve.getAuditId());
+                if (ObjectUtil.isNull(auditUser)) {
+                    throw new ServiceException("无该对象：" + reserve.getAuditId());
+                }
+                reserve.setAuditId(auditUser.getNickName());
+            }
+            reserve.setCreateId(sysUser.getNickName());
+        }
+        return list;
     }
 
     /**
@@ -113,7 +135,7 @@ public class ParkReserveServiceImpl implements ParkReserveService {
      * 添加工单信息
      *
      * @param parkReserve 装修办理实体
-     * @param nowDate 当前时间
+     * @param nowDate     当前时间
      * @return int
      */
     private int insertReport(ParkReserve parkReserve, Date nowDate) {

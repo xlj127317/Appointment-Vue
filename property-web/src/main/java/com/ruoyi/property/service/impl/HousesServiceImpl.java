@@ -6,11 +6,14 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjUtil;
+import cn.hutool.core.util.ObjectUtil;
+import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.uuid.PkeyGenerator;
 import com.ruoyi.property.domain.Owner;
 import com.ruoyi.property.mapper.OwnerMapper;
+import com.ruoyi.system.mapper.SysUserMapper;
 import org.springframework.stereotype.Service;
 import com.ruoyi.property.mapper.HousesMapper;
 import com.ruoyi.property.domain.Houses;
@@ -32,6 +35,9 @@ public class HousesServiceImpl implements IHousesService {
     @Resource
     private OwnerMapper ownerMapper;
 
+    @Resource
+    private SysUserMapper sysUserMapper;
+
     /**
      * 查询房屋管理
      *
@@ -51,7 +57,15 @@ public class HousesServiceImpl implements IHousesService {
      */
     @Override
     public List<Houses> selectHousesList(Houses houses) {
-        return housesMapper.selectHousesList(houses);
+        List<Houses> list = housesMapper.selectHousesList(houses);
+        for (Houses hou: list) {
+            SysUser sysUser = sysUserMapper.selectUserById(hou.getCreateId());
+            if (ObjectUtil.isNull(sysUser)) {
+                throw new ServiceException("无该对象：" + hou.getCreateId());
+            }
+            hou.setCreateId(sysUser.getNickName());
+        }
+        return list;
     }
 
     /**
@@ -137,9 +151,6 @@ public class HousesServiceImpl implements IHousesService {
      */
     private boolean getHousesNo(String housesNo) {
         List<Houses> list = housesMapper.selectHousesByNo(housesNo);
-        if (CollUtil.isNotEmpty(list)) {
-            return false;
-        }
-        return true;
+        return !CollUtil.isNotEmpty(list);
     }
 }

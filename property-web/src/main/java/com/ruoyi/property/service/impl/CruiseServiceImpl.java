@@ -2,13 +2,18 @@ package com.ruoyi.property.service.impl;
 
 import java.util.List;
 
+import cn.hutool.core.util.ObjectUtil;
+import com.ruoyi.common.core.domain.entity.SysUser;
+import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.uuid.PkeyGenerator;
 import com.ruoyi.property.service.CruiseService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.ruoyi.system.mapper.SysUserMapper;
 import org.springframework.stereotype.Service;
 import com.ruoyi.property.mapper.CruiseMapper;
 import com.ruoyi.property.domain.Cruise;
+
+import javax.annotation.Resource;
 
 /**
  * 巡航管理Service业务层处理
@@ -18,8 +23,11 @@ import com.ruoyi.property.domain.Cruise;
  */
 @Service
 public class CruiseServiceImpl implements CruiseService {
-    @Autowired
+    @Resource
     private CruiseMapper cruiseMapper;
+
+    @Resource
+    private SysUserMapper sysUserMapper;
 
     /**
      * 查询巡航管理
@@ -40,7 +48,15 @@ public class CruiseServiceImpl implements CruiseService {
      */
     @Override
     public List<Cruise> selectCruiseList(Cruise cruise) {
-        return cruiseMapper.selectCruiseList(cruise);
+        List<Cruise> list = cruiseMapper.selectCruiseList(cruise);
+        for (Cruise cru : list) {
+            SysUser sysUser = sysUserMapper.selectUserById(cru.getCreateId());
+            if (ObjectUtil.isNull(sysUser)) {
+                throw new ServiceException("无该对象：" + cru.getCreateId());
+            }
+            cru.setCreateId(sysUser.getNickName());
+        }
+        return list;
     }
 
     /**

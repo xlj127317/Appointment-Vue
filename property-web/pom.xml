@@ -30,6 +30,12 @@
             <artifactId>hutool-core</artifactId>
             <version>5.8.8</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>property-system</artifactId>
+        </dependency>
+
     </dependencies>
 
 </project>

@@ -2,8 +2,12 @@ package com.ruoyi.property.service.impl;
 
 import java.util.List;
 
+import cn.hutool.core.util.ObjectUtil;
+import com.ruoyi.common.core.domain.entity.SysUser;
+import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.uuid.PkeyGenerator;
+import com.ruoyi.system.mapper.SysUserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.property.mapper.OwnerMapper;
@@ -12,6 +16,8 @@ import com.ruoyi.property.service.IOwnerService;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
+
+import javax.annotation.Resource;
 
 /**
  * 业主管理Service业务层处理
@@ -23,6 +29,9 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 public class OwnerServiceImpl implements IOwnerService {
     @Autowired
     private OwnerMapper ownerMapper;
+
+    @Resource
+    private SysUserMapper sysUserMapper;
 
     @Autowired
     private WalletService walletService;
@@ -49,7 +58,15 @@ public class OwnerServiceImpl implements IOwnerService {
      */
     @Override
     public List<Owner> selectOwnerList(Owner owner) {
-        return ownerMapper.selectOwnerList(owner);
+        List<Owner> owners = ownerMapper.selectOwnerList(owner);
+        for (Owner own : owners) {
+            SysUser sysUser = sysUserMapper.selectUserById(own.getCreateId());
+            if (ObjectUtil.isNull(sysUser)) {
+                throw new ServiceException("无该对象：" + own.getCreateId());
+            }
+            own.setCreateId(sysUser.getNickName());
+        }
+        return owners;
     }
 
     /**

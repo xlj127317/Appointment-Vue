@@ -37,6 +37,7 @@
                 and create_id = #{createId}
             </if>
         </where>
+        order by create_time desc
     </select>
 
     <select id="selectParkResourceById" parameterType="String"

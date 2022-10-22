@@ -2,13 +2,19 @@ package com.ruoyi.property.service.impl;
 
 import java.util.List;
 
+import cn.hutool.core.util.ObjectUtil;
+import com.ruoyi.common.core.domain.entity.SysUser;
+import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.uuid.PkeyGenerator;
+import com.ruoyi.system.mapper.SysUserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.property.mapper.ContractMapper;
 import com.ruoyi.property.domain.Contract;
 import com.ruoyi.property.service.IContractService;
+
+import javax.annotation.Resource;
 
 /**
  * 合同管理Service业务层处理
@@ -21,6 +27,8 @@ public class ContractServiceImpl implements IContractService {
     @Autowired
     private ContractMapper contractMapper;
 
+    @Resource
+    private SysUserMapper sysUserMapper;
     /**
      * 查询合同管理
      *
@@ -40,7 +48,15 @@ public class ContractServiceImpl implements IContractService {
      */
     @Override
     public List<Contract> selectContractList(Contract contract) {
-        return contractMapper.selectContractList(contract);
+        List<Contract> list = contractMapper.selectContractList(contract);
+        for (Contract con : list) {
+            SysUser sysUser = sysUserMapper.selectUserById(con.getCreateId());
+            if (ObjectUtil.isNull(sysUser)) {
+                throw new ServiceException("无该对象：" + con.getCreateId());
+            }
+            con.setCreateId(sysUser.getNickName());
+        }
+        return list;
     }
 
     /**

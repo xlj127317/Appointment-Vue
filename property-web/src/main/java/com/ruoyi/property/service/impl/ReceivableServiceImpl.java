@@ -3,14 +3,19 @@ package com.ruoyi.property.service.impl;
 import java.util.Date;
 import java.util.List;
 
+import cn.hutool.core.util.ObjectUtil;
+import com.ruoyi.common.core.domain.entity.SysUser;
+import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.uuid.PkeyGenerator;
 import com.ruoyi.property.dto.ReceivableListInput;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.ruoyi.system.mapper.SysUserMapper;
 import org.springframework.stereotype.Service;
 import com.ruoyi.property.mapper.ReceivableMapper;
 import com.ruoyi.property.domain.Receivable;
 import com.ruoyi.property.service.IReceivableService;
+
+import javax.annotation.Resource;
 
 /**
  * 应收管理Service业务层处理
@@ -20,8 +25,11 @@ import com.ruoyi.property.service.IReceivableService;
  */
 @Service
 public class ReceivableServiceImpl implements IReceivableService {
-    @Autowired
+    @Resource
     private ReceivableMapper receivableMapper;
+
+    @Resource
+    private SysUserMapper sysUserMapper;
 
     /**
      * 查询应收管理
@@ -42,7 +50,15 @@ public class ReceivableServiceImpl implements IReceivableService {
      */
     @Override
     public List<Receivable> selectReceivableList(ReceivableListInput input) {
-        return receivableMapper.selectReceivableList(input);
+        List<Receivable> list = receivableMapper.selectReceivableList(input);
+        for (Receivable rece : list) {
+            SysUser sysUser = sysUserMapper.selectUserById(rece.getCreateId());
+            if (ObjectUtil.isNull(sysUser)) {
+                throw new ServiceException("无该对象：" + rece.getCreateId());
+            }
+            rece.setCreateId(sysUser.getNickName());
+        }
+        return list;
     }
 
     /**

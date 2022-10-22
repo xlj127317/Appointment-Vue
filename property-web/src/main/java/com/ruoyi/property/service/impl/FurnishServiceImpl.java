@@ -3,6 +3,9 @@ package com.ruoyi.property.service.impl;
 import java.util.Date;
 import java.util.List;
 
+import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.core.util.StrUtil;
+import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.enums.ReportTypeEnum;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.DateUtils;
@@ -10,6 +13,7 @@ import com.ruoyi.common.utils.uuid.PkeyGenerator;
 import com.ruoyi.property.domain.Report;
 import com.ruoyi.property.mapper.ReportMapper;
 import com.ruoyi.property.service.FurnishService;
+import com.ruoyi.system.mapper.SysUserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.property.mapper.FurnishMapper;
@@ -31,6 +35,9 @@ public class FurnishServiceImpl implements FurnishService {
     @Autowired
     private ReportMapper reportMapper;
 
+    @Resource
+    private SysUserMapper sysUserMapper;
+
     /**
      * 查询装修办理申请
      *
@@ -50,7 +57,22 @@ public class FurnishServiceImpl implements FurnishService {
      */
     @Override
     public List<Furnish> selectFurnishList(Furnish furnish) {
-        return furnishMapper.selectFurnishList(furnish);
+        List<Furnish> list = furnishMapper.selectFurnishList(furnish);
+        for (Furnish fu : list) {
+            SysUser createUser = sysUserMapper.selectUserById(fu.getCreateId());
+            if (ObjectUtil.isNull(createUser)) {
+                throw new ServiceException("无该对象：" + fu.getCreateId());
+            }
+            if (StrUtil.isNotBlank(fu.getAuditId())) {
+                SysUser auditUser = sysUserMapper.selectUserById(fu.getAuditId());
+                if (ObjectUtil.isNull(auditUser)) {
+                    throw new ServiceException("无该对象：" + fu.getAuditId());
+                }
+                fu.setAuditId(auditUser.getNickName());
+            }
+            fu.setCreateId(createUser.getNickName());
+        }
+        return list;
     }
 
     /**

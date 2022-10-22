@@ -1,17 +1,16 @@
 package com.ruoyi.property.service.impl;
 
-import com.ruoyi.common.exception.user.UserException;
 import com.ruoyi.property.mapper.EasyTrMapper;
 import com.ruoyi.property.service.IEasyTrService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Map;
 
 @Service
 public class EasyTrServiceImpl implements IEasyTrService {
-    @Autowired
+    @Resource
     private EasyTrMapper mapper;
 
     @Override
@@ -21,7 +20,7 @@ public class EasyTrServiceImpl implements IEasyTrService {
 
     @Override
     public String userIdToOwnerId(String userId, int lockType) {
-        Map params = new HashMap();
+        Map<String, Object> params = new HashMap<>();
         params.put("userId", userId);
         params.put("withLock", lockType);
         return mapper.userIdToOwnerId(params);
