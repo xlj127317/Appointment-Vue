@@ -175,6 +175,7 @@
                         )
             </if>
         </where>
+        order by create_time desc
     </select>
 
     <select id="selectContractConfigById"

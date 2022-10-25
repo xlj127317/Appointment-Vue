@@ -232,6 +232,7 @@
                 AND date_format(finish_date, '%y%m%d') &lt;= date_format(#{params.finishEndTime}, '%y%m%d')
             </if>
         </where>
+        order by create_time desc
     </select>
 
     <select id="selectWorkerById" resultMap="BaseResultMap">

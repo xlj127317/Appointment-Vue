@@ -72,7 +72,7 @@ public class ReportServiceImpl implements IReportService {
                 throw new ServiceException("无该对象：" + rep.getCreateId());
             }
             if (StrUtil.isNotBlank(rep.getAuditUserId())) {
-                SysUser auditUser = sysUserMapper.selectUserById(rep.getCreateId());
+                SysUser auditUser = sysUserMapper.selectUserById(rep.getAuditUserId());
                 if (ObjectUtil.isNull(auditUser)) {
                     throw new ServiceException("无该对象：" + rep.getCreateId());
                 }
