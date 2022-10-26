@@ -32,7 +32,7 @@ public class AssetsTypeController extends BaseController {
      * 查询资产类别管理列表
      */
     @ApiOperation("查询资产类别管理列表")
-    @PreAuthorize("@ss.hasPermi('system:type:list')")
+    @PreAuthorize("@ss.hasPermi('property:assetsType:list')")
     @GetMapping("/list")
     public TableDataInfo list(AssetsType assetsType) {
         startPage();
@@ -44,12 +44,12 @@ public class AssetsTypeController extends BaseController {
      * 导出资产类别管理列表
      */
     @ApiOperation("导出资产类别管理列表")
-    @PreAuthorize("@ss.hasPermi('system:type:export')")
+    @PreAuthorize("@ss.hasPermi('property:assetsType:export')")
     @Log(title = "资产类别管理", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, AssetsType assetsType) {
         List<AssetsType> list = assetsTypeService.selectAssetsTypeList(assetsType);
-        ExcelUtil<AssetsType> util = new ExcelUtil<AssetsType>(AssetsType.class);
+        ExcelUtil<AssetsType> util = new ExcelUtil<>(AssetsType.class);
         util.exportExcel(response, list, "资产类别管理数据");
     }
 
@@ -57,7 +57,7 @@ public class AssetsTypeController extends BaseController {
      * 获取资产类别管理详细信息
      */
     @ApiOperation("获取资产类别管理详细信息")
-    @PreAuthorize("@ss.hasPermi('system:type:query')")
+    @PreAuthorize("@ss.hasPermi('property:assetsType:query')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") String id) {
         return AjaxResult.success(assetsTypeService.selectAssetsTypeById(id));
@@ -67,7 +67,7 @@ public class AssetsTypeController extends BaseController {
      * 新增资产类别管理
      */
     @ApiOperation("新增资产类别管理")
-    @PreAuthorize("@ss.hasPermi('system:type:add')")
+    @PreAuthorize("@ss.hasPermi('property:assetsType:add')")
     @Log(title = "资产类别管理", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody AssetsType assetsType) {
@@ -78,7 +78,7 @@ public class AssetsTypeController extends BaseController {
      * 修改资产类别管理
      */
     @ApiOperation("修改资产类别管理")
-    @PreAuthorize("@ss.hasPermi('system:type:edit')")
+    @PreAuthorize("@ss.hasPermi('property:assetsType:edit')")
     @Log(title = "资产类别管理", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody AssetsType assetsType) {
@@ -89,7 +89,7 @@ public class AssetsTypeController extends BaseController {
      * 删除资产类别管理
      */
     @ApiOperation("删除资产类别管理")
-    @PreAuthorize("@ss.hasPermi('system:type:remove')")
+    @PreAuthorize("@ss.hasPermi('property:assetsType:remove')")
     @Log(title = "资产类别管理", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable String[] ids) {
