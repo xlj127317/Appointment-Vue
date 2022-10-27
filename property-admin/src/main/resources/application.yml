@@ -126,6 +126,7 @@ pagehelper:
   helperDialect: mysql
   supportMethodsArguments: true
   params: count=countSql
+  reasonable: false
 
 # Swagger配置
 swagger:

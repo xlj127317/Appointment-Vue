@@ -2,6 +2,7 @@ package com.ruoyi.framework.web.service;
 
 import javax.annotation.Resource;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
@@ -9,8 +10,10 @@ import com.alibaba.fastjson2.JSONObject;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.utils.*;
 import com.ruoyi.common.utils.uuid.PkeyGenerator;
+import com.ruoyi.system.domain.SysUserRole;
 import com.ruoyi.system.mapper.SysUserMapper;
 import com.ruoyi.framework.util.Jcode2SessionUtil;
+import com.ruoyi.system.mapper.SysUserRoleMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -32,6 +35,9 @@ import com.ruoyi.framework.manager.factory.AsyncFactory;
 import com.ruoyi.framework.security.context.AuthenticationContextHolder;
 import com.ruoyi.system.service.ISysConfigService;
 import com.ruoyi.system.service.ISysUserService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 登录校验方法
@@ -61,10 +67,18 @@ public class SysLoginService {
     @Resource
     private SysUserMapper userMapper;
 
+    @Resource
+    private SysUserRoleMapper roleMapper;
+
     /**
-     *
+     * 默认部门id
      */
     public static final long DEPT_ID = 110;
+
+    /**
+     * 默认角色id
+     */
+    public static final long ROLE_ID = 2;
 
     /**
      * 小程序appid
@@ -196,7 +210,9 @@ public class SysLoginService {
                 loginUser.setUserId(openid);
                 loginUser.setDeptId(DEPT_ID);
                 loginUser.setUser(sysUser);
-                return getAjaxResult(openid, loginUser);
+                recordLoginInfo(openid);
+                defaultRole(openid);
+                return getAjaxResult(openid, loginUser,defaultRole(openid));
             }
         } catch (NullPointerException exception) {
             System.out.println("空指针");
@@ -206,7 +222,25 @@ public class SysLoginService {
         loginUser.setUser(sysUser);
         loginUser.setPermissions(permissionService.getMenuPermission(sysUser));
         recordLoginInfo(sysUser.getUserId());
-        return getAjaxResult(openid, loginUser);
+        List<SysUserRole> roles = roleMapper.selectByUserId(openid);
+        if (CollUtil.isEmpty(roles))
+            throw new ServiceException("角色权限为空");
+        return getAjaxResult(openid, loginUser,roles);
+    }
+
+    /**
+     * 添加默认权限 为普通用户
+     *
+     * @param openid userId
+     */
+    private List<SysUserRole> defaultRole(String openid) {
+        List<SysUserRole> roles = new ArrayList<>();
+        SysUserRole sysUserRole = new SysUserRole();
+        sysUserRole.setUserId(openid);
+        sysUserRole.setRoleId(ROLE_ID);
+        roles.add(sysUserRole);
+        roleMapper.batchUserRole(roles);
+        return roles;
     }
 
     /**
@@ -216,11 +250,12 @@ public class SysLoginService {
      * @param loginUser 登录用户信息
      * @return AjaxResult
      */
-    private AjaxResult getAjaxResult(String openid, LoginUser loginUser) {
+    private AjaxResult getAjaxResult(String openid, LoginUser loginUser,List<SysUserRole> roles) {
         AjaxResult success = AjaxResult.success();
         String token = tokenService.createToken(loginUser);
         success.put("token", token);
         success.put("openId", openid);
+        success.put("roles",roles);
         return success;
     }
 

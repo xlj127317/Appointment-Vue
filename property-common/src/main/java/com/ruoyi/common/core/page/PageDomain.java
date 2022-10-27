@@ -80,9 +80,14 @@ public class PageDomain {
         }
     }
 
+    /**
+     * 当前页数超过最大页数时返回空，而非返回最后一页
+     *
+     * @return Boolean
+     */
     public Boolean getReasonable() {
         if (StringUtils.isNull(reasonable)) {
-            return Boolean.TRUE;
+            return Boolean.FALSE;
         }
         return reasonable;
     }
