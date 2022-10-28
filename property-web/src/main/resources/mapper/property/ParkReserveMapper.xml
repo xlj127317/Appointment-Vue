@@ -234,7 +234,7 @@
 
     <update id="updateAudit">
         update park_reserve t
-        set t.audit_id = #{auditStatus}
+        set t.audit_status = #{auditStatus}
         where id = #{id}
     </update>
 </mapper>

@@ -1,5 +1,6 @@
 package com.ruoyi.property.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import cn.hutool.core.util.ObjectUtil;
@@ -136,27 +137,29 @@ public class ReportServiceImpl implements IReportService {
     public AjaxResult auditReport(ReportAuditReq reportAuditReq) {
         AjaxResult ajaxResult = new AjaxResult();
         String typeId = reportAuditReq.getTypeId();
+        String id = reportAuditReq.getId();
+        Date nowDate = DateUtils.getNowDate();
         if (StrUtil.equals(typeId, ReportTypeEnum.FURNISH.getValue())) {
-            int furnishAudit = furnishMapper.updateAuditStatus(reportAuditReq.getId(), reportAuditReq.getAuditStatus());
+            int furnishAudit = furnishMapper.updateAuditStatus(id, reportAuditReq.getAuditStatus());
             ajaxResult.put("furnishAudit", furnishAudit);
         }
         if (StrUtil.equals(typeId, ReportTypeEnum.THING_OUT.getValue())) {
-            int thingAudit = thingOutMapper.updateAudit(reportAuditReq.getId(), reportAuditReq.getAuditStatus());
+            int thingAudit = thingOutMapper.updateAudit(id, reportAuditReq.getAuditStatus());
             ajaxResult.put("thingAudit", thingAudit);
         }
         if (StrUtil.equals(typeId, ReportTypeEnum.REPAIR.getValue())) {
-            int repairAudit = repairMapper.updateAudit(reportAuditReq.getId(), reportAuditReq.getAuditStatus());
+            int repairAudit = repairMapper.updateAudit(id, reportAuditReq.getAuditStatus());
             ajaxResult.put("repairAudit", repairAudit);
         }
         if (StrUtil.equals(typeId, ReportTypeEnum.VISIT.getValue())) {
-            int visitAudit = visitMapper.updateAudit(reportAuditReq.getId(), reportAuditReq.getAuditStatus());
+            int visitAudit = visitMapper.updateAudit(id, reportAuditReq.getAuditStatus());
             ajaxResult.put("visitAudit", visitAudit);
         }
         if (StrUtil.equals(typeId, ReportTypeEnum.PARK_RESERVE.getValue())) {
-            int parkReserveAudit = parkReserveMapper.updateAudit(reportAuditReq.getId(), reportAuditReq.getAuditStatus());
+            int parkReserveAudit = parkReserveMapper.updateAudit(id, reportAuditReq.getAuditStatus());
             ajaxResult.put("parkReserveAudit", parkReserveAudit);
         }
-        reportAuditReq.setAuditTime(DateUtils.getNowDate());
+        reportAuditReq.setAuditTime(nowDate);
         int reportAudit = reportMapper.updateAuditStatus(reportAuditReq);
         ajaxResult.put("reportAudit", reportAudit);
         return AjaxResult.success(ajaxResult);
