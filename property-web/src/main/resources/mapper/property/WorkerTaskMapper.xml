@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.property.mapper.WorkerTaskMapper">
+    <resultMap id="BaseResultMap" type="com.ruoyi.property.domain.WorkerTask">
+        <!--@mbg.generated-->
+        <!--@Table worker_task-->
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="receiver" jdbcType="VARCHAR" property="receiver"/>
+        <result column="task_content" jdbcType="VARCHAR" property="taskContent"/>
+        <result column="complete_status" jdbcType="INTEGER" property="completeStatus"/>
+        <result column="complete_time" jdbcType="TIMESTAMP" property="completeTime"/>
+        <result column="create_id" jdbcType="VARCHAR" property="createId"/>
+        <result column="is_flag" jdbcType="INTEGER" property="isFlag"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        id,
+        receiver,
+        task_content,
+        complete_status,
+        complete_time,
+        create_id,
+        is_flag,
+        create_time
+    </sql>
+
+    <select id="selectWorkerTaskList" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from worker_task
+        <where>
+            is_flag = 0
+            <if test="receiver != null  and receiver != ''">
+                and receiver =
+                    #{receiver}
+            </if>
+            <if test="taskContent != null  and taskContent != ''">
+                and task_content =
+                    #{taskContent}
+            </if>
+            <if test="completeStatus != null">
+                and complete_status
+                    =
+                    #{completeStatus}
+            </if>
+            <if test="completeTime != null">
+                and complete_time
+                    =
+                    #{completeTime}
+            </if>
+            <if test="createId != null  and createId != ''">
+                and create_id
+                    =
+                    #{createId}
+            </if>
+        </where>
+        order by create_time desc
+    </select>
+
+    <select id="selectWorkerTaskById" parameterType="String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from worker_task
+        where id =
+              #{id}
+    </select>
+
+    <insert id="insertWorkerTask">
+        insert into worker_task
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="receiver != null and receiver != ''">
+                receiver,
+            </if>
+            <if test="taskContent != null and taskContent != ''">
+                task_content,
+            </if>
+            <if test="completeStatus != null">
+                complete_status,
+            </if>
+            <if test="completeTime != null">
+                complete_time,
+            </if>
+            <if test="createId != null and createId != ''">
+                create_id,
+            </if>
+            <if test="isFlag != null">
+                is_flag,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="receiver != null and receiver != ''">
+                #{receiver},
+            </if>
+            <if test="taskContent != null and taskContent != ''">
+                #{taskContent},
+            </if>
+            <if test="completeStatus != null">
+                #{completeStatus},
+            </if>
+            <if test="completeTime != null">
+                #{completeTime},
+            </if>
+            <if test="createId != null and createId != ''">
+                #{createId},
+            </if>
+            <if test="isFlag != null">
+                #{isFlag},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateWorkerTask">
+        update worker_task
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="receiver != null and receiver != ''">
+                receiver =
+                    #{receiver},
+            </if>
+            <if test="taskContent != null and taskContent != ''">
+                task_content =
+                    #{taskContent},
+            </if>
+            <if test="completeStatus != null">
+                complete_status =
+                    #{completeStatus},
+            </if>
+            <if test="completeTime != null">
+                complete_time =
+                    #{completeTime},
+            </if>
+            <if test="createId != null and createId != ''">
+                create_id =
+                    #{createId},
+            </if>
+            <if test="isFlag != null">
+                is_flag =
+                    #{isFlag},
+            </if>
+            <if test="createTime != null">
+                create_time =
+                    #{createTime},
+            </if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteWorkerTaskById" parameterType="String">
+        delete
+        from worker_task
+        where id = #{id}
+    </delete>
+
+    <update id="deleteWorkerTaskByIds" parameterType="String">
+        update worker_task
+        set is_flag = 1 where id in
+        <foreach close=")" collection="array" item="id" open="(" separator=",">
+            #{id}
+        </foreach>
+    </update>
+</mapper>
