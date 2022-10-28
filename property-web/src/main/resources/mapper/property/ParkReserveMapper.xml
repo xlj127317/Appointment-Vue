@@ -231,4 +231,10 @@
             #{id}
         </foreach>
     </update>
+
+    <update id="updateAudit">
+        update park_reserve t
+        set t.audit_id = #{auditStatus}
+        where id = #{id}
+    </update>
 </mapper>

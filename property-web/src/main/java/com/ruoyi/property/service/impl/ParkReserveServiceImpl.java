@@ -141,7 +141,7 @@ public class ParkReserveServiceImpl implements ParkReserveService {
     private int insertReport(ParkReserve parkReserve, Date nowDate) {
         Report report = new Report();
         report.setId(parkReserve.getId());
-        report.setTypeId(ReportTypeEnum.FURNISH.getValue());
+        report.setTypeId(ReportTypeEnum.PARK_RESERVE.getValue());
         report.setReportContent(parkReserve.getReason());
         report.setAuditStatus(0);
         report.setCreateTime(nowDate);

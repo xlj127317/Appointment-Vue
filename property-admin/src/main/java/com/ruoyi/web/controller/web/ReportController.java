@@ -61,8 +61,8 @@ public class ReportController extends BaseController {
      */
     @ApiOperation("获取工单管理详细信息")
     @PreAuthorize("@ss.hasPermi('property:report:query')")
-    @GetMapping(value = "/{id}")
-    public AjaxResult getInfo(@PathVariable("id") String id) {
+    @GetMapping(value = "/getInfo")
+    public AjaxResult getInfo(@RequestParam String id) {
         return AjaxResult.success(reportService.selectReportById(id));
     }
 

@@ -11,7 +11,8 @@ public enum ReportTypeEnum {
     FURNISH("装修办理"),
     REPAIR("物业报修"),
     THING_OUT("物品出入"),
-    VISIT("来访出入");
+    VISIT("来访出入"),
+    PARK_RESERVE("园区资源预约");
 
     private final String value;
 

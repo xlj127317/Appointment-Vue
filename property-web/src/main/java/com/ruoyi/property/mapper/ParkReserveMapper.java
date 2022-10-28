@@ -3,6 +3,7 @@ package com.ruoyi.property.mapper;
 import java.util.List;
 
 import com.ruoyi.property.domain.ParkReserve;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * 园区资源预约Mapper接口
@@ -17,7 +18,7 @@ public interface ParkReserveMapper {
      * @param id 园区资源预约主键
      * @return 园区资源预约
      */
-    public ParkReserve selectParkReserveById(String id);
+    ParkReserve selectParkReserveById(String id);
 
     /**
      * 查询园区资源预约列表
@@ -58,4 +59,13 @@ public interface ParkReserveMapper {
      * @return 结果
      */
     int deleteParkReserveByIds(String[] ids);
+
+    /**
+     * 园区资源审核
+     *
+     * @param id          审核id
+     * @param auditStatus 审核状态
+     * @return int
+     */
+    int updateAudit(@Param("id") String id, @Param("auditStatus") Integer auditStatus);
 }

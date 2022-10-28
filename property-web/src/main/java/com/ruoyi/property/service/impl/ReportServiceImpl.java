@@ -44,6 +44,9 @@ public class ReportServiceImpl implements IReportService {
     private VisitMapper visitMapper;
 
     @Resource
+    private ParkReserveMapper parkReserveMapper;
+
+    @Resource
     private SysUserMapper sysUserMapper;
 
     /**
@@ -147,6 +150,10 @@ public class ReportServiceImpl implements IReportService {
         if (StrUtil.equals(reportAuditReq.getTypeId(), ReportTypeEnum.VISIT.getValue())) {
             int visitAudit = visitMapper.updateAudit(reportAuditReq.getId(), reportAuditReq.getAuditStatus());
             ajaxResult.put("visitAudit", visitAudit);
+        }
+        if (StrUtil.equals(reportAuditReq.getTypeId(),ReportTypeEnum.PARK_RESERVE.getValue())){
+            int parkReserveAudit = parkReserveMapper.updateAudit(reportAuditReq.getId(), reportAuditReq.getAuditStatus());
+            ajaxResult.put("parkReserveAudit",parkReserveAudit);
         }
         reportAuditReq.setAuditTime(DateUtils.getNowDate());
         int reportAudit = reportMapper.updateAuditStatus(reportAuditReq);
