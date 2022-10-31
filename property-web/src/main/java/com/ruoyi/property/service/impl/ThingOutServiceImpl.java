@@ -3,9 +3,7 @@ package com.ruoyi.property.service.impl;
 import java.util.Date;
 import java.util.List;
 
-import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
-import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.enums.ReportTypeEnum;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.DateUtils;
@@ -58,18 +56,18 @@ public class ThingOutServiceImpl implements ThingOutService {
     public List<ThingOut> selectThingOutList(ThingOut thingOut) {
         List<ThingOut> list = thingOutMapper.selectThingOutList(thingOut);
         for (ThingOut out : list) {
-            SysUser sysUser = sysUserMapper.selectUserById(out.getCreateId());
-            if (ObjectUtil.isNull(sysUser)) {
-                throw new ServiceException("无该对象：" + out.getCreateId());
+            String nickName = sysUserMapper.nickNameById(out.getCreateId());
+            if (StrUtil.isBlank(nickName)) {
+                throw new ServiceException("无此创建人：" + out.getCreateId(), 201);
             }
             if (StrUtil.isNotBlank(out.getAuditId())) {
-                SysUser auditUser = sysUserMapper.selectUserById(out.getAuditId());
-                if (ObjectUtil.isNull(auditUser)) {
-                    throw new ServiceException("无该对象：" + out.getAuditId());
+                String auditNickName = sysUserMapper.nickNameById(out.getAuditId());
+                if (StrUtil.isBlank(auditNickName)) {
+                    throw new ServiceException("无此审核人：" + out.getAuditId(), 201);
                 }
-                out.setAuditId(auditUser.getNickName());
+                out.setAuditId(auditNickName);
             }
-            out.setCreateId(sysUser.getNickName());
+            out.setCreateId(nickName);
         }
         return list;
     }

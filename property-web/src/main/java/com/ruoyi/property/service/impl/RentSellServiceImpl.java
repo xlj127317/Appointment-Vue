@@ -2,8 +2,7 @@ package com.ruoyi.property.service.impl;
 
 import java.util.List;
 
-import cn.hutool.core.util.ObjectUtil;
-import com.ruoyi.common.core.domain.entity.SysUser;
+import cn.hutool.core.util.StrUtil;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.uuid.PkeyGenerator;
@@ -37,7 +36,13 @@ public class RentSellServiceImpl implements IRentSellService {
      */
     @Override
     public RentSell selectRentSellById(String id) {
-        return rentSellMapper.selectRentSellById(id);
+        RentSell rentSell = rentSellMapper.selectRentSellById(id);
+        String nickName = sysUserMapper.nickNameById(rentSell.getCreateId());
+        if (StrUtil.isBlank(nickName)) {
+            throw new ServiceException("无此创建人：" + rentSell.getCreateId(), 201);
+        }
+        rentSell.setCreateId(nickName);
+        return rentSell;
     }
 
     /**
@@ -50,11 +55,11 @@ public class RentSellServiceImpl implements IRentSellService {
     public List<RentSell> selectRentSellList(RentSell rentSell) {
         List<RentSell> list = rentSellMapper.selectRentSellList(rentSell);
         for (RentSell rent : list) {
-            SysUser sysUser = sysUserMapper.selectUserById(rent.getCreateId());
-            if (ObjectUtil.isNull(sysUser)) {
-                throw new ServiceException("无该对象：" + rent.getCreateId());
+            String nickName = sysUserMapper.nickNameById(rent.getCreateId());
+            if (StrUtil.isBlank(nickName)) {
+                throw new ServiceException("无此创建人：" + rent.getCreateId(), 201);
             }
-            rent.setCreateId(sysUser.getNickName());
+            rent.setCreateId(nickName);
         }
         return list;
     }

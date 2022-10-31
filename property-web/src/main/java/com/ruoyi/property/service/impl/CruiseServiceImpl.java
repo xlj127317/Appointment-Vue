@@ -2,8 +2,7 @@ package com.ruoyi.property.service.impl;
 
 import java.util.List;
 
-import cn.hutool.core.util.ObjectUtil;
-import com.ruoyi.common.core.domain.entity.SysUser;
+import cn.hutool.core.util.StrUtil;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.uuid.PkeyGenerator;
@@ -37,7 +36,13 @@ public class CruiseServiceImpl implements CruiseService {
      */
     @Override
     public Cruise selectCruiseById(String id) {
-        return cruiseMapper.selectCruiseById(id);
+        Cruise cruise = cruiseMapper.selectCruiseById(id);
+        String nickName = sysUserMapper.nickNameById(cruise.getCreateId());
+        if (StrUtil.isBlank(nickName)) {
+            throw new ServiceException("无此创建人：" + id, 201);
+        }
+        cruise.setCreateId(nickName);
+        return cruise;
     }
 
     /**
@@ -50,11 +55,11 @@ public class CruiseServiceImpl implements CruiseService {
     public List<Cruise> selectCruiseList(Cruise cruise) {
         List<Cruise> list = cruiseMapper.selectCruiseList(cruise);
         for (Cruise cru : list) {
-            SysUser sysUser = sysUserMapper.selectUserById(cru.getCreateId());
-            if (ObjectUtil.isNull(sysUser)) {
-                throw new ServiceException("无该对象：" + cru.getCreateId());
+            String nickName = sysUserMapper.nickNameById(cru.getCreateId());
+            if (StrUtil.isBlank(nickName)) {
+                throw new ServiceException("无此创建人：" + cru.getCreateId(), 201);
             }
-            cru.setCreateId(sysUser.getNickName());
+            cru.setCreateId(nickName);
         }
         return list;
     }

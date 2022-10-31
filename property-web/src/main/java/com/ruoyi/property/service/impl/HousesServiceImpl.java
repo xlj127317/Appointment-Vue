@@ -6,8 +6,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjUtil;
-import cn.hutool.core.util.ObjectUtil;
-import com.ruoyi.common.core.domain.entity.SysUser;
+import cn.hutool.core.util.StrUtil;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.uuid.PkeyGenerator;
@@ -46,7 +45,13 @@ public class HousesServiceImpl implements IHousesService {
      */
     @Override
     public Houses selectHousesById(String id) {
-        return housesMapper.selectHousesById(id);
+        Houses houses = housesMapper.selectHousesById(id);
+        String nickName = sysUserMapper.nickNameById(houses.getCreateId());
+        if (StrUtil.isBlank(nickName)) {
+            throw new ServiceException("无此创建人：" + houses.getCreateId(), 201);
+        }
+        houses.setCreateId(nickName);
+        return houses;
     }
 
     /**
@@ -58,12 +63,12 @@ public class HousesServiceImpl implements IHousesService {
     @Override
     public List<Houses> selectHousesList(Houses houses) {
         List<Houses> list = housesMapper.selectHousesList(houses);
-        for (Houses hou: list) {
-            SysUser sysUser = sysUserMapper.selectUserById(hou.getCreateId());
-            if (ObjectUtil.isNull(sysUser)) {
-                throw new ServiceException("无该对象：" + hou.getCreateId());
+        for (Houses hou : list) {
+            String nickName = sysUserMapper.nickNameById(hou.getCreateId());
+            if (StrUtil.isBlank(nickName)) {
+                throw new ServiceException("无此创建人：" + hou.getCreateId(), 201);
             }
-            hou.setCreateId(sysUser.getNickName());
+            hou.setCreateId(nickName);
         }
         return list;
     }

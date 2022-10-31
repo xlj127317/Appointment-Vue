@@ -2,8 +2,7 @@ package com.ruoyi.property.service.impl;
 
 import cn.hutool.core.date.CalendarUtil;
 import cn.hutool.core.date.DateUtil;
-import cn.hutool.core.util.ObjectUtil;
-import com.ruoyi.common.core.domain.entity.SysUser;
+import cn.hutool.core.util.StrUtil;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.uuid.PkeyGenerator;
 import com.ruoyi.property.domain.Assets;
@@ -38,7 +37,13 @@ public class AssetsServiceImpl implements AssetsService {
 
     @Override
     public AjaxResult queryById(String id) {
-        return AjaxResult.success(assetsMapper.selectOne(id));
+        Assets assets = assetsMapper.selectOne(id);
+        String nickName = sysUserMapper.nickNameById(assets.getCreateId());
+        if (StrUtil.isBlank(nickName)) {
+            throw new ServiceException("无此创建人：" + assets.getCreateId(), 201);
+        }
+        assets.setCreateId(nickName);
+        return AjaxResult.success(assets);
     }
 
     @Override
@@ -49,12 +54,12 @@ public class AssetsServiceImpl implements AssetsService {
     @Override
     public List<Assets> queryList(Assets assets) {
         List<Assets> list = assetsMapper.queryHousesList(assets);
-        for (Assets ass: list) {
-            SysUser sysUser = sysUserMapper.selectUserById(ass.getCreateId());
-            if (ObjectUtil.isNull(sysUser)) {
-                throw new ServiceException("无该对象：" + ass.getCreateId());
+        for (Assets ass : list) {
+            String nickName = sysUserMapper.nickNameById(ass.getCreateId());
+            if (StrUtil.isBlank(nickName)) {
+                throw new ServiceException("无此创建人：" + ass.getCreateId(), 201);
             }
-            ass.setCreateId(sysUser.getNickName());
+            ass.setCreateId(nickName);
         }
         return list;
     }

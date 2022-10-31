@@ -347,12 +347,6 @@
         where user_id = #{userId}
     </update>
 
-    <update id="updateUserStatus" parameterType="com.ruoyi.common.core.domain.entity.SysUser">
-        update sys_user
-        set status = #{status}
-        where user_id = #{userId}
-    </update>
-
     <update id="updateUserAvatar" parameterType="com.ruoyi.common.core.domain.entity.SysUser">
         update sys_user
         set avatar = #{avatar}
@@ -384,4 +378,16 @@
         set nick_name = #{nickName,jdbcType=VARCHAR}
         where user_id = #{id,jdbcType=VARCHAR}
     </update>
+
+    <select id="nickNameById" resultType="java.lang.String">
+        select t.nick_name
+        from sys_user t
+        where t.user_id = #{id}
+    </select>
+
+    <select id="nickNameByUserName" resultType="java.lang.String">
+        select t.nick_name
+        from sys_user t
+        where t.user_id = #{userName}
+    </select>
 </mapper>

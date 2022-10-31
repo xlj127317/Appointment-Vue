@@ -1,7 +1,6 @@
 package com.ruoyi.property.service.impl;
 
-import cn.hutool.core.util.ObjectUtil;
-import com.ruoyi.common.core.domain.entity.SysUser;
+import cn.hutool.core.util.StrUtil;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.uuid.PkeyGenerator;
@@ -50,16 +49,16 @@ public class WorkerTaskServiceImpl implements WorkerTaskService {
         List<WorkerTask> list = workerTaskMapper.selectWorkerTaskList(workerTask);
         for (WorkerTask task : list) {
             String createId = task.getCreateId();
-            SysUser userById = userMapper.selectUserById(createId);
-            SysUser userByUserName = userMapper.selectUserByUserName(task.getReceiver());
-            if (ObjectUtil.isNull(userById)) {
-                throw new ServiceException("无该创建人");
+            String nickName = userMapper.nickNameById(createId);
+            if (StrUtil.isBlank(nickName)) {
+                throw new ServiceException("无此创建人：" + task.getCreateId(), 201);
             }
-            if (ObjectUtil.isNull(userByUserName)) {
-                throw new ServiceException("无该接收人");
+            String receiverName = userMapper.nickNameByUserName(task.getReceiver());
+            if (StrUtil.isBlank(receiverName)) {
+                throw new ServiceException("无该接收人: " + task.getReceiver());
             }
-            task.setReceiver(userByUserName.getNickName());
-            task.setCreateId(userById.getNickName());
+            task.setReceiver(receiverName);
+            task.setCreateId(nickName);
         }
         return list;
     }

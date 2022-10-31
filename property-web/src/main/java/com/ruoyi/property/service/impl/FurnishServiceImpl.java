@@ -3,9 +3,7 @@ package com.ruoyi.property.service.impl;
 import java.util.Date;
 import java.util.List;
 
-import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
-import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.enums.ReportTypeEnum;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.DateUtils;
@@ -46,7 +44,13 @@ public class FurnishServiceImpl implements FurnishService {
      */
     @Override
     public Furnish selectFurnishById(String id) {
-        return furnishMapper.selectFurnishById(id);
+        Furnish furnish = furnishMapper.selectFurnishById(id);
+        String nickName = sysUserMapper.nickNameById(furnish.getCreateId());
+        if (StrUtil.isBlank(nickName)) {
+            throw new ServiceException("无此创建人：" + id, 201);
+        }
+        furnish.setCreateId(nickName);
+        return furnish;
     }
 
     /**
@@ -59,18 +63,18 @@ public class FurnishServiceImpl implements FurnishService {
     public List<Furnish> selectFurnishList(Furnish furnish) {
         List<Furnish> list = furnishMapper.selectFurnishList(furnish);
         for (Furnish fu : list) {
-            SysUser createUser = sysUserMapper.selectUserById(fu.getCreateId());
-            if (ObjectUtil.isNull(createUser)) {
-                throw new ServiceException("无该对象：" + fu.getCreateId());
+            String nickName = sysUserMapper.nickNameById(fu.getCreateId());
+            if (StrUtil.isBlank(nickName)) {
+                throw new ServiceException("无此创建人：" + fu.getCreateId(), 201);
             }
             if (StrUtil.isNotBlank(fu.getAuditId())) {
-                SysUser auditUser = sysUserMapper.selectUserById(fu.getAuditId());
-                if (ObjectUtil.isNull(auditUser)) {
-                    throw new ServiceException("无该对象：" + fu.getAuditId());
+                String auditNickName = sysUserMapper.nickNameById(fu.getAuditId());
+                if (StrUtil.isBlank(auditNickName)) {
+                    throw new ServiceException("无该审核人：" + fu.getAuditId(), 201);
                 }
-                fu.setAuditId(auditUser.getNickName());
+                fu.setAuditId(auditNickName);
             }
-            fu.setCreateId(createUser.getNickName());
+            furnish.setCreateId(nickName);
         }
         return list;
     }

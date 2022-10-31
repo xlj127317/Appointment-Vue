@@ -2,8 +2,7 @@ package com.ruoyi.property.service.impl;
 
 import java.util.List;
 
-import cn.hutool.core.util.ObjectUtil;
-import com.ruoyi.common.core.domain.entity.SysUser;
+import cn.hutool.core.util.StrUtil;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.uuid.PkeyGenerator;
@@ -29,6 +28,7 @@ public class ContractServiceImpl implements IContractService {
 
     @Resource
     private SysUserMapper sysUserMapper;
+
     /**
      * 查询合同管理
      *
@@ -37,7 +37,13 @@ public class ContractServiceImpl implements IContractService {
      */
     @Override
     public Contract selectContractById(String id) {
-        return contractMapper.selectContractById(id);
+        Contract contract = contractMapper.selectContractById(id);
+        String nickName = sysUserMapper.nickNameById(contract.getCreateId());
+        if (StrUtil.isBlank(nickName)) {
+            throw new ServiceException("无此创建人：" + contract.getCreateId(), 201);
+        }
+        contract.setCreateId(nickName);
+        return contract;
     }
 
     /**
@@ -50,11 +56,11 @@ public class ContractServiceImpl implements IContractService {
     public List<Contract> selectContractList(Contract contract) {
         List<Contract> list = contractMapper.selectContractList(contract);
         for (Contract con : list) {
-            SysUser sysUser = sysUserMapper.selectUserById(con.getCreateId());
-            if (ObjectUtil.isNull(sysUser)) {
-                throw new ServiceException("无该对象：" + con.getCreateId());
+            String nickName = sysUserMapper.nickNameById(con.getCreateId());
+            if (StrUtil.isBlank(nickName)) {
+                throw new ServiceException("无此创建人：" + con.getCreateId(), 201);
             }
-            con.setCreateId(sysUser.getNickName());
+            con.setCreateId(nickName);
         }
         return list;
     }

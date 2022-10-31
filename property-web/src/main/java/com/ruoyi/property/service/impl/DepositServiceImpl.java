@@ -3,8 +3,7 @@ package com.ruoyi.property.service.impl;
 import java.util.List;
 import java.util.Map;
 
-import cn.hutool.core.util.ObjectUtil;
-import com.ruoyi.common.core.domain.entity.SysUser;
+import cn.hutool.core.util.StrUtil;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.uuid.PkeyGenerator;
@@ -39,7 +38,13 @@ public class DepositServiceImpl implements IDepositService {
      */
     @Override
     public Deposit selectDepositById(String id) {
-        return depositMapper.selectDepositById(id);
+        Deposit deposit = depositMapper.selectDepositById(id);
+        String nickName = sysUserMapper.nickNameById(deposit.getCreateId());
+        if (StrUtil.isBlank(nickName)) {
+            throw new ServiceException("无此创建人：" + deposit.getCreateId(), 201);
+        }
+        deposit.setCreateId(nickName);
+        return deposit;
     }
 
     /**
@@ -52,11 +57,11 @@ public class DepositServiceImpl implements IDepositService {
     public List<Deposit> selectDepositList(Deposit deposit) {
         List<Deposit> list = depositMapper.selectDepositList(deposit);
         for (Deposit dep : list) {
-            SysUser sysUser = sysUserMapper.selectUserById(dep.getCreateId());
-            if (ObjectUtil.isNull(sysUser)) {
-                throw new ServiceException("无该对象：" + dep.getCreateId());
+            String nickName = sysUserMapper.nickNameById(dep.getCreateId());
+            if (StrUtil.isBlank(nickName)) {
+                throw new ServiceException("无此创建人：" + dep.getCreateId(), 201);
             }
-            dep.setCreateId(sysUser.getNickName());
+            dep.setCreateId(nickName);
         }
         return list;
     }

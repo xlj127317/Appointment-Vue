@@ -3,8 +3,7 @@ package com.ruoyi.property.service.impl;
 import java.util.Date;
 import java.util.List;
 
-import cn.hutool.core.util.ObjectUtil;
-import com.ruoyi.common.core.domain.entity.SysUser;
+import cn.hutool.core.util.StrUtil;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.uuid.PkeyGenerator;
@@ -39,7 +38,13 @@ public class ReceivableServiceImpl implements IReceivableService {
      */
     @Override
     public Receivable selectReceivableById(String id) {
-        return receivableMapper.selectReceivableById(id);
+        Receivable receivable = receivableMapper.selectReceivableById(id);
+        String nickName = sysUserMapper.nickNameById(receivable.getCreateId());
+        if (StrUtil.isBlank(nickName)) {
+            throw new ServiceException("无此创建人：" + id, 201);
+        }
+        receivable.setCreateId(nickName);
+        return receivable;
     }
 
     /**
@@ -52,11 +57,11 @@ public class ReceivableServiceImpl implements IReceivableService {
     public List<Receivable> selectReceivableList(ReceivableListInput input) {
         List<Receivable> list = receivableMapper.selectReceivableList(input);
         for (Receivable rece : list) {
-            SysUser sysUser = sysUserMapper.selectUserById(rece.getCreateId());
-            if (ObjectUtil.isNull(sysUser)) {
-                throw new ServiceException("无该对象：" + rece.getCreateId());
+            String nickName = sysUserMapper.nickNameById(rece.getCreateId());
+            if (StrUtil.isBlank(nickName)) {
+                throw new ServiceException("无此创建人：" + rece.getCreateId(), 201);
             }
-            rece.setCreateId(sysUser.getNickName());
+            rece.setCreateId(nickName);
         }
         return list;
     }
@@ -107,8 +112,7 @@ public class ReceivableServiceImpl implements IReceivableService {
         return receivableMapper.deleteReceivableById(id);
     }
 
-    public boolean exists(String contractId, String paymentTypeId, Date date)
-    {
+    public boolean exists(String contractId, String paymentTypeId, Date date) {
         return receivableMapper.exists(contractId, paymentTypeId, date);
     }
 }

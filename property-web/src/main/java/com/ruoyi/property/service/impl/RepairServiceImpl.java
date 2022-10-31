@@ -3,9 +3,7 @@ package com.ruoyi.property.service.impl;
 import java.util.Date;
 import java.util.List;
 
-import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
-import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.enums.ReportTypeEnum;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.DateUtils;
@@ -46,7 +44,13 @@ public class RepairServiceImpl implements RepairService {
      */
     @Override
     public Repair selectRepairById(String id) {
-        return repairMapper.selectRepairById(id);
+        Repair repair = repairMapper.selectRepairById(id);
+        String nickName = sysUserMapper.nickNameById(repair.getCreateId());
+        if (StrUtil.isBlank(nickName)) {
+            throw new ServiceException("无此创建人：" + repair.getCreateId(), 201);
+        }
+        repair.setCreateId(nickName);
+        return repair;
     }
 
     /**
@@ -59,18 +63,18 @@ public class RepairServiceImpl implements RepairService {
     public List<Repair> selectRepairList(Repair repair) {
         List<Repair> list = repairMapper.selectRepairList(repair);
         for (Repair rep : list) {
-            SysUser sysUser = sysUserMapper.selectUserById(rep.getCreateId());
-            if (ObjectUtil.isNull(sysUser)) {
-                throw new ServiceException("无该对象：" + rep.getCreateId());
+            String nickName = sysUserMapper.nickNameById(rep.getCreateId());
+            if (StrUtil.isBlank(nickName)) {
+                throw new ServiceException("无此创建人：" + repair.getCreateId(), 201);
             }
             if (StrUtil.isNotBlank(rep.getAuditId())) {
-                SysUser auditUser = sysUserMapper.selectUserById(rep.getAuditId());
-                if (ObjectUtil.isNull(auditUser)) {
-                    throw new ServiceException("无该对象：" + rep.getAuditId());
+                String auditNickName = sysUserMapper.nickNameById(rep.getAuditId());
+                if (StrUtil.isBlank(auditNickName)) {
+                    throw new ServiceException("无此创建人：" + rep.getAuditId(), 201);
                 }
-                rep.setAuditId(auditUser.getNickName());
+                rep.setAuditId(auditNickName);
             }
-            rep.setCreateId(sysUser.getNickName());
+            rep.setCreateId(nickName);
         }
         return list;
     }

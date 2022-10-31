@@ -2,8 +2,7 @@ package com.ruoyi.property.service.impl;
 
 import java.util.List;
 
-import cn.hutool.core.util.ObjectUtil;
-import com.ruoyi.common.core.domain.entity.SysUser;
+import cn.hutool.core.util.StrUtil;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.uuid.PkeyGenerator;
@@ -37,7 +36,13 @@ public class ParkResourceServiceImpl implements ParkResourceService {
      */
     @Override
     public ParkResource selectParkResourceById(String id) {
-        return parkResourceMapper.selectParkResourceById(id);
+        ParkResource parkResource = parkResourceMapper.selectParkResourceById(id);
+        String nickName = sysUserMapper.nickNameById(parkResource.getCreateId());
+        if (StrUtil.isBlank(nickName)) {
+            throw new ServiceException("无此创建人：" + parkResource.getCreateId(), 201);
+        }
+        parkResource.setCreateId(nickName);
+        return parkResource;
     }
 
     /**
@@ -50,11 +55,11 @@ public class ParkResourceServiceImpl implements ParkResourceService {
     public List<ParkResource> selectParkResourceList(ParkResource parkResource) {
         List<ParkResource> list = parkResourceMapper.selectParkResourceList(parkResource);
         for (ParkResource resource : list) {
-            SysUser sysUser = sysUserMapper.selectUserById(resource.getCreateId());
-            if (ObjectUtil.isNull(sysUser)) {
-                throw new ServiceException("无该对象：" + resource.getCreateId());
+            String nickName = sysUserMapper.nickNameById(resource.getCreateId());
+            if (StrUtil.isBlank(nickName)) {
+                throw new ServiceException("无此创建人：" + resource.getCreateId(), 201);
             }
-            resource.setCreateId(sysUser.getNickName());
+            resource.setCreateId(nickName);
         }
         return list;
     }

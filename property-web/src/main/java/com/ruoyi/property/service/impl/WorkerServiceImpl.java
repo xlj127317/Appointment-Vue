@@ -2,13 +2,11 @@ package com.ruoyi.property.service.impl;
 
 import java.util.List;
 
-import cn.hutool.core.util.ObjectUtil;
-import com.ruoyi.common.core.domain.entity.SysUser;
+import cn.hutool.core.util.StrUtil;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.uuid.PkeyGenerator;
 import com.ruoyi.system.mapper.SysUserMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.property.mapper.WorkerMapper;
 import com.ruoyi.property.domain.Worker;
@@ -24,10 +22,11 @@ import javax.annotation.Resource;
  */
 @Service
 public class WorkerServiceImpl implements WorkerService {
-    @Autowired
+    @Resource
     private WorkerMapper workerMapper;
     @Resource
     private SysUserMapper sysUserMapper;
+
     /**
      * 查询用工管理
      *
@@ -36,7 +35,13 @@ public class WorkerServiceImpl implements WorkerService {
      */
     @Override
     public Worker selectWorkerById(String id) {
-        return workerMapper.selectWorkerById(id);
+        Worker worker = workerMapper.selectWorkerById(id);
+        String nickName = sysUserMapper.nickNameById(worker.getCreateId());
+        if (StrUtil.isBlank(nickName)) {
+            throw new ServiceException("无此创建人：" + worker.getCreateId(), 201);
+        }
+        worker.setCreateId(nickName);
+        return worker;
     }
 
     /**
@@ -49,11 +54,11 @@ public class WorkerServiceImpl implements WorkerService {
     public List<Worker> selectWorkerList(Worker worker) {
         List<Worker> list = workerMapper.selectWorkerList(worker);
         for (Worker wor : list) {
-            SysUser sysUser = sysUserMapper.selectUserById(wor.getCreateId());
-            if (ObjectUtil.isNull(sysUser)) {
-                throw new ServiceException("无该对象：" + wor.getCreateId());
+            String nickName = sysUserMapper.nickNameById(wor.getCreateId());
+            if (StrUtil.isBlank(nickName)) {
+                throw new ServiceException("无此创建人：" + wor.getCreateId(), 201);
             }
-            wor.setCreateId(sysUser.getNickName());
+            wor.setCreateId(nickName);
         }
         return list;
     }

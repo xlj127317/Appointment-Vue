@@ -2,8 +2,7 @@ package com.ruoyi.property.service.impl;
 
 import java.util.List;
 
-import cn.hutool.core.util.ObjectUtil;
-import com.ruoyi.common.core.domain.entity.SysUser;
+import cn.hutool.core.util.StrUtil;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.uuid.PkeyGenerator;
@@ -47,7 +46,13 @@ public class OwnerServiceImpl implements IOwnerService {
      */
     @Override
     public Owner selectOwnerById(String id) {
-        return ownerMapper.selectOwnerById(id);
+        Owner owner = ownerMapper.selectOwnerById(id);
+        String nickName = sysUserMapper.nickNameById(owner.getCreateId());
+        if (StrUtil.isBlank(nickName)) {
+            throw new ServiceException("无此创建人：" + owner.getCreateId(), 201);
+        }
+        owner.setCreateId(nickName);
+        return owner;
     }
 
     /**
@@ -60,11 +65,11 @@ public class OwnerServiceImpl implements IOwnerService {
     public List<Owner> selectOwnerList(Owner owner) {
         List<Owner> owners = ownerMapper.selectOwnerList(owner);
         for (Owner own : owners) {
-            SysUser sysUser = sysUserMapper.selectUserById(own.getCreateId());
-            if (ObjectUtil.isNull(sysUser)) {
-                throw new ServiceException("无该对象：" + own.getCreateId());
+            String nickName = sysUserMapper.nickNameById(own.getCreateId());
+            if (StrUtil.isBlank(nickName)) {
+                throw new ServiceException("无此创建人：" + own.getCreateId(), 201);
             }
-            own.setCreateId(sysUser.getNickName());
+            own.setCreateId(nickName);
         }
         return owners;
     }

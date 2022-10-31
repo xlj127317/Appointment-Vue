@@ -4,9 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import cn.hutool.core.date.DateUtil;
-import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
-import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.enums.ReportTypeEnum;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.DateUtils;
@@ -46,7 +44,13 @@ public class ParkReserveServiceImpl implements ParkReserveService {
      */
     @Override
     public ParkReserve selectParkReserveById(String id) {
-        return parkReserveMapper.selectParkReserveById(id);
+        ParkReserve reserve = parkReserveMapper.selectParkReserveById(id);
+        String nickName = sysUserMapper.nickNameById(reserve.getCreateId());
+        if (StrUtil.isBlank(nickName)) {
+            throw new ServiceException("无此创建人：" + reserve.getCreateId(), 201);
+        }
+        reserve.setCreateId(nickName);
+        return reserve;
     }
 
     /**
@@ -59,18 +63,18 @@ public class ParkReserveServiceImpl implements ParkReserveService {
     public List<ParkReserve> selectParkReserveList(ParkReserve parkReserve) {
         List<ParkReserve> list = parkReserveMapper.selectParkReserveList(parkReserve);
         for (ParkReserve reserve : list) {
-            SysUser sysUser = sysUserMapper.selectUserById(reserve.getCreateId());
-            if (ObjectUtil.isNull(sysUser)) {
-                throw new ServiceException("无该对象：" + reserve.getCreateId());
+            String nickName = sysUserMapper.nickNameById(reserve.getCreateId());
+            if (StrUtil.isBlank(nickName)) {
+                throw new ServiceException("无此创建人：" + reserve.getCreateId(), 201);
             }
             if (StrUtil.isNotBlank(reserve.getAuditId())) {
-                SysUser auditUser = sysUserMapper.selectUserById(reserve.getAuditId());
-                if (ObjectUtil.isNull(auditUser)) {
-                    throw new ServiceException("无该对象：" + reserve.getAuditId());
+                String auditNickName = sysUserMapper.nickNameById(reserve.getAuditId());
+                if (StrUtil.isBlank(auditNickName)) {
+                    throw new ServiceException("无此审核人：" + reserve.getAuditId(), 201);
                 }
-                reserve.setAuditId(auditUser.getNickName());
+                reserve.setAuditId(auditNickName);
             }
-            reserve.setCreateId(sysUser.getNickName());
+            reserve.setCreateId(nickName);
         }
         return list;
     }

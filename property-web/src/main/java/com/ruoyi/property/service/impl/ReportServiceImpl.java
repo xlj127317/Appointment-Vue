@@ -3,10 +3,8 @@ package com.ruoyi.property.service.impl;
 import java.util.Date;
 import java.util.List;
 
-import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.ruoyi.common.core.domain.AjaxResult;
-import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.enums.ReportTypeEnum;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.DateUtils;
@@ -58,7 +56,13 @@ public class ReportServiceImpl implements IReportService {
      */
     @Override
     public Report selectReportById(String id) {
-        return reportMapper.selectReportById(id);
+        Report report = reportMapper.selectReportById(id);
+        String nickName = sysUserMapper.nickNameById(report.getCreateId());
+        if (StrUtil.isBlank(nickName)) {
+            throw new ServiceException("无此创建人：" + report.getCreateId(), 201);
+        }
+        report.setCreateId(nickName);
+        return report;
     }
 
     /**
@@ -71,18 +75,18 @@ public class ReportServiceImpl implements IReportService {
     public List<Report> selectReportList(Report report) {
         List<Report> list = reportMapper.selectReportList(report);
         for (Report rep : list) {
-            SysUser createUser = sysUserMapper.selectUserById(rep.getCreateId());
-            if (ObjectUtil.isNull(createUser)) {
-                throw new ServiceException("无该对象：" + rep.getCreateId());
+            String nickName = sysUserMapper.nickNameById(rep.getCreateId());
+            if (StrUtil.isBlank(nickName)) {
+                throw new ServiceException("无此创建人：" + rep.getCreateId(), 201);
             }
             if (StrUtil.isNotBlank(rep.getAuditUserId())) {
-                SysUser auditUser = sysUserMapper.selectUserById(rep.getAuditUserId());
-                if (ObjectUtil.isNull(auditUser)) {
-                    throw new ServiceException("无该对象：" + rep.getCreateId());
+                String auditNickName = sysUserMapper.nickNameById(rep.getAuditUserId());
+                if (StrUtil.isBlank(auditNickName)) {
+                    throw new ServiceException("无此审核人：" + rep.getAuditUserId(), 201);
                 }
-                rep.setAuditUserId(auditUser.getNickName());
+                rep.setAuditUserId(auditNickName);
             }
-            rep.setCreateId(createUser.getNickName());
+            rep.setCreateId(nickName);
         }
         return list;
     }

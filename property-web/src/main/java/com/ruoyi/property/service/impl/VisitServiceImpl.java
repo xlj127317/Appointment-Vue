@@ -3,9 +3,7 @@ package com.ruoyi.property.service.impl;
 import java.util.Date;
 import java.util.List;
 
-import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
-import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.enums.ReportTypeEnum;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.DateUtils;
@@ -13,7 +11,6 @@ import com.ruoyi.common.utils.uuid.PkeyGenerator;
 import com.ruoyi.property.domain.Report;
 import com.ruoyi.property.mapper.ReportMapper;
 import com.ruoyi.system.mapper.SysUserMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.property.mapper.VisitMapper;
 import com.ruoyi.property.domain.Visit;
@@ -35,7 +32,7 @@ public class VisitServiceImpl implements VisitService {
     @Resource
     private SysUserMapper sysUserMapper;
 
-    @Autowired
+    @Resource
     private ReportMapper reportMapper;
 
     /**
@@ -59,18 +56,18 @@ public class VisitServiceImpl implements VisitService {
     public List<Visit> selectVisitList(Visit visit) {
         List<Visit> visits = visitMapper.selectVisitList(visit);
         for (Visit vis : visits) {
-            SysUser sysUser = sysUserMapper.selectUserById(vis.getCreateId());
-            if (ObjectUtil.isNull(sysUser)) {
-                throw new ServiceException("无该对象：" + vis.getCreateId());
+            String nickName = sysUserMapper.nickNameById(vis.getCreateId());
+            if (StrUtil.isBlank(nickName)) {
+                throw new ServiceException("无此创建人：" + vis.getCreateId(), 201);
             }
             if (StrUtil.isNotBlank(vis.getAuditId())) {
-                SysUser auditUser = sysUserMapper.selectUserById(vis.getAuditId());
-                if (ObjectUtil.isNull(auditUser)) {
-                    throw new ServiceException("无该对象：" + vis.getAuditId());
+                String auditNickName = sysUserMapper.nickNameById(vis.getAuditId());
+                if (StrUtil.isBlank(auditNickName)) {
+                    throw new ServiceException("无此创建人：" + vis.getAuditId(), 201);
                 }
-                vis.setAuditId(auditUser.getNickName());
+                vis.setAuditId(auditNickName);
             }
-            vis.setCreateId(sysUser.getNickName());
+            visit.setCreateId(nickName);
         }
         return visits;
     }

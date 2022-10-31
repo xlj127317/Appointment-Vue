@@ -1,7 +1,6 @@
 package com.ruoyi.property.service.impl;
 
-import cn.hutool.core.util.ObjectUtil;
-import com.ruoyi.common.core.domain.entity.SysUser;
+import cn.hutool.core.util.StrUtil;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.uuid.PkeyGenerator;
@@ -35,7 +34,13 @@ public class AssetsTypeServiceImpl implements IAssetsTypeService {
      */
     @Override
     public AssetsType selectAssetsTypeById(String id) {
-        return assetsTypeMapper.selectAssetsTypeById(id);
+        AssetsType assetsType = assetsTypeMapper.selectAssetsTypeById(id);
+        String nickName = sysUserMapper.nickNameById(assetsType.getCreateId());
+        if (StrUtil.isBlank(nickName)) {
+            throw new ServiceException("无此创建人：" + id, 201);
+        }
+        assetsType.setCreateId(nickName);
+        return assetsType;
     }
 
     /**
@@ -48,11 +53,11 @@ public class AssetsTypeServiceImpl implements IAssetsTypeService {
     public List<AssetsType> selectAssetsTypeList(AssetsType assetsType) {
         List<AssetsType> list = assetsTypeMapper.selectAssetsTypeList(assetsType);
         for (AssetsType assType : list) {
-            SysUser sysUser = sysUserMapper.selectUserById(assType.getCreateId());
-            if (ObjectUtil.isNull(sysUser)) {
-                throw new ServiceException("无该对象：" + assType.getCreateId());
+            String nickName = sysUserMapper.nickNameById(assType.getCreateId());
+            if (StrUtil.isBlank(nickName)) {
+                throw new ServiceException("无此创建人：" + assType.getCreateId(), 201);
             }
-            assType.setCreateId(sysUser.getNickName());
+            assType.setCreateId(nickName);
         }
         return list;
     }
