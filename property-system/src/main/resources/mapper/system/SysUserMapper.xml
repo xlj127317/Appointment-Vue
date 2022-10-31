@@ -347,6 +347,12 @@
         where user_id = #{userId}
     </update>
 
+    <update id="updateUserStatus" parameterType="com.ruoyi.common.core.domain.entity.SysUser">
+        update sys_user
+        set status = #{status}
+        where user_id = #{userId}
+    </update>
+
     <update id="updateUserAvatar" parameterType="com.ruoyi.common.core.domain.entity.SysUser">
         update sys_user
         set avatar = #{avatar}
