@@ -11,6 +11,7 @@ import com.ruoyi.system.mapper.SysUserMapper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -107,6 +108,12 @@ public class WorkerTaskServiceImpl implements WorkerTaskService {
     @Override
     public int deleteWorkerTaskById(String id) {
         return workerTaskMapper.deleteWorkerTaskById(id);
+    }
+
+    @Override
+    public int updateStatusById(String id, Integer completeStatus) {
+        Date nowDate = DateUtils.getNowDate();
+        return workerTaskMapper.updateStatus(id, completeStatus, nowDate);
     }
 }
 

@@ -70,10 +70,13 @@ public class WorkerServiceImpl implements WorkerService {
      * @return 结果
      */
     @Override
-    public int insertWorker(Worker worker) {
+    public String insertWorker(Worker worker) {
         worker.setId(PkeyGenerator.getUniqueString());
         worker.setCreateTime(DateUtils.getNowDate());
-        return workerMapper.insertWorker(worker);
+        if (workerMapper.insertWorker(worker) == 0) {
+            return null;
+        }
+        return worker.getId();
     }
 
     /**

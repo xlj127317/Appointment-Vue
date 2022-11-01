@@ -4,6 +4,7 @@ import java.beans.PropertyEditorSupport;
 import java.util.Date;
 import java.util.List;
 
+import cn.hutool.core.util.StrUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.WebDataBinder;
@@ -118,6 +119,16 @@ public class BaseController {
      */
     protected AjaxResult toAjax(int rows) {
         return rows > 0 ? AjaxResult.success() : AjaxResult.error();
+    }
+
+    /**
+     * 响应返回结果
+     *
+     * @param id 返回的结果
+     * @return 操作结果
+     */
+    protected AjaxResult toAjax(String id) {
+        return StrUtil.isNotBlank(id) ? AjaxResult.success(id) : AjaxResult.error();
     }
 
     /**

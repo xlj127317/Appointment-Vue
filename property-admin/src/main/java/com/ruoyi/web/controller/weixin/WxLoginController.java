@@ -42,4 +42,10 @@ public class WxLoginController {
     public AjaxResult getPhone(@RequestParam String code,@RequestParam String userId) {
         return loginService.getPhone(code,userId);
     }
+
+    @GetMapping(value = "/getUserRole")
+    @ApiOperation(value = "获取登录用户权限")
+    public AjaxResult getUserRole(@RequestParam String id) {
+        return userService.checkRole(id);
+    }
 }

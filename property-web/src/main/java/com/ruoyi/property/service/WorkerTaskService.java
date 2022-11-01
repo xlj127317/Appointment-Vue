@@ -58,5 +58,7 @@ public interface WorkerTaskService {
      * @return 结果
      */
     int deleteWorkerTaskById(String id);
+
+    int updateStatusById(String id, Integer completeStatus);
 }
 

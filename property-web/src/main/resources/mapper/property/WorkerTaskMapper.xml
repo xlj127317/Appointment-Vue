@@ -170,4 +170,11 @@
             #{id}
         </foreach>
     </update>
+
+    <update id="updateStatus">
+        update worker_task t
+        set t.complete_status = #{completeStatus},
+            t.complete_time   = #{nowDate}
+        where t.id = #{id}
+    </update>
 </mapper>

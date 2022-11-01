@@ -97,4 +97,13 @@ public class WorkerTaskController extends BaseController {
     public AjaxResult remove(@PathVariable String[] ids) {
         return toAjax(workerTaskService.deleteWorkerTaskByIds(ids));
     }
+
+    @ApiOperation("修改任务完成情况")
+    @PreAuthorize("@ss.hasAnyPermi('property:task:edit')")
+    @Log(title = "用工任务完成", businessType = BusinessType.UPDATE)
+    @GetMapping("/updateStatusById")
+    public AjaxResult updateStatusById(@RequestParam String id,
+                                       @RequestParam Integer completeStatus) {
+        return toAjax(workerTaskService.updateStatusById(id, completeStatus));
+    }
 }
