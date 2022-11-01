@@ -1,11 +1,6 @@
 package com.ruoyi.property.mapper;
 
-import com.ruoyi.property.domain.WorkerTask;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-
-import java.util.Date;
-import java.util.List;
+import com.ruoyi.property.domain.WorkerTask;import org.apache.ibatis.annotations.Mapper;import org.apache.ibatis.annotations.Param;import java.util.Date;import java.util.List;
 
 @Mapper
 public interface WorkerTaskMapper {
@@ -64,5 +59,5 @@ public interface WorkerTaskMapper {
      * @param completeStatus 完成状态
      * @return int
      */
-    int updateStatus(@Param("id") String id, @Param("completeStatus") Integer completeStatus, @Param("nowDate")Date nowDate);
+    int updateStatus(@Param("id") String id, @Param("completeStatus") Integer completeStatus, @Param("nowDate") Date nowDate);
 }

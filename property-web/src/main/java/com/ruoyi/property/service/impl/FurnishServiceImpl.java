@@ -44,13 +44,7 @@ public class FurnishServiceImpl implements FurnishService {
      */
     @Override
     public Furnish selectFurnishById(String id) {
-        Furnish furnish = furnishMapper.selectFurnishById(id);
-        String nickName = sysUserMapper.nickNameById(furnish.getCreateId());
-        if (StrUtil.isBlank(nickName)) {
-            throw new ServiceException("无此创建人：" + id, 201);
-        }
-        furnish.setCreateId(nickName);
-        return furnish;
+        return furnishMapper.selectFurnishById(id);
     }
 
     /**

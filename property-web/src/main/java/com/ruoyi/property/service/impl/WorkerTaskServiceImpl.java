@@ -74,6 +74,11 @@ public class WorkerTaskServiceImpl implements WorkerTaskService {
     public int insertWorkerTask(WorkerTask workerTask) {
         workerTask.setId(PkeyGenerator.getUniqueString());
         workerTask.setCreateTime(DateUtils.getNowDate());
+        String nickName = userMapper.nickNameById(workerTask.getCreateId());
+        if (StrUtil.isBlank(nickName)) {
+            throw new ServiceException("无此创建人：" + workerTask.getCreateId(), 201);
+        }
+        workerTask.setCreateName(nickName);
         return workerTaskMapper.insertWorkerTask(workerTask);
     }
 

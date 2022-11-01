@@ -10,6 +10,7 @@
         <result column="complete_status" jdbcType="INTEGER" property="completeStatus"/>
         <result column="complete_time" jdbcType="TIMESTAMP" property="completeTime"/>
         <result column="create_id" jdbcType="VARCHAR" property="createId"/>
+        <result column="create_name" jdbcType="VARCHAR" property="createName"/>
         <result column="is_flag" jdbcType="INTEGER" property="isFlag"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
     </resultMap>
@@ -21,6 +22,7 @@
         complete_status,
         complete_time,
         create_id,
+        create_name,
         is_flag,
         create_time
     </sql>
@@ -54,6 +56,9 @@
                     =
                     #{createId}
             </if>
+            <if test="createName != null">
+                and create_name = #{createName}
+            </if>
         </where>
         order by create_time desc
     </select>
@@ -62,8 +67,7 @@
         select
         <include refid="Base_Column_List"/>
         from worker_task
-        where id =
-              #{id}
+        where id = #{id}
     </select>
 
     <insert id="insertWorkerTask">
@@ -86,6 +90,9 @@
             </if>
             <if test="createId != null and createId != ''">
                 create_id,
+            </if>
+            <if test="createName != null">
+                create_name,
             </if>
             <if test="isFlag != null">
                 is_flag,
@@ -112,6 +119,9 @@
             </if>
             <if test="createId != null and createId != ''">
                 #{createId},
+            </if>
+            <if test="createName != null and createName != ''">
+                #{createName},
             </if>
             <if test="isFlag != null">
                 #{isFlag},
@@ -144,6 +154,10 @@
             <if test="createId != null and createId != ''">
                 create_id =
                     #{createId},
+            </if>
+            <if test="createName != null and createName != ''">
+                create_name =
+                    #{createName},
             </if>
             <if test="isFlag != null">
                 is_flag =

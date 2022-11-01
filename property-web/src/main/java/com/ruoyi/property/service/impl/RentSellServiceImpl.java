@@ -36,13 +36,7 @@ public class RentSellServiceImpl implements IRentSellService {
      */
     @Override
     public RentSell selectRentSellById(String id) {
-        RentSell rentSell = rentSellMapper.selectRentSellById(id);
-        String nickName = sysUserMapper.nickNameById(rentSell.getCreateId());
-        if (StrUtil.isBlank(nickName)) {
-            throw new ServiceException("无此创建人：" + rentSell.getCreateId(), 201);
-        }
-        rentSell.setCreateId(nickName);
-        return rentSell;
+        return rentSellMapper.selectRentSellById(id);
     }
 
     /**

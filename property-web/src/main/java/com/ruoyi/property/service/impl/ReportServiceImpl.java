@@ -56,13 +56,7 @@ public class ReportServiceImpl implements IReportService {
      */
     @Override
     public Report selectReportById(String id) {
-        Report report = reportMapper.selectReportById(id);
-        String nickName = sysUserMapper.nickNameById(report.getCreateId());
-        if (StrUtil.isBlank(nickName)) {
-            throw new ServiceException("无此创建人：" + report.getCreateId(), 201);
-        }
-        report.setCreateId(nickName);
-        return report;
+        return reportMapper.selectReportById(id);
     }
 
     /**

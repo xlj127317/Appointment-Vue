@@ -38,13 +38,7 @@ public class ReceivableServiceImpl implements IReceivableService {
      */
     @Override
     public Receivable selectReceivableById(String id) {
-        Receivable receivable = receivableMapper.selectReceivableById(id);
-        String nickName = sysUserMapper.nickNameById(receivable.getCreateId());
-        if (StrUtil.isBlank(nickName)) {
-            throw new ServiceException("无此创建人：" + id, 201);
-        }
-        receivable.setCreateId(nickName);
-        return receivable;
+        return receivableMapper.selectReceivableById(id);
     }
 
     /**

@@ -35,13 +35,7 @@ public class WorkerServiceImpl implements WorkerService {
      */
     @Override
     public Worker selectWorkerById(String id) {
-        Worker worker = workerMapper.selectWorkerById(id);
-        String nickName = sysUserMapper.nickNameById(worker.getCreateId());
-        if (StrUtil.isBlank(nickName)) {
-            throw new ServiceException("无此创建人：" + worker.getCreateId(), 201);
-        }
-        worker.setCreateId(nickName);
-        return worker;
+        return workerMapper.selectWorkerById(id);
     }
 
     /**

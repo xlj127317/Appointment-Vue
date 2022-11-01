@@ -44,13 +44,7 @@ public class RepairServiceImpl implements RepairService {
      */
     @Override
     public Repair selectRepairById(String id) {
-        Repair repair = repairMapper.selectRepairById(id);
-        String nickName = sysUserMapper.nickNameById(repair.getCreateId());
-        if (StrUtil.isBlank(nickName)) {
-            throw new ServiceException("无此创建人：" + repair.getCreateId(), 201);
-        }
-        repair.setCreateId(nickName);
-        return repair;
+        return repairMapper.selectRepairById(id);
     }
 
     /**

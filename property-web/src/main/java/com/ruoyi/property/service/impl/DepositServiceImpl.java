@@ -38,13 +38,7 @@ public class DepositServiceImpl implements IDepositService {
      */
     @Override
     public Deposit selectDepositById(String id) {
-        Deposit deposit = depositMapper.selectDepositById(id);
-        String nickName = sysUserMapper.nickNameById(deposit.getCreateId());
-        if (StrUtil.isBlank(nickName)) {
-            throw new ServiceException("无此创建人：" + deposit.getCreateId(), 201);
-        }
-        deposit.setCreateId(nickName);
-        return deposit;
+        return depositMapper.selectDepositById(id);
     }
 
     /**

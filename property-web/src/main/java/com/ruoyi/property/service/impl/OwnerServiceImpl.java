@@ -46,13 +46,7 @@ public class OwnerServiceImpl implements IOwnerService {
      */
     @Override
     public Owner selectOwnerById(String id) {
-        Owner owner = ownerMapper.selectOwnerById(id);
-        String nickName = sysUserMapper.nickNameById(owner.getCreateId());
-        if (StrUtil.isBlank(nickName)) {
-            throw new ServiceException("无此创建人：" + owner.getCreateId(), 201);
-        }
-        owner.setCreateId(nickName);
-        return owner;
+        return ownerMapper.selectOwnerById(id);
     }
 
     /**

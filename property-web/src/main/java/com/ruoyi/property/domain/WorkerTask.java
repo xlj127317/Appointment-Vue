@@ -61,6 +61,13 @@ public class WorkerTask extends BaseEntity {
     private String createId;
 
     /**
+     * 创建人姓名
+     */
+    @ApiModelProperty(value = "创建人姓名")
+    @Schema(description = "创建人姓名")
+    private String createName;
+
+    /**
      * 状态,0 未删除 1已删除
      */
     @ApiModelProperty(value = "状态,0 未删除 1已删除")

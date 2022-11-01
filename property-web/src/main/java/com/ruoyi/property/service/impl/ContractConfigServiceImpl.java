@@ -42,13 +42,7 @@ public class ContractConfigServiceImpl implements ContractConfigService {
      */
     @Override
     public ContractConfig selectContractConfigById(String id) {
-        ContractConfig contractConfig = contractConfigMapper.selectContractConfigById(id);
-        String nickName = sysUserMapper.nickNameById(contractConfig.getCreateId());
-        if (StrUtil.isBlank(nickName)) {
-            throw new ServiceException("无此创建人：" + contractConfig.getCreateId(), 201);
-        }
-        contractConfig.setCreateId(nickName);
-        return contractConfig;
+        return contractConfigMapper.selectContractConfigById(id);
     }
 
     /**

@@ -394,6 +394,6 @@
     <select id="nickNameByUserName" resultType="java.lang.String">
         select t.nick_name
         from sys_user t
-        where t.user_id = #{userName}
+        where t.user_name = #{userName}
     </select>
 </mapper>

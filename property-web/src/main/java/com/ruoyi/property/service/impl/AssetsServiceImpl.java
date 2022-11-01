@@ -38,11 +38,6 @@ public class AssetsServiceImpl implements AssetsService {
     @Override
     public AjaxResult queryById(String id) {
         Assets assets = assetsMapper.selectOne(id);
-        String nickName = sysUserMapper.nickNameById(assets.getCreateId());
-        if (StrUtil.isBlank(nickName)) {
-            throw new ServiceException("无此创建人：" + assets.getCreateId(), 201);
-        }
-        assets.setCreateId(nickName);
         return AjaxResult.success(assets);
     }
 

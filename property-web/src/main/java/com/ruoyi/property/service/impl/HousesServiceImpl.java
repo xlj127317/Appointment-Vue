@@ -45,13 +45,7 @@ public class HousesServiceImpl implements IHousesService {
      */
     @Override
     public Houses selectHousesById(String id) {
-        Houses houses = housesMapper.selectHousesById(id);
-        String nickName = sysUserMapper.nickNameById(houses.getCreateId());
-        if (StrUtil.isBlank(nickName)) {
-            throw new ServiceException("无此创建人：" + houses.getCreateId(), 201);
-        }
-        houses.setCreateId(nickName);
-        return houses;
+        return housesMapper.selectHousesById(id);
     }
 
     /**

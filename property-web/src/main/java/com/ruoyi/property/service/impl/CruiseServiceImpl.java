@@ -36,13 +36,7 @@ public class CruiseServiceImpl implements CruiseService {
      */
     @Override
     public Cruise selectCruiseById(String id) {
-        Cruise cruise = cruiseMapper.selectCruiseById(id);
-        String nickName = sysUserMapper.nickNameById(cruise.getCreateId());
-        if (StrUtil.isBlank(nickName)) {
-            throw new ServiceException("无此创建人：" + id, 201);
-        }
-        cruise.setCreateId(nickName);
-        return cruise;
+        return cruiseMapper.selectCruiseById(id);
     }
 
     /**

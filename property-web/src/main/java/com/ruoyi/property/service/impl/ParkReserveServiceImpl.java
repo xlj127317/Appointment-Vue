@@ -44,13 +44,7 @@ public class ParkReserveServiceImpl implements ParkReserveService {
      */
     @Override
     public ParkReserve selectParkReserveById(String id) {
-        ParkReserve reserve = parkReserveMapper.selectParkReserveById(id);
-        String nickName = sysUserMapper.nickNameById(reserve.getCreateId());
-        if (StrUtil.isBlank(nickName)) {
-            throw new ServiceException("无此创建人：" + reserve.getCreateId(), 201);
-        }
-        reserve.setCreateId(nickName);
-        return reserve;
+        return parkReserveMapper.selectParkReserveById(id);
     }
 
     /**

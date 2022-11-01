@@ -37,13 +37,7 @@ public class ContractServiceImpl implements IContractService {
      */
     @Override
     public Contract selectContractById(String id) {
-        Contract contract = contractMapper.selectContractById(id);
-        String nickName = sysUserMapper.nickNameById(contract.getCreateId());
-        if (StrUtil.isBlank(nickName)) {
-            throw new ServiceException("无此创建人：" + contract.getCreateId(), 201);
-        }
-        contract.setCreateId(nickName);
-        return contract;
+        return contractMapper.selectContractById(id);
     }
 
     /**

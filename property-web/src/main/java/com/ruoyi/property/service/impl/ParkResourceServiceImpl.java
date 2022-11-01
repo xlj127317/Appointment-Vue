@@ -36,13 +36,7 @@ public class ParkResourceServiceImpl implements ParkResourceService {
      */
     @Override
     public ParkResource selectParkResourceById(String id) {
-        ParkResource parkResource = parkResourceMapper.selectParkResourceById(id);
-        String nickName = sysUserMapper.nickNameById(parkResource.getCreateId());
-        if (StrUtil.isBlank(nickName)) {
-            throw new ServiceException("无此创建人：" + parkResource.getCreateId(), 201);
-        }
-        parkResource.setCreateId(nickName);
-        return parkResource;
+        return parkResourceMapper.selectParkResourceById(id);
     }
 
     /**

@@ -34,13 +34,7 @@ public class AssetsTypeServiceImpl implements IAssetsTypeService {
      */
     @Override
     public AssetsType selectAssetsTypeById(String id) {
-        AssetsType assetsType = assetsTypeMapper.selectAssetsTypeById(id);
-        String nickName = sysUserMapper.nickNameById(assetsType.getCreateId());
-        if (StrUtil.isBlank(nickName)) {
-            throw new ServiceException("无此创建人：" + id, 201);
-        }
-        assetsType.setCreateId(nickName);
-        return assetsType;
+        return assetsTypeMapper.selectAssetsTypeById(id);
     }
 
     /**
