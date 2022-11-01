@@ -1,5 +1,6 @@
 package com.ruoyi.property.service;
 
+import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.property.domain.WorkerTask;
 
 import java.util.List;
@@ -33,7 +34,7 @@ public interface WorkerTaskService {
      * @param workerTask 用工任务
      * @return 结果
      */
-    int insertWorkerTask(WorkerTask workerTask);
+    AjaxResult insertWorkerTask(WorkerTask workerTask);
 
     /**
      * 修改用工任务
@@ -59,6 +60,13 @@ public interface WorkerTaskService {
      */
     int deleteWorkerTaskById(String id);
 
-    int updateStatusById(String id, Integer completeStatus);
+    /**
+     * 修改任务完成情况
+     *
+     * @param id             id
+     * @param completeStatus 完成状态
+     * @return ajaxResult
+     */
+    AjaxResult updateStatusById(String id, Integer completeStatus);
 }
 

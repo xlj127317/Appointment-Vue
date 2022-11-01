@@ -73,7 +73,7 @@ public class WorkerTaskController extends BaseController {
     @Log(title = "用工任务", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody WorkerTask workerTask) {
-        return toAjax(workerTaskService.insertWorkerTask(workerTask));
+        return workerTaskService.insertWorkerTask(workerTask);
     }
 
     /**
@@ -104,6 +104,6 @@ public class WorkerTaskController extends BaseController {
     @GetMapping("/updateStatusById")
     public AjaxResult updateStatusById(@RequestParam String id,
                                        @RequestParam Integer completeStatus) {
-        return toAjax(workerTaskService.updateStatusById(id, completeStatus));
+        return workerTaskService.updateStatusById(id, completeStatus);
     }
 }

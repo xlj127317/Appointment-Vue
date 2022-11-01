@@ -4,7 +4,9 @@ import com.ruoyi.common.core.domain.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.Date;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -67,7 +69,7 @@ public class WorkerTask extends BaseEntity {
     @Schema(description = "创建人姓名")
     private String createName;
 
-    /**
+    /**0.
      * 状态,0 未删除 1已删除
      */
     @ApiModelProperty(value = "状态,0 未删除 1已删除")
@@ -80,4 +82,10 @@ public class WorkerTask extends BaseEntity {
     @ApiModelProperty(value = "创建时间")
     @Schema(description = "创建时间")
     private Date createTime;
+
+    /**
+     * 用工id 非用工任务表字段
+     */
+    @ApiModelProperty(value = "用工id 非用工任务表字段")
+    private String workId;
 }

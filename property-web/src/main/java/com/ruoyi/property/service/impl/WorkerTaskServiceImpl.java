@@ -1,10 +1,16 @@
 package com.ruoyi.property.service.impl;
 
+import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
+import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.uuid.PkeyGenerator;
+import com.ruoyi.property.domain.WorkRelation;
+import com.ruoyi.property.domain.Worker;
 import com.ruoyi.property.domain.WorkerTask;
+import com.ruoyi.property.mapper.WorkRelationMapper;
+import com.ruoyi.property.mapper.WorkerMapper;
 import com.ruoyi.property.mapper.WorkerTaskMapper;
 import com.ruoyi.property.service.WorkerTaskService;
 import com.ruoyi.system.mapper.SysUserMapper;
@@ -27,6 +33,15 @@ public class WorkerTaskServiceImpl implements WorkerTaskService {
 
     @Resource
     private SysUserMapper userMapper;
+
+    /**
+     * 关联用工关联表表Mapper注入
+     */
+    @Resource
+    private WorkRelationMapper workAndTaskMapper;
+
+    @Resource
+    private WorkerMapper workerMapper;
 
     /**
      * 查询用工任务
@@ -71,15 +86,55 @@ public class WorkerTaskServiceImpl implements WorkerTaskService {
      * @return 结果
      */
     @Override
-    public int insertWorkerTask(WorkerTask workerTask) {
-        workerTask.setId(PkeyGenerator.getUniqueString());
-        workerTask.setCreateTime(DateUtils.getNowDate());
+    public AjaxResult insertWorkerTask(WorkerTask workerTask) {
+        AjaxResult ajaxResult = new AjaxResult();
+        String id = PkeyGenerator.getUniqueString();
+        Date nowDate = DateUtils.getNowDate();
+        workerTask.setId(id);
+        workerTask.setCreateTime(nowDate);
         String nickName = userMapper.nickNameById(workerTask.getCreateId());
         if (StrUtil.isBlank(nickName)) {
             throw new ServiceException("无此创建人：" + workerTask.getCreateId(), 201);
         }
         workerTask.setCreateName(nickName);
-        return workerTaskMapper.insertWorkerTask(workerTask);
+        int insertNum = workerTaskMapper.insertWorkerTask(workerTask);
+        int insertWorkNum = insertWorkAndTask(workerTask);
+        if (insertNum <= 0 && insertWorkNum <= 0) {
+            ajaxResult.put(id + "：pushStatus：", "false");
+        }
+        if (updateWork(workerTask, nowDate) <= 0) {
+            ajaxResult.put(workerTask.getWorkId() + "：updateStatus：", "false");
+        }
+        ajaxResult.put(id + "：pushStatus：", true);
+        ajaxResult.put(workerTask.getWorkId() + "：updateStatus：", true);
+        return AjaxResult.success(ajaxResult);
+    }
+
+    /**
+     * 更新用工推送状态
+     *
+     * @param workerTask 用工任务
+     * @param nowDate    推送时间
+     */
+    private int updateWork(WorkerTask workerTask, Date nowDate) {
+        Worker worker = new Worker();
+        worker.setId(workerTask.getWorkId());
+        worker.setPushDate(nowDate);
+        worker.setPushStatus(1);
+        return workerMapper.updateWorker(worker);
+    }
+
+    /**
+     * 用工任务中间表添加数据
+     *
+     * @param workerTask 用工任务entity
+     */
+    private int insertWorkAndTask(WorkerTask workerTask) {
+        WorkRelation workRelation = new WorkRelation();
+        workRelation.setWorkId(workerTask.getWorkId());
+        workRelation.setTaskId(workerTask.getId());
+        // 添加中间表数据
+        return workAndTaskMapper.insert(workRelation);
     }
 
     /**
@@ -115,10 +170,30 @@ public class WorkerTaskServiceImpl implements WorkerTaskService {
         return workerTaskMapper.deleteWorkerTaskById(id);
     }
 
+    /**
+     * 更新用工任务完成状态 - 修改用工表中的状态
+     *
+     * @param id             id
+     * @param completeStatus 完成状态
+     * @return AjaxResult
+     */
     @Override
-    public int updateStatusById(String id, Integer completeStatus) {
+    public AjaxResult updateStatusById(String id, Integer completeStatus) {
         Date nowDate = DateUtils.getNowDate();
-        return workerTaskMapper.updateStatus(id, completeStatus, nowDate);
+        AjaxResult ajaxResult = new AjaxResult();
+        int updateNum = workerTaskMapper.updateStatus(id, completeStatus, nowDate);
+        WorkRelation workRelation = workAndTaskMapper.selectByTaskId(id);
+        if (ObjectUtil.isNull(workRelation)) {
+            return AjaxResult.error("无此任务id：" + id);
+        }
+        String workId = workRelation.getWorkId();
+        int updateFinishNum = workerMapper.updateFinishStatus(workId, completeStatus, nowDate);
+        if (updateNum <= 0 && updateFinishNum <= 0) {
+            ajaxResult.put(id + "updateStatus", false);
+        }
+        ajaxResult.put("id", id);
+        ajaxResult.put("updateStatus", false);
+        return AjaxResult.success(ajaxResult);
     }
 }
 

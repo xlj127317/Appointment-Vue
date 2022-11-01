@@ -384,4 +384,11 @@
             #{id}
         </foreach>
     </update>
+
+    <update id="updateFinishStatus">
+        update worker t
+        set t.finish_status = #{finishStatus},
+            t.finish_date   = #{finishDate}
+        where t.id = #{id}
+    </update>
 </mapper>

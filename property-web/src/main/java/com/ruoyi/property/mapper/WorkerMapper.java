@@ -2,7 +2,9 @@ package com.ruoyi.property.mapper;
 
 import com.ruoyi.property.domain.Worker;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
+import java.util.Date;
 import java.util.List;
 
 @Mapper
@@ -87,4 +89,14 @@ public interface WorkerMapper {
      * @return 结果
      */
     int deleteWorkerByIds(String[] ids);
+
+    /**
+     * update worker finishStatus
+     *
+     * @param id           id
+     * @param finishStatus 完成状态
+     * @param finishDate   完成时间
+     * @return int
+     */
+    int updateFinishStatus(@Param("id") String id, @Param("finishStatus") Integer finishStatus, @Param("finishDate") Date finishDate);
 }
