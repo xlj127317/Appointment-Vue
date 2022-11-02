@@ -2,13 +2,16 @@ package com.ruoyi.property.service.impl;
 
 import java.util.List;
 
+import cn.hutool.core.collection.CollUtil;
+import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.uuid.PkeyGenerator;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.property.mapper.FirmInfoMapper;
 import com.ruoyi.property.domain.FirmInfo;
 import com.ruoyi.property.service.FirmInfoService;
+
+import javax.annotation.Resource;
 
 /**
  * 企业信息Service业务层处理
@@ -18,7 +21,7 @@ import com.ruoyi.property.service.FirmInfoService;
  */
 @Service
 public class FirmInfoServiceImpl implements FirmInfoService {
-    @Autowired
+    @Resource
     private FirmInfoMapper firmInfoMapper;
 
     /**
@@ -87,5 +90,20 @@ public class FirmInfoServiceImpl implements FirmInfoService {
     @Override
     public int deleteFirmInfoById(String id) {
         return firmInfoMapper.deleteFirmInfoById(id);
+    }
+
+    /**
+     * 根据业主id或电话查询企业信息
+     *
+     * @param userId 业主id或者电话
+     * @return ajax
+     */
+    @Override
+    public AjaxResult selectFirmInfoByUserId(String userId) {
+        List<FirmInfo> list = firmInfoMapper.selectFirmInfoByUserId(userId);
+        if (CollUtil.isEmpty(list)) {
+            return AjaxResult.success("");
+        }
+        return AjaxResult.success(list);
     }
 }

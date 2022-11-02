@@ -2,6 +2,7 @@ package com.ruoyi.property.service;
 
 import java.util.List;
 
+import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.property.domain.FirmInfo;
 
 /**
@@ -58,4 +59,6 @@ public interface FirmInfoService {
      * @return 结果
      */
     int deleteFirmInfoById(String id);
+
+    AjaxResult selectFirmInfoByUserId(String userId);
 }

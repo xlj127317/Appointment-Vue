@@ -60,4 +60,12 @@ public interface FirmInfoMapper {
      * @return 结果
      */
     int deleteFirmInfoByIds(String[] ids);
+
+    /**
+     * 根据业主id或电话查询企业信息
+     *
+     * @param userId 业主id或者电话
+     * @return list
+     */
+    List<FirmInfo> selectFirmInfoByUserId(String userId);
 }
