@@ -61,7 +61,7 @@
         );
     </insert>
     <select id="listUserTrades" parameterType="java.lang.String" resultType="java.util.Map">
-        SELECT * FROM fee_trades WHERE owner_id = #{ownerId}
+        SELECT * FROM fee_trades WHERE owner_id = #{ownerId} ORDER BY create_time DESC;
     </select>
     <select id="listTrades" parameterType="java.util.Map" resultType="java.util.Map">
         SELECT
@@ -147,4 +147,26 @@
         </choose>
         AND state = 0
     </update>
+    <select id="statisticSummaryByMonth" resultType="java.util.Map">
+        SELECT
+            SUM(paid_amount) AS paidAmount,
+            MONTH (paid_at) AS month
+        FROM
+            fee_trades
+        WHERE
+            state = 2
+            AND YEAR(paid_at) = #{year}
+    GROUP BY MONTH (paid_at)
+    </select>
+    <select id="statisticSummaryByQuarter" resultType="java.util.Map">
+        SELECT
+            SUM(paid_amount) AS paidAmount,
+            quarter(paid_at) AS `quarter`
+        FROM
+            fee_trades
+        WHERE
+            state = 2
+            AND YEAR(paid_at) = #{year}
+        GROUP BY `quarter`
+    </select>
 </mapper>

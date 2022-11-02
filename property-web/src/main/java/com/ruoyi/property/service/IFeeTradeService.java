@@ -16,4 +16,6 @@ public interface IFeeTradeService {
     Map getTradeByNo(String no, DbLockStrength withLock);
     Map getOwnedTradeByNo(String ownerId, String no, DbLockStrength withLock);
     int completeTrade(Map params);
+    List<Map> statisticSummaryByMonth(int year);
+    List<Map> statisticSummaryByQuarter(int year);
 }

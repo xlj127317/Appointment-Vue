@@ -2,6 +2,7 @@ package com.ruoyi.web.controller.web;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
+import cn.hutool.core.map.MapUtil;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfPCell;
@@ -10,9 +11,11 @@ import com.itextpdf.text.pdf.PdfWriter;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.FeeTradeState;
+import com.ruoyi.property.dto.AggregatedSumDto;
 import com.ruoyi.property.dto.FeeTradeListInputDto;
 import com.ruoyi.property.dto.FeeTradeOutputDto;
 import com.ruoyi.property.service.IFeeTradeService;
+import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -20,11 +23,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.time.Year;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -139,5 +142,44 @@ public class FeeTradesController extends BaseController {
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         table.addCell(cell);
+    }
+
+    @GetMapping("statistics/summary")
+    public Map summaryStatistics() {
+        HashMap<Integer, AggregatedSumDto> allByMonth = new HashMap<Integer, AggregatedSumDto>();
+        for (int i = 1; i <= 12; i++) {
+            AggregatedSumDto dto = new AggregatedSumDto();
+            dto.setName(String.format("%d月", i));
+            dto.setAmount(BigDecimal.ZERO);
+            allByMonth.put(i, dto);
+        }
+
+        HashMap<Integer, AggregatedSumDto> allByQuarter = new HashMap<Integer, AggregatedSumDto>();
+        for (int i = 1; i <= 4; i++) {
+            AggregatedSumDto dto = new AggregatedSumDto();
+            dto.setName(String.format("第%d季度", i));
+            dto.setAmount(BigDecimal.ZERO);
+            allByQuarter.put(i, dto);
+        }
+
+        Map output = new HashMap();
+
+        List<Map> byMonths = feeTradeService.statisticSummaryByMonth(Year.now().getValue());
+        for (Map item : byMonths) {
+            AggregatedSumDto dto = allByMonth.get((Integer)item.get("month"));
+            dto.setAmount((BigDecimal)item.get("paidAmount"));
+        }
+
+        output.put("months", allByMonth);
+
+        List<Map> byQuarters = feeTradeService.statisticSummaryByQuarter(Year.now().getValue());
+        for (Map item : byQuarters) {
+            AggregatedSumDto dto = allByQuarter.get((Integer)item.get("quarter"));
+            dto.setAmount((BigDecimal)item.get("paidAmount"));
+        }
+
+        output.put("quarters", allByQuarter);
+
+        return output;
     }
 }

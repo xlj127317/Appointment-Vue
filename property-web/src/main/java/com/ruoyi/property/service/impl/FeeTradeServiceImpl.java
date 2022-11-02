@@ -83,4 +83,14 @@ public class FeeTradeServiceImpl implements IFeeTradeService {
         params.put("stateSucceedValue", FeeTradeState.SUCCEED.getValue());
         return feeTradeMapper.completeTrade(params);
     }
+
+    @Override
+    public List<Map> statisticSummaryByMonth(int year)  {
+        return feeTradeMapper.statisticSummaryByMonth(year);
+    }
+
+    @Override
+    public List<Map> statisticSummaryByQuarter(int year) {
+        return feeTradeMapper.statisticSummaryByQuarter(year);
+    }
 }

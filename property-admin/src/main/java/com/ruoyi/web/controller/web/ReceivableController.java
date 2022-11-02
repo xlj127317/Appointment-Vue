@@ -109,15 +109,44 @@ public class ReceivableController extends BaseController {
             return error("款项类别不存在");
         }
 
+        BigDecimal itemPrice;
+        BigDecimal itemCount = input.getItemCount();
+        BigDecimal itemAmount;
+
+        if (input.getPaymentTypeId() == null) {
+            return error("款项类型不能为空");
+        } else if (input.getPaymentTypeId().equals("1")) {
+            // 水费
+            itemPrice = BigDecimal.valueOf(2);
+        } else if (input.getPaymentTypeId().equals("2")) {
+            // 电费
+            itemPrice = BigDecimal.valueOf(5);
+        } else {
+            itemAmount = input.getReceivableMoney();
+            if (itemAmount == null) {
+                return error("应收金额不能为空");
+            }
+            itemCount = BigDecimal.ONE;
+            itemPrice = itemAmount;
+        }
+
+        if (itemCount == null || itemCount.compareTo(BigDecimal.ZERO) <= 0) {
+            return error("数量不能为0");
+        }
+
+        itemAmount = itemPrice.multiply(itemCount);
+
         Receivable receivable = new Receivable();
         receivable.setContractId(contract.getId());
         receivable.setOwnerId(contract.getOwnerId());
         receivable.setPaymentId(input.getPaymentTypeId());
         receivable.setPaymentDate(input.getPaymentDate());
         receivable.setPaymentName(input.getPaymentName());
-        receivable.setReceivableMoney(input.getReceivableMoney().toString());
+        receivable.setReceivableMoney(itemAmount.toString());
+        receivable.setItemCount(itemCount);
+        receivable.setItemPrice(itemPrice);
         receivable.setPaymentContent(input.getPaymentContent());
-        receivable.setStopTime(input.getExpiresDate());
+        receivable.setStopTime(input.getStopTime());
         receivable.setPaymentType(0);
         receivable.setCreateId(getUserId());
         int result = receivableService.insertReceivable(receivable);
@@ -126,8 +155,8 @@ public class ReceivableController extends BaseController {
         feeTradeCreateParams.put("ownerId", contract.getOwnerId());
         feeTradeCreateParams.put("subject", input.getPaymentName());
         feeTradeCreateParams.put("description", input.getPaymentContent());
-        feeTradeCreateParams.put("price", input.getReceivableMoney());
-        feeTradeCreateParams.put("count", new BigDecimal(1));
+        feeTradeCreateParams.put("price", itemPrice);
+        feeTradeCreateParams.put("count", itemCount);
         feeTradeCreateParams.put("outScope", "receivable");
         feeTradeCreateParams.put("outId", receivable.getId());
         feeTradeService.createTrade(feeTradeCreateParams);

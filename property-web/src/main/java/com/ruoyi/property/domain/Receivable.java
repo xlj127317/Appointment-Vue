@@ -5,6 +5,8 @@ import com.ruoyi.common.core.domain.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
+
+import java.math.BigDecimal;
 import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -60,6 +62,9 @@ public class Receivable extends BaseEntity {
     @ApiModelProperty(value = "款项内容")
     @Schema(description = "款项内容")
     private String paymentContent;
+
+    private BigDecimal itemPrice;
+    private BigDecimal itemCount;
 
     /**
      * 应收金额

@@ -1,4 +1,4 @@
-package com.ruoyi.web.dto;
+package com.ruoyi.property.dto.wx;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
@@ -7,19 +7,12 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 @Data
-public class ReceivableCreateInput {
+public class AdvanceCreateInput {
     private String contractId;
     private String paymentTypeId;
-
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private Date paymentDate;
     private String paymentName;
-    private BigDecimal receivableMoney;
     private String paymentContent;
-
     @JsonFormat(pattern = "yyyy-MM-dd")
-    private Date stopTime;
-
-    private BigDecimal itemPrice;
-    private BigDecimal itemCount;
+    private Date advanceDate;
+    private BigDecimal amount;
 }

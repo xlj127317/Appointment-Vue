@@ -14,4 +14,6 @@ public interface FeeTradeMapper {
     Map getTrade(Map params);
 
     int completeTrade(Map params);
+    List<Map> statisticSummaryByMonth(int year);
+    List<Map> statisticSummaryByQuarter(int year);
 }

@@ -61,7 +61,7 @@ public class WxFeeTradesController extends BaseController {
     @GetMapping("")
     public TableDataInfo list() throws Exception {
         String ownerId = easyTrService.mustUserIdToOwnerId(getUserId());
-        startPage();
+        // startPage();
         List<Map> trades = feeTradeService.listUserTrades(ownerId);
         List<FeeTradeOutputDto> output = trades.stream()
                 .map(m -> BeanUtil.mapToBean(m, FeeTradeOutputDto.class, false, new CopyOptions()))
