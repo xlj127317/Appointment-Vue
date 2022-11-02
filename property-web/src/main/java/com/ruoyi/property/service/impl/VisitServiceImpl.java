@@ -67,7 +67,7 @@ public class VisitServiceImpl implements VisitService {
                 }
                 vis.setAuditId(auditNickName);
             }
-            visit.setCreateId(nickName);
+            vis.setCreateId(nickName);
         }
         return visits;
     }

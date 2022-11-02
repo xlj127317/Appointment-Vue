@@ -68,7 +68,7 @@ public class FurnishServiceImpl implements FurnishService {
                 }
                 fu.setAuditId(auditNickName);
             }
-            furnish.setCreateId(nickName);
+            fu.setCreateId(nickName);
         }
         return list;
     }
