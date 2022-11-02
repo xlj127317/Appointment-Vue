@@ -1,5 +1,6 @@
 package com.ruoyi.property.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ruoyi.common.core.domain.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -128,6 +129,7 @@ public class Receivable extends BaseEntity {
      */
     @ApiModelProperty(value = "应收截止时间")
     @Schema(description = "应收截止时间")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date stopTime;
 
     /**
