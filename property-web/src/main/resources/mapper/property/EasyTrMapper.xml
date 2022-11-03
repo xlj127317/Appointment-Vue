@@ -11,10 +11,10 @@
           sys_user.user_id = #{userId}
         LIMIT 1
         <choose>
-            <when test="withLock == 1">
+            <when test="lockMode == 1">
                 FOR SHARED
             </when>
-            <when test="withLock == 2">
+            <when test="lockMode == 2">
                 FOR UPDATE
             </when>
         </choose>

@@ -22,7 +22,7 @@ public class EasyTrServiceImpl implements IEasyTrService {
     public String userIdToOwnerId(String userId, int lockType) {
         Map<String, Object> params = new HashMap<>();
         params.put("userId", userId);
-        params.put("withLock", lockType);
+        params.put("lockMode", lockType);
         return mapper.userIdToOwnerId(params);
     }
 

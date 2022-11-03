@@ -8,6 +8,7 @@ import java.util.Date;
 
 @Data
 public class ReceivableCreateInput {
+    private String id;
     private String contractId;
     private String paymentTypeId;
 

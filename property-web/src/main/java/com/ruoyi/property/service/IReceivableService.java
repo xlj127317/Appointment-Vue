@@ -2,6 +2,7 @@ package com.ruoyi.property.service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import com.ruoyi.property.domain.Receivable;
 import com.ruoyi.property.dto.ReceivableListInput;
@@ -62,4 +63,6 @@ public interface IReceivableService {
     public int deleteReceivableById(String id);
 
     boolean exists(String contractId, String paymentTypeId, Date date);
+
+    Receivable findOne(Map params);
 }

@@ -5,6 +5,7 @@ import java.util.Map;
 
 public interface FeeTradeMapper {
     void create(Map params);
+    void deleteTrade(String id);
     List<Map> listUserTrades(String ownerId);
 
     List<Map> listTrades(Map params);

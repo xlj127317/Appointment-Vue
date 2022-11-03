@@ -1,6 +1,6 @@
 package com.ruoyi.common.enums;
 
-public enum DbLockStrength {
+public enum SqlLockMode {
     NONE,
     UPDATE,
     SHARE,

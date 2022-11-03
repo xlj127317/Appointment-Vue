@@ -1,10 +1,8 @@
 package com.ruoyi.property.service.impl;
 
-import cn.hutool.core.bean.BeanUtil;
-import com.ruoyi.common.enums.DbLockStrength;
+import com.ruoyi.common.enums.SqlLockMode;
 import com.ruoyi.common.enums.FeeTradeState;
 import com.ruoyi.common.utils.uuid.PkeyGenerator;
-import com.ruoyi.property.dto.FeeTradeListInputDto;
 import com.ruoyi.property.mapper.FeeTradeMapper;
 import com.ruoyi.property.service.IFeeTradeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +31,11 @@ public class FeeTradeServiceImpl implements IFeeTradeService {
     }
 
     @Override
+    public void deleteTrade(String id) {
+        feeTradeMapper.deleteTrade(id);
+    }
+
+    @Override
     public List<Map> listUserTrades(String ownerId) {
         return feeTradeMapper.listUserTrades(ownerId);
     }
@@ -53,27 +56,27 @@ public class FeeTradeServiceImpl implements IFeeTradeService {
     }
 
     @Override
-    public Map getTradeById(String id, DbLockStrength withLock) {
+    public Map getTradeById(String id, SqlLockMode lockMode) {
         Map params = new HashMap();
         params.put("id", id);
-        params.put("withLock", withLock);
+        params.put("lockMode", lockMode);
         return getTrade(params);
     }
 
     @Override
-    public Map getTradeByNo(String no, DbLockStrength withLock) {
+    public Map getTradeByNo(String no, SqlLockMode lockMode) {
         Map params = new HashMap();
         params.put("no", no);
-        params.put("withLock", withLock);
+        params.put("lockMode", lockMode);
         return getTrade(params);
     }
 
     @Override
-    public Map getOwnedTradeByNo(String ownerId, String no, DbLockStrength withLock) {
+    public Map getOwnedTradeByNo(String ownerId, String no, SqlLockMode lockMode) {
         Map params = new HashMap();
         params.put("ownerId", ownerId);
         params.put("no", no);
-        params.put("withLock", withLock);
+        params.put("lockMode", lockMode);
         return getTrade(params);
     }
 

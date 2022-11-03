@@ -2,6 +2,7 @@ package com.ruoyi.property.service.impl;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import cn.hutool.core.util.StrUtil;
 import com.ruoyi.common.exception.ServiceException;
@@ -108,5 +109,11 @@ public class ReceivableServiceImpl implements IReceivableService {
 
     public boolean exists(String contractId, String paymentTypeId, Date date) {
         return receivableMapper.exists(contractId, paymentTypeId, date);
+    }
+
+    @Override
+    public Receivable findOne(Map params) {
+        params.put("limit", 1);
+        return receivableMapper.select(params);
     }
 }

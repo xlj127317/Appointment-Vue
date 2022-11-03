@@ -119,12 +119,18 @@
         <if test="ownerId != null">
             AND owner_id = #{ownerId}
         </if>
+        <if test="outScope != null">
+            AND out_scope = #{outScope}
+        </if>
+        <if test="outId != null">
+            AND out_id = #{outId}
+        </if>
         LIMIT 1
         <choose>
-            <when test="withLock == @com.ruoyi.common.enums.DbLockStrength@SHARE">
+            <when test="lockMode == @com.ruoyi.common.enums.SqlLockMode@SHARE">
                 LOCK IN SHARE MODE
             </when>
-            <when test="withLock == @com.ruoyi.common.enums.DbLockStrength@UPDATE">
+            <when test="lockMode == @com.ruoyi.common.enums.SqlLockMode@UPDATE">
                 FOR UPDATE
             </when>
         </choose>
@@ -147,6 +153,9 @@
         </choose>
         AND state = 0
     </update>
+    <delete id="deleteTrade" parameterType="java.lang.String">
+        DELETE FROM fee_trades WHERE id = #{id}
+    </delete>
     <select id="statisticSummaryByMonth" resultType="java.util.Map">
         SELECT
             SUM(paid_amount) AS paidAmount,

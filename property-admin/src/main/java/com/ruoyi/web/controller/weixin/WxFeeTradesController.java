@@ -3,7 +3,6 @@ package com.ruoyi.web.controller.weixin;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
 import cn.hutool.core.date.DateUtil;
-import com.github.binarywang.wxpay.bean.request.WxPayOrderQueryRequest;
 import com.github.binarywang.wxpay.bean.request.WxPayUnifiedOrderRequest;
 import com.github.binarywang.wxpay.bean.result.WxPayUnifiedOrderResult;
 import com.github.binarywang.wxpay.config.WxPayConfig;
@@ -13,7 +12,7 @@ import com.github.binarywang.wxpay.util.SignUtils;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.page.TableDataInfo;
-import com.ruoyi.common.enums.DbLockStrength;
+import com.ruoyi.common.enums.SqlLockMode;
 import com.ruoyi.common.enums.FeeTradeState;
 import com.ruoyi.common.utils.uuid.PkeyGenerator;
 import com.ruoyi.property.domain.Deposit;
@@ -25,7 +24,6 @@ import com.ruoyi.property.service.IDepositService;
 import com.ruoyi.property.service.IEasyTrService;
 import com.ruoyi.property.service.IFeeTradeService;
 import com.ruoyi.property.service.IWalletService;
-import me.chanjar.weixin.common.util.crypto.WxCryptUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -86,7 +84,7 @@ public class WxFeeTradesController extends BaseController {
             String tradeNo = (String) params.get("tradeNo");
 
             FeeTrade trade = BeanUtil.mapToBean(
-                    feeTradeService.getOwnedTradeByNo(ownerId, tradeNo, DbLockStrength.UPDATE),
+                    feeTradeService.getOwnedTradeByNo(ownerId, tradeNo, SqlLockMode.UPDATE),
                     FeeTrade.class,
                     false,
                     CopyOptions.create());
@@ -147,7 +145,7 @@ public class WxFeeTradesController extends BaseController {
         String wxOpenId = getUserId();
         // wxOpenId = "oyM1S41LqTlqnbX_oIK5hjr70Efw";
         String ownerId = easyTrService.mustUserIdToOwnerId(wxOpenId);
-        Map feeTradeMap = feeTradeService.getOwnedTradeByNo(ownerId, input.getNo(), DbLockStrength.SHARE);
+        Map feeTradeMap = feeTradeService.getOwnedTradeByNo(ownerId, input.getNo(), SqlLockMode.SHARE);
         if (feeTradeMap == null) {
             throw new Exception("账单不存在");
         }

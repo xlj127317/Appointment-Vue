@@ -4,13 +4,11 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
 import cn.hutool.core.date.DateUtil;
 import com.github.binarywang.wxpay.bean.request.WxPayRefundRequest;
-import com.github.binarywang.wxpay.bean.result.WxPayRefundResult;
 import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.service.WxPayService;
-import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.Channel;
 import com.ruoyi.common.config.RabbitConfig;
-import com.ruoyi.common.enums.DbLockStrength;
+import com.ruoyi.common.enums.SqlLockMode;
 import com.ruoyi.common.enums.FeeTradeState;
 import com.ruoyi.common.utils.uuid.PkeyGenerator;
 import com.ruoyi.property.domain.FeeTrade;
@@ -61,7 +59,7 @@ public class TransactionListener {
 
     private void handlePayNotify(PayNotifyDto event) throws WxPayException {
         String feeTradeNo = event.getAttach();
-        Map feeTradeMap = feeTradeService.getTradeById(feeTradeNo, DbLockStrength.UPDATE);
+        Map feeTradeMap = feeTradeService.getTradeById(feeTradeNo, SqlLockMode.UPDATE);
         FeeTradeOutputDto feeTrade = BeanUtil.mapToBean(feeTradeMap, FeeTradeOutputDto.class, true, CopyOptions.create());
         if (feeTrade.getState() != FeeTradeState.WAIT_PAY || true) {
             logger.warn("账单[{}]已支付，关联支付单号{}，自动发起退款", feeTradeNo, event.getOutTradeNo());
