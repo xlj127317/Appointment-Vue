@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.property.mapper.HydropowerMapper">
+    <resultMap id="BaseResultMap" type="com.ruoyi.property.domain.Hydropower">
+        <!--@mbg.generated-->
+        <!--@Table hydropower-->
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="house_id" jdbcType="VARCHAR" property="houseId"/>
+        <result column="water_amount" jdbcType="VARCHAR" property="waterAmount"/>
+        <result column="electricity" jdbcType="VARCHAR" property="electricity"/>
+        <result column="count_time" jdbcType="TIMESTAMP" property="countTime"/>
+        <result column="is_flag" jdbcType="INTEGER" property="isFlag"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        id,
+        house_id,
+        water_amount,
+        electricity,
+        count_time,
+        is_flag,
+        create_time
+    </sql>
+
+    <select id="selectHydropowerList" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from hydropower
+        <where>
+            is_flag = 0
+            <if test="houseId != null  and houseId != ''">
+                and house_id =
+                    #{houseId}
+            </if>
+            <if test="waterAmount != null  and waterAmount != ''">
+                and water_amount
+                    =
+                    #{waterAmount}
+            </if>
+            <if test="electricity != null  and electricity != ''">
+                and electricity
+                    =
+                    #{electricity}
+            </if>
+            <if test="countTime != null">
+                and count_time
+                    =
+                    #{countTime}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectHydropowerById" parameterType="String"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from hydropower
+        where id =
+              #{id}
+    </select>
+
+    <insert id="insertHydropower">
+        insert into hydropower
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="houseId != null and houseId != ''">
+                house_id,
+            </if>
+            <if test="waterAmount != null">
+                water_amount,
+            </if>
+            <if test="electricity != null">
+                electricity,
+            </if>
+            <if test="countTime != null">
+                count_time,
+            </if>
+            <if test="isFlag != null">
+                is_flag,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="houseId != null and houseId != ''">
+                #{houseId},
+            </if>
+            <if test="waterAmount != null">
+                #{waterAmount},
+            </if>
+            <if test="electricity != null">
+                #{electricity},
+            </if>
+            <if test="countTime != null">
+                #{countTime},
+            </if>
+            <if test="isFlag != null">
+                #{isFlag},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateHydropower">
+        update hydropower
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="houseId != null and houseId != ''">
+                house_id =
+                    #{houseId},
+            </if>
+            <if test="waterAmount != null">
+                water_amount =
+                    #{waterAmount},
+            </if>
+            <if test="electricity != null">
+                electricity =
+                    #{electricity},
+            </if>
+            <if test="countTime != null">
+                count_time =
+                    #{countTime},
+            </if>
+            <if test="isFlag != null">
+                is_flag =
+                    #{isFlag},
+            </if>
+            <if test="createTime != null">
+                create_time =
+                    #{createTime},
+            </if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHydropowerById" parameterType="String">
+        delete
+        from hydropower
+        where id = #{id}
+    </delete>
+
+    <update id="deleteHydropowerByIds" parameterType="String">
+        update hydropower
+        set is_flag = 1 where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+</mapper>
