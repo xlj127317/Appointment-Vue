@@ -3,6 +3,7 @@ package com.ruoyi.property.service.impl;
 import java.util.List;
 
 import com.ruoyi.common.utils.DateUtils;
+import com.ruoyi.common.utils.uuid.PkeyGenerator;
 import org.springframework.stereotype.Service;
 import com.ruoyi.property.mapper.HydropowerMapper;
 import com.ruoyi.property.domain.Hydropower;
@@ -51,6 +52,7 @@ public class HydropowerServiceImpl implements HydropowerService {
      */
     @Override
     public int insertHydropower(Hydropower hydropower) {
+        hydropower.setId(PkeyGenerator.getUniqueString());
         hydropower.setCreateTime(DateUtils.getNowDate());
         return hydropowerMapper.insertHydropower(hydropower);
     }

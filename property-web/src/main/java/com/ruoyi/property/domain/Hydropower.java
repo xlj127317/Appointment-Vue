@@ -1,13 +1,9 @@
 package com.ruoyi.property.domain;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.ruoyi.common.core.domain.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.util.Date;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Hydropower extends BaseEntity {
+public class Hydropower {
     /**
      * 主键
      */
@@ -40,7 +36,7 @@ public class Hydropower extends BaseEntity {
      */
     @ApiModelProperty(value = "用水量")
     @Schema(description = "用水量")
-    private String waterAmount;
+    private String water;
 
     /**
      * 用电量
@@ -50,12 +46,18 @@ public class Hydropower extends BaseEntity {
     private String electricity;
 
     /**
-     * 统计时间 yyyy-MM
+     * 开始时间 yyyy-MM
      */
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT+8")
-    @ApiModelProperty(value = "统计时间 yyyy-MM")
-    @Schema(description = "统计时间 yyyy-MM")
-    private Date countTime;
+    @ApiModelProperty(value = "开始时间 yyyy-MM")
+    @Schema(description = "开始时间 yyyy-MM")
+    private Date statTime;
+
+    /**
+     * 结束时间
+     */
+    @ApiModelProperty(value = "结束时间")
+    @Schema(description = "结束时间")
+    private Date stopTime;
 
     /**
      * 状态,0 未删除 1已删除

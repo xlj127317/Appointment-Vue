@@ -6,9 +6,10 @@
         <!--@Table hydropower-->
         <id column="id" jdbcType="VARCHAR" property="id"/>
         <result column="house_id" jdbcType="VARCHAR" property="houseId"/>
-        <result column="water_amount" jdbcType="VARCHAR" property="waterAmount"/>
+        <result column="water" jdbcType="VARCHAR" property="water"/>
         <result column="electricity" jdbcType="VARCHAR" property="electricity"/>
-        <result column="count_time" jdbcType="TIMESTAMP" property="countTime"/>
+        <result column="stat_time" jdbcType="TIMESTAMP" property="statTime"/>
+        <result column="stop_time" jdbcType="TIMESTAMP" property="stopTime"/>
         <result column="is_flag" jdbcType="INTEGER" property="isFlag"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
     </resultMap>
@@ -16,9 +17,10 @@
         <!--@mbg.generated-->
         id,
         house_id,
-        water_amount,
+        water,
         electricity,
-        count_time,
+        stat_time,
+        stop_time,
         is_flag,
         create_time
     </sql>
@@ -33,26 +35,31 @@
                 and house_id =
                     #{houseId}
             </if>
-            <if test="waterAmount != null  and waterAmount != ''">
-                and water_amount
+            <if test="water != null  and water != ''">
+                and water
                     =
-                    #{waterAmount}
+                    #{water}
             </if>
             <if test="electricity != null  and electricity != ''">
                 and electricity
                     =
                     #{electricity}
             </if>
-            <if test="countTime != null">
-                and count_time
+            <if test="statTime != null">
+                and stat_time
                     =
-                    #{countTime}
+                    #{statTime}
+            </if>
+            <if test="stopTime != null">
+                and stop_time
+                    =
+                    #{stopTime}
             </if>
         </where>
+        order by create_time desc
     </select>
 
-    <select id="selectHydropowerById" parameterType="String"
-            resultMap="BaseResultMap">
+    <select id="selectHydropowerById" parameterType="String" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from hydropower
@@ -69,14 +76,17 @@
             <if test="houseId != null and houseId != ''">
                 house_id,
             </if>
-            <if test="waterAmount != null">
-                water_amount,
+            <if test="water != null">
+                water,
             </if>
             <if test="electricity != null">
                 electricity,
             </if>
-            <if test="countTime != null">
-                count_time,
+            <if test="statTime != null">
+                stat_time,
+            </if>
+            <if test="stopTime != null">
+                stop_time,
             </if>
             <if test="isFlag != null">
                 is_flag,
@@ -92,14 +102,17 @@
             <if test="houseId != null and houseId != ''">
                 #{houseId},
             </if>
-            <if test="waterAmount != null">
-                #{waterAmount},
+            <if test="water != null">
+                #{water},
             </if>
             <if test="electricity != null">
                 #{electricity},
             </if>
-            <if test="countTime != null">
-                #{countTime},
+            <if test="statTime != null">
+                #{statTime},
+            </if>
+            <if test="stopTime != null">
+                #{stopTime},
             </if>
             <if test="isFlag != null">
                 #{isFlag},
@@ -117,17 +130,21 @@
                 house_id =
                     #{houseId},
             </if>
-            <if test="waterAmount != null">
-                water_amount =
-                    #{waterAmount},
+            <if test="water != null">
+                water =
+                    #{water},
             </if>
             <if test="electricity != null">
                 electricity =
                     #{electricity},
             </if>
-            <if test="countTime != null">
-                count_time =
-                    #{countTime},
+            <if test="statTime != null">
+                stat_time =
+                    #{statTime},
+            </if>
+            <if test="stopTime != null">
+                stop_time =
+                    #{stopTime},
             </if>
             <if test="isFlag != null">
                 is_flag =
@@ -150,7 +167,7 @@
     <update id="deleteHydropowerByIds" parameterType="String">
         update hydropower
         set is_flag = 1 where id in
-        <foreach item="id" collection="array" open="(" separator="," close=")">
+        <foreach close=")" collection="array" item="id" open="(" separator=",">
             #{id}
         </foreach>
     </update>

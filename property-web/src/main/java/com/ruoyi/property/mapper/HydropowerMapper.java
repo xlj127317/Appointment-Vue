@@ -1,16 +1,7 @@
 package com.ruoyi.property.mapper;
 
-import com.ruoyi.property.domain.Hydropower;
-import org.apache.ibatis.annotations.Mapper;
+import com.ruoyi.property.domain.Hydropower;import org.apache.ibatis.annotations.Mapper;import java.util.List;
 
-import java.util.List;
-
-/**
- * 水电统计Mapper接口
- *
- * @author wind
- * @date 2022-11-03
- */
 @Mapper
 public interface HydropowerMapper {
     /**
