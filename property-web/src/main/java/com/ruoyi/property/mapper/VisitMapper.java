@@ -1,6 +1,8 @@
 package com.ruoyi.property.mapper;
 
 import com.ruoyi.property.domain.Visit;
+import com.ruoyi.property.dto.AggregatedSumDto;
+import com.ruoyi.property.dto.NamedAggregatedSumDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -96,4 +98,7 @@ public interface VisitMapper {
      * @return int
      */
     int updateAudit(@Param("id") String id, @Param("auditStatus") Integer auditStatus);
+
+    List<AggregatedSumDto> getAmountGroupByMonth(int year);
+    List<AggregatedSumDto> getAmountGroupByQuarter(int year);
 }

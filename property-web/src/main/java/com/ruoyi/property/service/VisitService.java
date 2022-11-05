@@ -3,6 +3,7 @@ package com.ruoyi.property.service;
 import java.util.List;
 
 import com.ruoyi.property.domain.Visit;
+import com.ruoyi.property.dto.AmountValueChartDto;
 
 /**
  * 来访出入申请Service接口
@@ -58,4 +59,6 @@ public interface VisitService {
      * @return 结果
      */
      int deleteVisitById(String id);
+
+     AmountValueChartDto getAmountValueChart(int year);
 }

@@ -1,5 +1,7 @@
 package com.ruoyi.web.controller.weixin;
 
+import java.time.Year;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
@@ -96,5 +98,10 @@ public class VisitController extends BaseController {
     @DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable String[] ids) {
         return toAjax(visitService.deleteVisitByIds(ids));
+    }
+
+    @GetMapping("/chart")
+    public AjaxResult chart() {
+        return AjaxResult.success(visitService.getAmountValueChart(Year.now().getValue()));
     }
 }

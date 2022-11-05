@@ -9,6 +9,9 @@ import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.uuid.PkeyGenerator;
 import com.ruoyi.property.domain.Report;
+import com.ruoyi.property.dto.AggregatedSumDto;
+import com.ruoyi.property.dto.NamedAggregatedSumDto;
+import com.ruoyi.property.dto.AmountValueChartDto;
 import com.ruoyi.property.mapper.ReportMapper;
 import com.ruoyi.system.mapper.SysUserMapper;
 import org.springframework.stereotype.Service;
@@ -139,5 +142,15 @@ public class VisitServiceImpl implements VisitService {
         report.setCreateTime(nowDate);
         report.setCreateId(visit.getCreateId());
         return reportMapper.insertReport(report);
+    }
+
+    @Override
+    public AmountValueChartDto getAmountValueChart(int year) {
+        List<AggregatedSumDto> byMonth = visitMapper.getAmountGroupByMonth(year);
+        List<AggregatedSumDto> byQuarter = visitMapper.getAmountGroupByQuarter(year);
+        return new AmountValueChartDto.Builder()
+                .addMonths(byMonth)
+                .addQuarters(byQuarter)
+                .build();
     }
 }

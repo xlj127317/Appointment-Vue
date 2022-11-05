@@ -403,4 +403,28 @@
         set v.audit_status = #{auditStatus}
         where v.id = #{id}
     </update>
+
+    
+    <select id="getAmountGroupByMonth" resultType="com.ruoyi.property.dto.AggregatedSumDto">
+        SELECT
+            COUNT(1) AS amount,
+            MONTH (visit_date) AS `index`
+        FROM
+            visit
+        WHERE
+            audit_status = 1
+            AND YEAR(visit_date) = #{year}
+    GROUP BY `index`
+    </select>
+    <select id="getAmountGroupByQuarter" resultType="com.ruoyi.property.dto.AggregatedSumDto">
+        SELECT
+            COUNT(1) AS amount,
+            QUARTER(visit_date) AS `index`
+        FROM
+            visit
+        WHERE
+            audit_status = 1
+            AND YEAR(visit_date) = #{year}
+        GROUP BY `index`
+    </select>
 </mapper>
