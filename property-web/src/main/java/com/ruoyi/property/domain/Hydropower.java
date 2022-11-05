@@ -1,5 +1,6 @@
 package com.ruoyi.property.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -48,6 +49,7 @@ public class Hydropower {
     /**
      * 开始时间 yyyy-MM
      */
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT+8")
     @ApiModelProperty(value = "开始时间 yyyy-MM")
     @Schema(description = "开始时间 yyyy-MM")
     private Date statTime;
@@ -55,6 +57,7 @@ public class Hydropower {
     /**
      * 结束时间
      */
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT+8")
     @ApiModelProperty(value = "结束时间")
     @Schema(description = "结束时间")
     private Date stopTime;
