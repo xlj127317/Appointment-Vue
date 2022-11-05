@@ -7,31 +7,18 @@ import com.ruoyi.common.enums.SqlLockMode;
 import com.ruoyi.common.utils.uuid.PkeyGenerator;
 import com.ruoyi.property.domain.Advance;
 import com.ruoyi.property.domain.Contract;
-import com.ruoyi.property.domain.FeeTrade;
 import com.ruoyi.property.domain.PaymentType;
-import com.ruoyi.property.dto.payment.UnifiedOrderInput;
 import com.ruoyi.property.dto.payment.UnifiedOrderOutput;
 import com.ruoyi.property.dto.wx.AdvanceCreateInput;
-import com.ruoyi.property.dto.wx.UnifiedOrderInputDto;
-import com.ruoyi.property.dto.wx.UnifiedOrderOutputDto;
+import com.ruoyi.property.dto.wx.AdvanceGetInput;
 import com.ruoyi.property.service.*;
-import org.apache.ibatis.transaction.Transaction;
-import org.checkerframework.checker.units.qual.A;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.support.DefaultTransactionDefinition;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
+import java.util.List;
 
 @RestController
 @RequestMapping("/hcx/property/wx/advances")
@@ -71,12 +58,11 @@ public class WxAdvanceController extends BaseController {
     public AjaxResult create(
             @RequestBody AdvanceCreateInput input,
             HttpServletRequest request) throws Exception {
-        getLoginUser().setUserId("oyM1S41LqTlqnbX_oIK5hjr70Efw");
         String wxOpenId = getUserId();
         String ownerId = easyTrService.mustUserIdToOwnerId(wxOpenId);
         String remoteAddr = request.getRemoteAddr();
 
-        Contract contract = contractService.newQueryBuilder()
+        Contract contract = contractService.newQuery()
                 .id(input.getContractId())
                 .ownerId(ownerId)
                 .lockMode(SqlLockMode.SHARE)
@@ -113,5 +99,35 @@ public class WxAdvanceController extends BaseController {
                 .extra("advance", advance)
                 .send();
         return AjaxResult.success(unifiedOrderOutput);
+    }
+
+    @PostMapping("/list")
+    public AjaxResult list() throws Exception {
+        String wxOpenId = getUserId();
+        String ownerId = easyTrService.mustUserIdToOwnerId(wxOpenId);
+        List<Advance> advances = advanceService.newQuery()
+                .ownerId(ownerId)
+                .find();
+        return AjaxResult.success(advances);
+    }
+
+    @PostMapping("/get")
+    public AjaxResult get(@RequestBody AdvanceGetInput input) throws Exception {
+        if (input.getId() == null) {
+            return error("预收id不能为空");
+        }
+
+        String wxOpenId = getUserId();
+        String ownerId = easyTrService.mustUserIdToOwnerId(wxOpenId);
+
+        Advance advance = advanceService.newQuery()
+                .ownerId(ownerId)
+                .findOneOrNull();
+
+        if (advance == null) {
+            return error("预收款项不存在");
+        }
+
+        return AjaxResult.success(advance);
     }
 }

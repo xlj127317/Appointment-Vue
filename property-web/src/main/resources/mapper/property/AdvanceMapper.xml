@@ -418,4 +418,30 @@
             LIMIT 1
         );
     </select>
+
+    <select id="select" resultMap="BaseResultMap">
+        SELECT * FROM advance
+        <where>
+            <if test="id != null">
+                AND id = #{id}
+            </if>
+            <if test="ownerId != null">
+                AND owner_id = #{ownerId}
+            </if>
+            <if test="deleted == null">
+                AND is_flag = 0
+            </if>
+        </where>
+        <if test="limit != null">
+            LIMIT #{limit}
+        </if>
+        <choose>
+            <when test="lockMode == @com.ruoyi.common.enums.SqlLockMode@SHARE">
+                LOCK IN SHARE MODE
+            </when>
+            <when test="lockMode == @com.ruoyi.common.enums.SqlLockMode@UPDATE">
+                FOR UPDATE
+            </when>
+        </choose>
+    </select>
 </mapper>

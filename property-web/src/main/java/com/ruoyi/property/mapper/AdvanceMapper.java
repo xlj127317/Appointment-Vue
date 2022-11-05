@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface AdvanceMapper {
@@ -94,4 +95,6 @@ public interface AdvanceMapper {
             @Param("contractId") String contractId,
             @Param("paymentTypeId") String paymentTypeId,
             @Param("date") Date date);
+
+    List<Advance> select(Map params);
 }

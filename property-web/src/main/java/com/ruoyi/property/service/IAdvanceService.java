@@ -62,4 +62,13 @@ public interface IAdvanceService {
     public int deleteAdvanceById(String id);
 
     boolean exists(String contractId, String paymentTypeId, Date date);
+
+    QueryBuilder newQuery();
+
+    interface QueryBuilder {
+        QueryBuilder ownerId(String ownerId);
+        QueryBuilder limit(Integer limit);
+        Advance findOneOrNull();
+        List<Advance> find();
+    }
 }

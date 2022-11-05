@@ -63,7 +63,7 @@ public interface IContractService {
      */
     public int deleteContractById(String id);
 
-    QueryBuilder newQueryBuilder();
+    QueryBuilder newQuery();
 
     interface QueryBuilder
     {

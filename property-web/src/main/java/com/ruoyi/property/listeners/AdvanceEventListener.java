@@ -66,7 +66,7 @@ public class AdvanceEventListener {
 
     private void unsafeComplete(AdvanceCompletedEvent event) throws Exception {
         Advance advance = event.getAdvance();
-        Contract contract = contractService.newQueryBuilder()
+        Contract contract = contractService.newQuery()
                 .id(advance.getContractId())
                 .ownerId(advance.getOwnerId())
                 .lockMode(SqlLockMode.SHARE)

@@ -113,7 +113,7 @@ public class ContractServiceImpl implements IContractService {
         return contractMapper.deleteContractById(id);
     }
 
-    public QueryBuilder newQueryBuilder() {
+    public QueryBuilder newQuery() {
         return new QueryBuilderImpl(this);
     }
 
