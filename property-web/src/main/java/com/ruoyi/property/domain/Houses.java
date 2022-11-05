@@ -42,6 +42,13 @@ public class Houses extends BaseEntity {
     private String ownerId;
 
     /**
+     * 关联合同id
+     */
+    @ApiModelProperty(value = "关联合同id")
+    @Schema(description = "关联合同id")
+    private String contractId;
+
+    /**
      * 房屋面积，单位m2
      */
     @ApiModelProperty(value = "房屋面积，单位m2")
