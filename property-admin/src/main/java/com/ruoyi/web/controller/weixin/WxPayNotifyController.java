@@ -5,6 +5,7 @@ import com.github.binarywang.wxpay.bean.notify.WxPayOrderNotifyResult;
 import com.github.binarywang.wxpay.service.WxPayService;
 import com.ruoyi.common.annotation.Anonymous;
 import com.ruoyi.common.config.RabbitConfig;
+import com.ruoyi.common.config.RuoYiConfig;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.property.dto.wx.PayNotifyDto;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -18,6 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/hcx/property/wx/pay/notify")
 @Anonymous
 public class WxPayNotifyController extends BaseController {
+    @Autowired
+    private RuoYiConfig appConfig;
+
     @Autowired
     private WxPayService wxPayService;
 
@@ -36,6 +40,9 @@ public class WxPayNotifyController extends BaseController {
 
     @PostMapping("/pay/debug")
     public String debugPay(@RequestBody String xmlData) {
+        if (appConfig.isDemoEnabled()) {
+            return "";
+        }
         WxPayOrderNotifyResult result = WxPayOrderNotifyResult.fromXML(xmlData);
         return handlePayNotify(result);
     }
