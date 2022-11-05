@@ -14,5 +14,5 @@ public class AdvanceCreateInput {
     private String paymentContent;
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date advanceDate;
-    private BigDecimal amount;
+    private BigDecimal advanceMoney;
 }

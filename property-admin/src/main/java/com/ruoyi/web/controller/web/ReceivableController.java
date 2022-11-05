@@ -164,6 +164,7 @@ public class ReceivableController extends BaseController {
         feeTradeCreateParams.put("count", itemCount);
         feeTradeCreateParams.put("outScope", FEE_TRADE_RECEIVABLE_SCOPE);
         feeTradeCreateParams.put("outId", receivable.getId());
+        feeTradeCreateParams.put("contractId", receivable.getContractId());
         feeTradeService.createTrade(feeTradeCreateParams);
 
         return toAjax(result);

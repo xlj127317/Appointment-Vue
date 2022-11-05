@@ -36,6 +36,14 @@
             <artifactId>property-system</artifactId>
         </dependency>
 
+
+
+        <dependency>
+            <groupId>com.github.binarywang</groupId>
+            <artifactId>weixin-java-pay</artifactId>
+            <version>4.4.0</version>
+        </dependency>
+
     </dependencies>
 
 </project>

@@ -31,7 +31,7 @@
         checked_at
     </sql>
     <insert id="create" parameterType="java.util.Map">
-        INSERT IGNORE INTO fee_trades
+        INSERT INTO fee_trades
         (
             id,
             owner_id,
@@ -44,6 +44,7 @@
             state,
             out_scope,
             out_id,
+            contract_id,
             create_time
         ) VALUES (
             #{id},
@@ -57,6 +58,7 @@
             #{state},
             #{outScope},
             #{outId},
+            #{contractId},
             CURRENT_TIMESTAMP
         );
     </insert>

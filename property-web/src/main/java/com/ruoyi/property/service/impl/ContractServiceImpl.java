@@ -1,8 +1,11 @@
 package com.ruoyi.property.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import cn.hutool.core.util.StrUtil;
+import com.ruoyi.common.enums.SqlLockMode;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.uuid.PkeyGenerator;
@@ -38,6 +41,11 @@ public class ContractServiceImpl implements IContractService {
     @Override
     public Contract selectContractById(String id) {
         return contractMapper.selectContractById(id);
+    }
+
+    public Contract findOne(Map params) {
+        params.put("limit", 1);
+        return contractMapper.find(params);
     }
 
     /**
@@ -103,5 +111,48 @@ public class ContractServiceImpl implements IContractService {
     @Override
     public int deleteContractById(String id) {
         return contractMapper.deleteContractById(id);
+    }
+
+    public QueryBuilder newQueryBuilder() {
+        return new QueryBuilderImpl(this);
+    }
+
+    private static class QueryBuilderImpl implements QueryBuilder {
+        private Map params = new HashMap();
+        private IContractService contractService;
+
+        public QueryBuilderImpl(IContractService contractService) {
+            this.contractService = contractService;
+        }
+
+        @Override
+        public QueryBuilder id(String id) {
+            params.put("id", id);
+            return this;
+        }
+
+        @Override
+        public QueryBuilder ownerId(String ownerId) {
+            params.put("ownerId", ownerId);
+            return this;
+        }
+
+        @Override
+        public QueryBuilder lockMode(SqlLockMode lockMode) {
+            params.put("lockMode", lockMode);
+            return this;
+        }
+
+        @Override
+        public QueryBuilder limit(int limit) {
+            params.put("limit", limit);
+            return this;
+        }
+
+        @Override
+        public Contract findOne() {
+            limit(1);
+            return contractService.findOne(params);
+        }
     }
 }

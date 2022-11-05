@@ -143,7 +143,6 @@ public class WxFeeTradesController extends BaseController {
             throw new Exception("账单号不能为空");
         }
         String wxOpenId = getUserId();
-        // wxOpenId = "oyM1S41LqTlqnbX_oIK5hjr70Efw";
         String ownerId = easyTrService.mustUserIdToOwnerId(wxOpenId);
         Map feeTradeMap = feeTradeService.getOwnedTradeByNo(ownerId, input.getNo(), SqlLockMode.SHARE);
         if (feeTradeMap == null) {

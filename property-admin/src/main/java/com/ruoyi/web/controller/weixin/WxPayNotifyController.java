@@ -25,12 +25,23 @@ public class WxPayNotifyController extends BaseController {
     private RabbitTemplate rabbitTemplate;
 
     @PostMapping("/pay")
-    public String pay(@RequestBody String xmlData) throws InterruptedException {
-        logger.info(xmlData);
-
+    public String pay(@RequestBody String xmlData) {
         try {
-            final WxPayOrderNotifyResult notifyResult = wxPayService.parseOrderNotifyResult(xmlData);
+            final WxPayOrderNotifyResult result = wxPayService.parseOrderNotifyResult(xmlData);
+            return handlePayNotify(result);
+        } catch (Exception exception) {
+            return WxPayNotifyResponse.fail(exception.getMessage());
+        }
+    }
 
+    @PostMapping("/pay/debug")
+    public String debugPay(@RequestBody String xmlData) {
+        WxPayOrderNotifyResult result = WxPayOrderNotifyResult.fromXML(xmlData);
+        return handlePayNotify(result);
+    }
+
+    private String handlePayNotify(WxPayOrderNotifyResult notifyResult) {
+        try {
             PayNotifyDto dto = new PayNotifyDto();
             dto.setResultCode(notifyResult.getResultCode());
             dto.setErrCode(notifyResult.getErrCode());

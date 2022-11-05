@@ -154,6 +154,9 @@ wxpay:
   mchId: 1600304800
   mchKey: HCXTEC88HCXTEC88HCXTEC88HCXTEC88
   keyPath: classpath:wxpay/apiclient_cert.p12
+  useSandbox: true  # 支付调试模式，开启时在支付后自动发起退款
+  payNotifyUrl: https://dev.property.hcxtec.com/hcx/property/wx/pay/notify/pay
+  refundNotifyUrl: https://dev.property.hcxtec.com/hcx/property/wx/pay/notify/refund
 
 file:
   path: /www/javaProject/property/file/

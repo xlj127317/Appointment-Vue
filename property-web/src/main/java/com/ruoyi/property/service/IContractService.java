@@ -1,7 +1,9 @@
 package com.ruoyi.property.service;
 
 import java.util.List;
+import java.util.Map;
 
+import com.ruoyi.common.enums.SqlLockMode;
 import com.ruoyi.property.domain.Contract;
 
 /**
@@ -18,6 +20,8 @@ public interface IContractService {
      * @return 合同管理
      */
     public Contract selectContractById(String id);
+
+    Contract findOne(Map params);
 
     /**
      * 查询合同管理列表
@@ -58,4 +62,15 @@ public interface IContractService {
      * @return 结果
      */
     public int deleteContractById(String id);
+
+    QueryBuilder newQueryBuilder();
+
+    interface QueryBuilder
+    {
+        QueryBuilder id(String id);
+        QueryBuilder ownerId(String ownerId);
+        QueryBuilder lockMode(SqlLockMode lockMode);
+        QueryBuilder limit(int limit);
+        Contract findOne();
+    }
 }

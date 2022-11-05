@@ -1,8 +1,11 @@
 package com.ruoyi.property.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.bean.copier.CopyOptions;
 import com.ruoyi.common.enums.SqlLockMode;
 import com.ruoyi.common.enums.FeeTradeState;
 import com.ruoyi.common.utils.uuid.PkeyGenerator;
+import com.ruoyi.property.domain.FeeTrade;
 import com.ruoyi.property.mapper.FeeTradeMapper;
 import com.ruoyi.property.service.IFeeTradeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,15 +22,21 @@ public class FeeTradeServiceImpl implements IFeeTradeService {
     private FeeTradeMapper feeTradeMapper;
 
     @Override
-    public void createTrade(Map params) {
-        params.put("id", PkeyGenerator.getUniqueString());
+    public FeeTrade createTrade(Map params) {
+        String id = PkeyGenerator.getUniqueString();
+        params.put("id", id);
         params.put("no", PkeyGenerator.getUniqueString());
         BigDecimal price = (BigDecimal) params.get("price");
         BigDecimal count = (BigDecimal) params.get("count");
         BigDecimal amount = price.multiply(count);
         params.put("amount", amount);
-        params.put("state", FeeTradeState.WAIT_PAY);
+        params.put("state", FeeTradeState.WAIT_PAY.getValue());
         feeTradeMapper.create(params);
+
+        params.clear();
+        params.put("id", id);
+        Map feeTradeMap = feeTradeMapper.getTrade(params);
+        return BeanUtil.mapToBean(feeTradeMap, FeeTrade.class, true, CopyOptions.create());
     }
 
     @Override

@@ -43,6 +43,31 @@
         from contract
         where id = #{id,jdbcType=VARCHAR}
     </select>
+    <select id="find" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" /> FROM contract
+        <where>
+            <if test="id != null">
+                AND id = #{id}
+            </if>
+            <if test="ownerId != null">
+                AND owner_id = #{ownerId}
+            </if>
+            <if test="deleted == null">
+                AND is_flag = 0
+            </if>
+        </where>
+        <if test="limit != null">
+            LIMIT #{limit}
+        </if>
+        <choose>
+            <when test="lockMode == @com.ruoyi.common.enums.SqlLockMode@SHARE">
+                LOCK IN SHARE MODE
+            </when>
+            <when test="lockMode == @com.ruoyi.common.enums.SqlLockMode@UPDATE">
+                FOR UPDATE
+            </when>
+        </choose>
+    </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
         <!--@mbg.generated-->
         delete

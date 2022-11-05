@@ -4,6 +4,7 @@ import com.ruoyi.property.domain.Contract;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface ContractMapper {
@@ -31,6 +32,7 @@ public interface ContractMapper {
      */
     Contract selectByPrimaryKey(String id);
 
+    Contract find(Map params);
     /**
      * update record selective
      *

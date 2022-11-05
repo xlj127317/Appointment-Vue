@@ -32,5 +32,7 @@ public class FeeTrade extends BaseEntity {
     private String bizTradeNo;
     private String outScope;
     private String outId;
+
+    // 合同id，仅冗余
     private String contractId;
 }
