@@ -93,7 +93,7 @@ public class WxAdvanceController extends BaseController {
         UnifiedOrderOutput unifiedOrderOutput = paymentService.unifiedOrder()
                 .body(advance.getPaymentName() + "-" + advance.getPaymentContent())
                 .outTradeNo(PkeyGenerator.getUniqueString())
-                .totalFee(input.getAdvanceMoney().movePointRight(2))
+                .totalFee(input.getAdvanceMoney())
                 .spbillCreateIp(remoteAddr)
                 .openId(wxOpenId)
                 .extra("advance", advance)
