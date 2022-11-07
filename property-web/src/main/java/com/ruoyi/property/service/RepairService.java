@@ -3,6 +3,7 @@ package com.ruoyi.property.service;
 import java.util.List;
 
 import com.ruoyi.property.domain.Repair;
+import com.ruoyi.property.dto.AmountValueChartDto;
 
 /**
  * 物业报修申请Service接口
@@ -58,4 +59,6 @@ public interface RepairService {
      * @return 结果
      */
      int deleteRepairById(String id);
+
+    AmountValueChartDto getAmountValueChart(int year);
 }

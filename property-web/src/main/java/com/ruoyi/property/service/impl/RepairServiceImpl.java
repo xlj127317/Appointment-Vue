@@ -9,6 +9,8 @@ import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.uuid.PkeyGenerator;
 import com.ruoyi.property.domain.Report;
+import com.ruoyi.property.dto.AggregatedSumDto;
+import com.ruoyi.property.dto.AmountValueChartDto;
 import com.ruoyi.property.mapper.ReportMapper;
 import com.ruoyi.property.service.RepairService;
 import com.ruoyi.system.mapper.SysUserMapper;
@@ -140,5 +142,15 @@ public class RepairServiceImpl implements RepairService {
         report.setCreateTime(nowDate);
         report.setCreateId(repair.getCreateId());
         return reportMapper.insertReport(report);
+    }
+
+    @Override
+    public AmountValueChartDto getAmountValueChart(int year) {
+        List<AggregatedSumDto> byMonth = repairMapper.getAmountGroupByMonth(year);
+        List<AggregatedSumDto> byQuarter = repairMapper.getAmountGroupByQuarter(year);
+        return new AmountValueChartDto.Builder()
+                .addMonths(byMonth)
+                .addQuarters(byQuarter)
+                .build();
     }
 }

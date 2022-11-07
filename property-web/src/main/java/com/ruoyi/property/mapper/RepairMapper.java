@@ -1,6 +1,7 @@
 package com.ruoyi.property.mapper;
 
 import com.ruoyi.property.domain.Repair;
+import com.ruoyi.property.dto.AggregatedSumDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -96,4 +97,6 @@ public interface RepairMapper {
      * @return int
      */
     int updateAudit(@Param("id") String id, @Param("auditStatus") Integer auditStatus);
+    List<AggregatedSumDto> getAmountGroupByMonth(int year);
+    List<AggregatedSumDto> getAmountGroupByQuarter(int year);
 }

@@ -404,27 +404,26 @@
         where v.id = #{id}
     </update>
 
-    
     <select id="getAmountGroupByMonth" resultType="com.ruoyi.property.dto.AggregatedSumDto">
         SELECT
             COUNT(1) AS amount,
-            MONTH (visit_date) AS `index`
+            MONTH (applicant_time) AS `index`
         FROM
-            visit
+            repair
         WHERE
             audit_status = 1
-            AND YEAR(visit_date) = #{year}
-    GROUP BY `index`
+            AND YEAR(applicant_time) = #{year}
+        GROUP BY `index`
     </select>
     <select id="getAmountGroupByQuarter" resultType="com.ruoyi.property.dto.AggregatedSumDto">
         SELECT
             COUNT(1) AS amount,
-            QUARTER(visit_date) AS `index`
+            QUARTER(applicant_time) AS `index`
         FROM
-            visit
+            repair
         WHERE
             audit_status = 1
-            AND YEAR(visit_date) = #{year}
+            AND YEAR(applicant_time) = #{year}
         GROUP BY `index`
     </select>
 </mapper>

@@ -12,6 +12,7 @@ import com.github.binarywang.wxpay.bean.result.WxPayUnifiedOrderResult;
 import com.github.binarywang.wxpay.constant.WxPayConstants;
 import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.service.WxPayService;
+import com.github.binarywang.wxpay.util.SignUtils;
 import com.ruoyi.common.config.WxConfig;
 import com.ruoyi.common.core.redis.RedisCache;
 import com.ruoyi.common.utils.uuid.PkeyGenerator;
@@ -71,6 +72,14 @@ public class PaymentServiceImpl implements IPaymentService {
         output.setNonceStr(result.getNonceStr());
         output.setPackageStr("prepay_id=" + result.getPrepayId());
         output.setTimeStamp(Long.toString(DateUtil.currentSeconds()));
+
+        Map signParams = BeanUtil.beanToMap(output);
+        signParams.remove("paySign");
+        signParams.put("package", signParams.get("packageStr"));
+        signParams.remove("packageStr");
+        signParams.put("appId", wxConfig.getAppId());
+
+        output.setPaySign(SignUtils.createSign(signParams, WxPayConstants.SignType.MD5, wxConfig.getMchKey(), null));
 
         printDebugPayNotifyXml(request);
 
