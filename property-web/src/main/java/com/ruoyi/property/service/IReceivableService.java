@@ -68,4 +68,6 @@ public interface IReceivableService {
     Receivable findOne(Map params);
 
     AmountValueChartDto getAmountValueChart(int year);
+
+    AmountValueChartDto getAmountValueChartByPaymentTypeId(int year, String paymentTypeId);
 }

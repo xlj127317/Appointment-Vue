@@ -128,4 +128,14 @@ public class ReceivableServiceImpl implements IReceivableService {
                 .addQuarters(byQuarter)
                 .build();
     }
+
+    @Override
+    public AmountValueChartDto getAmountValueChartByPaymentTypeId(int year, String paymentTypeId) {
+        List<AggregatedSumDto> byMonth = receivableMapper.getAmountGroupByMonthByPaymentTypeId(year, paymentTypeId);
+        List<AggregatedSumDto> byQuarter = receivableMapper.getAmountGroupByQuarterByPaymentTypeId(year, paymentTypeId);
+        return new AmountValueChartDto.Builder()
+                .addMonths(byMonth)
+                .addQuarters(byQuarter)
+                .build();
+    }
 }

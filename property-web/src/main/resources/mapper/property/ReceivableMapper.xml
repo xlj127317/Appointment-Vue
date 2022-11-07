@@ -675,4 +675,29 @@
             AND YEAR(stop_time) = #{year}
         GROUP BY `index`
     </select>
+
+    <select id="getAmountGroupByMonthByPaymentTypeId" resultType="com.ruoyi.property.dto.AggregatedSumDto">
+        SELECT
+            SUM(item_count) AS amount,
+            MONTH (stop_time) AS `index`
+        FROM
+            receivable
+        WHERE
+            is_flag = 0
+            AND payment_id = #{paymentTypeId}
+            AND YEAR(stop_time) = #{year}
+        GROUP BY `index`
+    </select>
+    <select id="getAmountGroupByQuarterByPaymentTypeId" resultType="com.ruoyi.property.dto.AggregatedSumDto">
+        SELECT
+            SUM(item_count) AS amount,
+            QUARTER(stop_time) AS `index`
+        FROM
+            receivable
+        WHERE
+            is_flag = 0
+            AND payment_id = #{paymentTypeId}
+            AND YEAR(stop_time) = #{year}
+        GROUP BY `index`
+    </select>
 </mapper>

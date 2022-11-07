@@ -320,4 +320,9 @@ public class ReceivableController extends BaseController {
     public AjaxResult chart() {
         return AjaxResult.success(receivableService.getAmountValueChart(Year.now().getValue()));
     }
+
+    @GetMapping("/chartByType/{paymentTypeId}")
+    public AjaxResult chartByType(@PathVariable String paymentTypeId) {
+        return AjaxResult.success(receivableService.getAmountValueChartByPaymentTypeId(Year.now().getValue(), paymentTypeId));
+    }
 }

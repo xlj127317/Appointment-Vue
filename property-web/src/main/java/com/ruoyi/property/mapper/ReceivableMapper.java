@@ -101,4 +101,13 @@ public interface ReceivableMapper {
 
     List<AggregatedSumDto> getAmountGroupByMonth(int year);
     List<AggregatedSumDto> getAmountGroupByQuarter(int year);
+
+
+    List<AggregatedSumDto> getAmountGroupByMonthByPaymentTypeId(
+            @Param("year") int year,
+            @Param("paymentTypeId") String paymentTypeId);
+    List<AggregatedSumDto> getAmountGroupByQuarterByPaymentTypeId(
+            @Param("year") int year,
+            @Param("paymentTypeId") String paymentTypeId);
+
 }
