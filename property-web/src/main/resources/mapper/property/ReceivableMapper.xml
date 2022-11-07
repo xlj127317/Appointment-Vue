@@ -652,4 +652,27 @@
           </when>
       </choose>
     </select>
+
+    <select id="getAmountGroupByMonth" resultType="com.ruoyi.property.dto.AggregatedSumDto">
+        SELECT
+            SUM(receivable_money) AS amount,
+            MONTH (stop_time) AS `index`
+        FROM
+            receivable
+        WHERE
+            is_flag = 0
+            AND YEAR(stop_time) = #{year}
+        GROUP BY `index`
+    </select>
+    <select id="getAmountGroupByQuarter" resultType="com.ruoyi.property.dto.AggregatedSumDto">
+        SELECT
+            SUM(receivable_money) AS amount,
+            QUARTER(stop_time) AS `index`
+        FROM
+            receivable
+        WHERE
+            is_flag = 0
+            AND YEAR(stop_time) = #{year}
+        GROUP BY `index`
+    </select>
 </mapper>

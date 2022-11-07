@@ -1,6 +1,7 @@
 package com.ruoyi.property.mapper;
 
 import com.ruoyi.property.domain.Receivable;
+import com.ruoyi.property.dto.AggregatedSumDto;
 import com.ruoyi.property.dto.ReceivableListInput;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -97,4 +98,7 @@ public interface ReceivableMapper {
             @Param("date") Date date);
 
     Receivable select(Map params);
+
+    List<AggregatedSumDto> getAmountGroupByMonth(int year);
+    List<AggregatedSumDto> getAmountGroupByQuarter(int year);
 }

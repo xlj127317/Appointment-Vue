@@ -18,6 +18,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -58,6 +59,14 @@ public class WxAdvanceController extends BaseController {
     public AjaxResult create(
             @RequestBody AdvanceCreateInput input,
             HttpServletRequest request) throws Exception {
+        if (input == null) {
+            return error("无效的请求");
+        }
+        if (input.getAdvanceMoney() == null
+                || input.getAdvanceMoney().compareTo(BigDecimal.valueOf(1, 2)) <= 0) {
+            return error("预收金额不能少于0.01元");
+        }
+
         String wxOpenId = getUserId();
         String ownerId = easyTrService.mustUserIdToOwnerId(wxOpenId);
         String remoteAddr = request.getRemoteAddr();

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.ruoyi.property.domain.Receivable;
+import com.ruoyi.property.dto.AmountValueChartDto;
 import com.ruoyi.property.dto.ReceivableListInput;
 
 /**
@@ -65,4 +66,6 @@ public interface IReceivableService {
     boolean exists(String contractId, String paymentTypeId, Date date);
 
     Receivable findOne(Map params);
+
+    AmountValueChartDto getAmountValueChart(int year);
 }

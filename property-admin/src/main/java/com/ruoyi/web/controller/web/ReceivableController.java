@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
+import java.time.Year;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -313,5 +314,10 @@ public class ReceivableController extends BaseController {
             receivableService.deleteReceivableById(id);
         }
         return success();
+    }
+
+    @GetMapping("/chart")
+    public AjaxResult chart() {
+        return AjaxResult.success(receivableService.getAmountValueChart(Year.now().getValue()));
     }
 }

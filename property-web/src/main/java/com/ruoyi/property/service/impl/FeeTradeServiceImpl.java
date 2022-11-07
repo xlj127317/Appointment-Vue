@@ -6,6 +6,8 @@ import com.ruoyi.common.enums.SqlLockMode;
 import com.ruoyi.common.enums.FeeTradeState;
 import com.ruoyi.common.utils.uuid.PkeyGenerator;
 import com.ruoyi.property.domain.FeeTrade;
+import com.ruoyi.property.dto.AggregatedSumDto;
+import com.ruoyi.property.dto.AmountValueChartDto;
 import com.ruoyi.property.mapper.FeeTradeMapper;
 import com.ruoyi.property.service.IFeeTradeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -97,12 +99,12 @@ public class FeeTradeServiceImpl implements IFeeTradeService {
     }
 
     @Override
-    public List<Map> statisticSummaryByMonth(int year)  {
-        return feeTradeMapper.statisticSummaryByMonth(year);
-    }
-
-    @Override
-    public List<Map> statisticSummaryByQuarter(int year) {
-        return feeTradeMapper.statisticSummaryByQuarter(year);
+    public AmountValueChartDto getAmountValueChart(int year) {
+        List<AggregatedSumDto> byMonth = feeTradeMapper.getAmountGroupByMonth(year);
+        List<AggregatedSumDto> byQuarter = feeTradeMapper.getAmountGroupByQuarter(year);
+        return new AmountValueChartDto.Builder()
+                .addMonths(byMonth)
+                .addQuarters(byQuarter)
+                .build();
     }
 }

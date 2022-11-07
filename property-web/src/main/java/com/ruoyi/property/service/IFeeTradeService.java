@@ -2,6 +2,7 @@ package com.ruoyi.property.service;
 
 import com.ruoyi.common.enums.SqlLockMode;
 import com.ruoyi.property.domain.FeeTrade;
+import com.ruoyi.property.dto.AmountValueChartDto;
 
 import java.util.List;
 import java.util.Map;
@@ -18,6 +19,5 @@ public interface IFeeTradeService {
     Map getOwnedTradeByNo(String ownerId, String no, SqlLockMode lockMode);
     int completeTrade(Map params);
 
-    List<Map> statisticSummaryByMonth(int year);
-    List<Map> statisticSummaryByQuarter(int year);
+    AmountValueChartDto getAmountValueChart(int year);
 }

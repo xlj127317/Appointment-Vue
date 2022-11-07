@@ -158,26 +158,26 @@
     <delete id="deleteTrade" parameterType="java.lang.String">
         DELETE FROM fee_trades WHERE id = #{id}
     </delete>
-    <select id="statisticSummaryByMonth" resultType="java.util.Map">
+    <select id="getAmountGroupByMonth" resultType="com.ruoyi.property.dto.AggregatedSumDto">
         SELECT
-            SUM(paid_amount) AS paidAmount,
-            MONTH (paid_at) AS month
+            SUM(paid_amount) AS amount,
+            MONTH (paid_at) AS `index`
         FROM
             fee_trades
         WHERE
             state = 2
             AND YEAR(paid_at) = #{year}
-    GROUP BY MONTH (paid_at)
+        GROUP BY `index`
     </select>
-    <select id="statisticSummaryByQuarter" resultType="java.util.Map">
+    <select id="getAmountGroupByQuarter" resultType="com.ruoyi.property.dto.AggregatedSumDto">
         SELECT
-            SUM(paid_amount) AS paidAmount,
-            quarter(paid_at) AS `quarter`
+            SUM(paid_amount) AS amount,
+            QUARTER(paid_at) AS `index`
         FROM
             fee_trades
         WHERE
             state = 2
             AND YEAR(paid_at) = #{year}
-        GROUP BY `quarter`
+        GROUP BY `index`
     </select>
 </mapper>

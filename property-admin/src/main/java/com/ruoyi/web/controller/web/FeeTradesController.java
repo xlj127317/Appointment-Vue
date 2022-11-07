@@ -8,6 +8,7 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.ruoyi.common.core.controller.BaseController;
+import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.FeeTradeState;
 import com.ruoyi.property.dto.NamedAggregatedSumDto;
@@ -142,42 +143,8 @@ public class FeeTradesController extends BaseController {
         table.addCell(cell);
     }
 
-    @GetMapping("statistics/summary")
-    public Map summaryStatistics() {
-        HashMap<Integer, NamedAggregatedSumDto> allByMonth = new HashMap<Integer, NamedAggregatedSumDto>();
-        for (int i = 1; i <= 12; i++) {
-            NamedAggregatedSumDto dto = new NamedAggregatedSumDto();
-            dto.setName(String.format("%d月", i));
-            dto.setAmount(BigDecimal.ZERO);
-            allByMonth.put(i, dto);
-        }
-
-        HashMap<Integer, NamedAggregatedSumDto> allByQuarter = new HashMap<Integer, NamedAggregatedSumDto>();
-        for (int i = 1; i <= 4; i++) {
-            NamedAggregatedSumDto dto = new NamedAggregatedSumDto();
-            dto.setName(String.format("第%d季度", i));
-            dto.setAmount(BigDecimal.ZERO);
-            allByQuarter.put(i, dto);
-        }
-
-        Map output = new HashMap();
-
-        List<Map> byMonths = feeTradeService.statisticSummaryByMonth(Year.now().getValue());
-        for (Map item : byMonths) {
-            NamedAggregatedSumDto dto = allByMonth.get((Integer)item.get("month"));
-            dto.setAmount((BigDecimal)item.get("paidAmount"));
-        }
-
-        output.put("months", allByMonth);
-
-        List<Map> byQuarters = feeTradeService.statisticSummaryByQuarter(Year.now().getValue());
-        for (Map item : byQuarters) {
-            NamedAggregatedSumDto dto = allByQuarter.get((Integer)item.get("quarter"));
-            dto.setAmount((BigDecimal)item.get("paidAmount"));
-        }
-
-        output.put("quarters", allByQuarter);
-
-        return output;
+    @GetMapping("/chart")
+    public AjaxResult chart() {
+        return AjaxResult.success(feeTradeService.getAmountValueChart(Year.now().getValue()));
     }
 }

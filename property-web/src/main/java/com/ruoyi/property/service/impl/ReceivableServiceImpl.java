@@ -8,6 +8,8 @@ import cn.hutool.core.util.StrUtil;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.uuid.PkeyGenerator;
+import com.ruoyi.property.dto.AggregatedSumDto;
+import com.ruoyi.property.dto.AmountValueChartDto;
 import com.ruoyi.property.dto.ReceivableListInput;
 import com.ruoyi.system.mapper.SysUserMapper;
 import org.springframework.stereotype.Service;
@@ -115,5 +117,15 @@ public class ReceivableServiceImpl implements IReceivableService {
     public Receivable findOne(Map params) {
         params.put("limit", 1);
         return receivableMapper.select(params);
+    }
+
+    @Override
+    public AmountValueChartDto getAmountValueChart(int year) {
+        List<AggregatedSumDto> byMonth = receivableMapper.getAmountGroupByMonth(year);
+        List<AggregatedSumDto> byQuarter = receivableMapper.getAmountGroupByQuarter(year);
+        return new AmountValueChartDto.Builder()
+                .addMonths(byMonth)
+                .addQuarters(byQuarter)
+                .build();
     }
 }

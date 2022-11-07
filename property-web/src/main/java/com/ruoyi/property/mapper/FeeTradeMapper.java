@@ -1,5 +1,7 @@
 package com.ruoyi.property.mapper;
 
+import com.ruoyi.property.dto.AggregatedSumDto;
+
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +17,7 @@ public interface FeeTradeMapper {
     Map getTrade(Map params);
 
     int completeTrade(Map params);
-    List<Map> statisticSummaryByMonth(int year);
-    List<Map> statisticSummaryByQuarter(int year);
+
+    List<AggregatedSumDto> getAmountGroupByMonth(int year);
+    List<AggregatedSumDto> getAmountGroupByQuarter(int year);
 }
