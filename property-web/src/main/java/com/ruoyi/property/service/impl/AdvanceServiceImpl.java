@@ -111,6 +111,12 @@ public class AdvanceServiceImpl implements IAdvanceService {
         Map params = new HashMap();
 
         @Override
+        public QueryBuilder id(String id) {
+            params.put("id", id);
+            return this;
+        }
+        
+        @Override
         public QueryBuilder ownerId(String ownerId) {
             params.put("ownerId", ownerId);
             return this;
