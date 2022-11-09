@@ -163,7 +163,8 @@
                 and type_id = #{typeId,jdbcType=VARCHAR}
             </if>
             <if test="assetsName != null">
-                and assets_name = #{assetsName,jdbcType=VARCHAR}
+                and assets_name like
+                concat('%', #{assetsName,jdbcType=VARCHAR}, '%')
             </if>
             <if test="inStock != null">
                 and in_stock = #{inStock,jdbcType=VARCHAR}

@@ -2,6 +2,7 @@ package com.ruoyi.property.service.impl;
 
 import java.util.List;
 
+import cn.hutool.core.util.ObjUtil;
 import cn.hutool.core.util.StrUtil;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.DateUtils;
@@ -81,7 +82,9 @@ public class OwnerServiceImpl implements IOwnerService {
         try {
             owner.setId(PkeyGenerator.getUniqueString());
             owner.setCreateTime(DateUtils.getNowDate());
-
+            if (ObjUtil.isNotNull(ownerMapper.selectOwnerByIDCard(owner.getIdentity()))) {
+                throw new ServiceException(owner.getIdentity() + "：身份证号码重复");
+            }
             walletService.createIfNotExists(owner.getId());
 
             int result = ownerMapper.insertOwner(owner);
@@ -103,6 +106,9 @@ public class OwnerServiceImpl implements IOwnerService {
      */
     @Override
     public int updateOwner(Owner owner) {
+        if (ObjUtil.isNotNull(ownerMapper.selectOwnerByIDCard(owner.getIdentity()))) {
+            throw new ServiceException(owner.getIdentity() + "：身份证号码重复");
+        }
         return ownerMapper.updateOwner(owner);
     }
 

@@ -183,5 +183,6 @@
         <include refid="Base_Column_List"/>
         from houses h
         where h.houses_no = #{housesNo,jdbcType=VARCHAR}
+          and h.is_flag = 0
     </select>
 </mapper>

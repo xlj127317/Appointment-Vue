@@ -84,4 +84,6 @@ public interface OwnerMapper {
      * @return 结果
      */
     int deleteOwnerByIds(String[] ids);
+
+    Owner selectOwnerByIDCard(String identity);
 }
