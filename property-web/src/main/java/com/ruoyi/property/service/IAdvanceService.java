@@ -66,6 +66,7 @@ public interface IAdvanceService {
     QueryBuilder newQuery();
 
     interface QueryBuilder {
+        QueryBuilder id(String id);
         QueryBuilder ownerId(String ownerId);
         QueryBuilder limit(Integer limit);
         Advance findOneOrNull();

@@ -130,6 +130,7 @@ public class WxAdvanceController extends BaseController {
         String ownerId = easyTrService.mustUserIdToOwnerId(wxOpenId);
 
         Advance advance = advanceService.newQuery()
+                .id(input.getId())
                 .ownerId(ownerId)
                 .findOneOrNull();
 
