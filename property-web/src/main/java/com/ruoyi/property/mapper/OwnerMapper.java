@@ -1,7 +1,10 @@
 package com.ruoyi.property.mapper;
 
 import com.ruoyi.property.domain.Owner;
-import org.apache.ibatis.annotations.Mapper;import java.util.List;
+import com.ruoyi.property.vo.resp.OwnerSettledResp;
+import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 @Mapper
 public interface OwnerMapper {
@@ -86,4 +89,11 @@ public interface OwnerMapper {
     int deleteOwnerByIds(String[] ids);
 
     Owner selectOwnerByIDCard(String identity);
+
+    /**
+     * 按照月份统计企业入驻量
+     *
+     * @return list
+     */
+    List<OwnerSettledResp> getSettled();
 }

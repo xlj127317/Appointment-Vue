@@ -99,4 +99,11 @@ public class OwnerController extends BaseController {
     public AjaxResult remove(@PathVariable String[] ids) {
         return toAjax(ownerService.deleteOwnerByIds(ids));
     }
+
+    @ApiOperation("按照月份统计企业入驻量")
+    @GetMapping("/getSettled")
+    public AjaxResult getSettled() {
+        return ownerService.getSettled();
+    }
+
 }

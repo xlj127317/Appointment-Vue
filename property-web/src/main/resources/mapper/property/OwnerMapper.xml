@@ -308,4 +308,14 @@
         where t.identity = #{identity}
           and t.is_flag = 0
     </select>
+
+    <select id="getSettled" resultType="com.ruoyi.property.vo.resp.OwnerSettledResp">
+        SELECT date_format(create_time, '%Y') as year,
+               DATE_FORMAT(create_time, '%m') AS month,
+               count(*)                       AS count
+        FROM `owner`
+        where is_flag = 0
+        GROUP BY Month, year
+        order by year desc;
+    </select>
 </mapper>

@@ -4,6 +4,7 @@ import java.util.List;
 
 import cn.hutool.core.util.ObjUtil;
 import cn.hutool.core.util.StrUtil;
+import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.uuid.PkeyGenerator;
@@ -132,5 +133,10 @@ public class OwnerServiceImpl implements IOwnerService {
     @Override
     public int deleteOwnerById(String id) {
         return ownerMapper.deleteOwnerById(id);
+    }
+
+    @Override
+    public AjaxResult getSettled() {
+        return AjaxResult.success(ownerMapper.getSettled());
     }
 }
