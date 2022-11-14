@@ -115,7 +115,7 @@ public class AdvanceServiceImpl implements IAdvanceService {
             params.put("id", id);
             return this;
         }
-        
+
         @Override
         public QueryBuilder ownerId(String ownerId) {
             params.put("ownerId", ownerId);

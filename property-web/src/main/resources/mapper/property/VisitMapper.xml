@@ -426,4 +426,10 @@
             AND YEAR(applicant_time) = #{year}
         GROUP BY `index`
     </select>
+    <select id="getStatisticsSummary" resultType="java.util.Map">
+        SELECT
+        ( SELECT COUNT( 1 ) FROM visit WHERE is_flag = 0 AND audit_status = 1 ) AS audited,
+        ( SELECT COUNT( 1 ) FROM visit WHERE is_flag = 0 AND audit_status = 0 ) AS unaudited,
+        ( SELECT COUNT( 1 ) FROM visit WHERE is_flag = 0 ) AS total;
+    </select>
 </mapper>

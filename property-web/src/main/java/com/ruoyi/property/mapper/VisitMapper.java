@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface VisitMapper {
@@ -101,4 +102,5 @@ public interface VisitMapper {
 
     List<AggregatedSumDto> getAmountGroupByMonth(int year);
     List<AggregatedSumDto> getAmountGroupByQuarter(int year);
+    Map getStatisticsSummary();
 }

@@ -1,6 +1,7 @@
 package com.ruoyi.property.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.ruoyi.property.domain.Visit;
 import com.ruoyi.property.dto.AmountValueChartDto;
@@ -61,4 +62,5 @@ public interface VisitService {
      int deleteVisitById(String id);
 
      AmountValueChartDto getAmountValueChart(int year);
+     Map getStatisticsSummary();
 }

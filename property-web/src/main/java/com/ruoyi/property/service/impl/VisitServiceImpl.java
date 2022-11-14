@@ -2,6 +2,7 @@ package com.ruoyi.property.service.impl;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import cn.hutool.core.util.StrUtil;
 import com.ruoyi.common.enums.ReportTypeEnum;
@@ -152,5 +153,10 @@ public class VisitServiceImpl implements VisitService {
                 .addMonths(byMonth)
                 .addQuarters(byQuarter)
                 .build();
+    }
+
+    @Override
+    public Map getStatisticsSummary() {
+        return visitMapper.getStatisticsSummary();
     }
 }

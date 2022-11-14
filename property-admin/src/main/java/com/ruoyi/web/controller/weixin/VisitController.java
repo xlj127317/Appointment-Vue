@@ -1,10 +1,13 @@
 package com.ruoyi.web.controller.weixin;
 
+import java.math.BigDecimal;
 import java.time.Year;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import javax.servlet.http.HttpServletResponse;
 
+import com.ruoyi.property.vo.resp.VisitStatisticsSummaryVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -103,5 +106,15 @@ public class VisitController extends BaseController {
     @GetMapping("/chart")
     public AjaxResult chart() {
         return AjaxResult.success(visitService.getAmountValueChart(Year.now().getValue()));
+    }
+
+    @GetMapping("/statistics/summary")
+    public AjaxResult statisticsSummary() {
+        Map result = visitService.getStatisticsSummary();
+        VisitStatisticsSummaryVo vo = new VisitStatisticsSummaryVo();
+        vo.setAudited((Long) result.get("audited"));
+        vo.setUnaudited((Long) result.get("unaudited"));
+        vo.setTotal((Long) result.get("total"));
+        return AjaxResult.success(vo);
     }
 }
