@@ -13,7 +13,7 @@ public class AdvanceOutput {
     private String paymentName;
     private String paymentContent;
     private String advanceMoney;
-    private int payType;
+    private String payType;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date advanceDate;
