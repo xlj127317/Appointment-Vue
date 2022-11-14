@@ -2,8 +2,11 @@ package com.ruoyi.property.service.impl;
 
 import java.util.List;
 
+import cn.hutool.core.util.ObjUtil;
+import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.uuid.PkeyGenerator;
+import com.ruoyi.property.mapper.HousesMapper;
 import org.springframework.stereotype.Service;
 import com.ruoyi.property.mapper.HydropowerMapper;
 import com.ruoyi.property.domain.Hydropower;
@@ -21,6 +24,9 @@ import javax.annotation.Resource;
 public class HydropowerServiceImpl implements HydropowerService {
     @Resource
     private HydropowerMapper hydropowerMapper;
+
+    @Resource
+    private HousesMapper housesMapper;
 
     /**
      * 查询水电统计
@@ -53,6 +59,9 @@ public class HydropowerServiceImpl implements HydropowerService {
     @Override
     public int insertHydropower(Hydropower hydropower) {
         hydropower.setId(PkeyGenerator.getUniqueString());
+        if (ObjUtil.isNull(housesMapper.selectHousesById(hydropower.getHouseId()))) {
+            throw new ServiceException("该房屋id不存在");
+        }
         hydropower.setCreateTime(DateUtils.getNowDate());
         return hydropowerMapper.insertHydropower(hydropower);
     }
@@ -65,6 +74,9 @@ public class HydropowerServiceImpl implements HydropowerService {
      */
     @Override
     public int updateHydropower(Hydropower hydropower) {
+        if (ObjUtil.isNull(housesMapper.selectHousesById(hydropower.getHouseId()))) {
+            throw new ServiceException("该房屋id不存在");
+        }
         return hydropowerMapper.updateHydropower(hydropower);
     }
 

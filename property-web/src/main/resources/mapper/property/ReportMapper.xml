@@ -150,6 +150,9 @@
         from report
         <where>
             is_flag = 0
+            <if test="id != null and id != ''">
+                and id = #{id}
+            </if>
             <if test="typeId != null and typeId != ''">
                 and type_id = #{typeId}
             </if>

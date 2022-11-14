@@ -77,8 +77,10 @@ public class HousesServiceImpl implements IHousesService {
     public int insertHouses(Houses houses) {
         houses.setId(PkeyGenerator.getUniqueString());
         if (!getHousesNo(houses.getHousesNo())) {
-            throw new ServiceException("房屋编号重复");
+            throw new ServiceException("房屋编号重复",201);
         }
+        if (ObjUtil.isNull(ownerMapper.selectOwnerById(houses.getOwnerId())))
+            throw new ServiceException("此" + houses.getOwnerId() + "不存在", 201);
         houses.setCreateTime(DateUtils.getNowDate());
         return housesMapper.insertHouses(houses);
     }
@@ -91,6 +93,11 @@ public class HousesServiceImpl implements IHousesService {
      */
     @Override
     public int updateHouses(Houses houses) {
+        if (!getHousesNo(houses.getHousesNo())) {
+            throw new ServiceException("房屋编号重复");
+        }
+        if (ObjUtil.isNull(ownerMapper.selectOwnerById(houses.getOwnerId())))
+            throw new ServiceException("此" + houses.getOwnerId() + "不存在", 201);
         return housesMapper.updateHouses(houses);
     }
 

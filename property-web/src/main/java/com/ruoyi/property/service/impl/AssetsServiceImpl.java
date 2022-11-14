@@ -2,11 +2,14 @@ package com.ruoyi.property.service.impl;
 
 import cn.hutool.core.date.CalendarUtil;
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.ObjUtil;
 import cn.hutool.core.util.StrUtil;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.uuid.PkeyGenerator;
 import com.ruoyi.property.domain.Assets;
+import com.ruoyi.property.domain.AssetsType;
 import com.ruoyi.property.mapper.AssetsMapper;
+import com.ruoyi.property.mapper.AssetsTypeMapper;
 import com.ruoyi.property.service.AssetsService;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.system.mapper.SysUserMapper;
@@ -24,6 +27,9 @@ public class AssetsServiceImpl implements AssetsService {
 
     @Resource
     private AssetsMapper assetsMapper;
+
+    @Resource
+    private AssetsTypeMapper assetsTypeMapper;
 
     @Resource
     private SysUserMapper sysUserMapper;
@@ -55,6 +61,12 @@ public class AssetsServiceImpl implements AssetsService {
                 throw new ServiceException("无此创建人：" + ass.getCreateId(), 201);
             }
             ass.setCreateId(nickName);
+            // 列表返回类型编码
+            String typeId = ass.getTypeId();
+            AssetsType assetsType = assetsTypeMapper.selectAssetsTypeById(typeId);
+            if (ObjUtil.isNull(assetsType))
+                throw new ServiceException("无该类型");
+            ass.setTypeId(assetsType.getAssetsType());
         }
         return list;
     }

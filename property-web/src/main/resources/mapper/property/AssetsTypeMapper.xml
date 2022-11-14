@@ -148,7 +148,8 @@
         select
         <include refid="Base_Column_List"/>
         from assets_type
-        where id = #{id} and is_flag = 0
+        where id = #{id}
+          and is_flag = 0
     </select>
 
     <insert id="insertAssetsType" parameterType="com.ruoyi.property.domain.AssetsType">
@@ -235,4 +236,10 @@
             #{id}
         </foreach>
     </delete>
+
+    <select id="selectAssetsTypeByName" resultMap="BaseResultMap">
+        select t.assets_type
+        from assets_type t
+        where t.assets_type = #{assetsType}
+    </select>
 </mapper>

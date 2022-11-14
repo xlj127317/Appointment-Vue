@@ -2,7 +2,9 @@ package com.ruoyi.property.service.impl;
 
 import java.util.List;
 
+import cn.hutool.core.util.ObjUtil;
 import cn.hutool.core.util.StrUtil;
+import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.uuid.PkeyGenerator;
@@ -65,6 +67,11 @@ public class WorkerServiceImpl implements WorkerService {
      */
     @Override
     public String insertWorker(Worker worker) {
+        String jobNum = worker.getJobNum();
+        SysUser sysUser = sysUserMapper.selectUserByUserName(jobNum);
+        if (ObjUtil.isNull(sysUser)) {
+            throw new ServiceException("工号" + jobNum + "不存在", 201);
+        }
         worker.setId(PkeyGenerator.getUniqueString());
         worker.setCreateTime(DateUtils.getNowDate());
         if (workerMapper.insertWorker(worker) == 0) {

@@ -159,9 +159,9 @@ public class SysUserServiceImpl implements ISysUserService {
      */
     @Override
     public String checkUserNameUnique(SysUser user) {
-        String userId = StringUtils.isNull(user.getUserId()) ? "-1" : user.getUserId();
+        String userId = StringUtils.isNull(user.getUserName()) ? "-1" : user.getUserName();
         SysUser info = userMapper.checkUserNameUnique(user.getUserName());
-        if (StringUtils.isNotNull(info) && info.getUserId().equals(userId)) {
+        if (StringUtils.isNotNull(info) && info.getUserName().equals(userId)) {
             return UserConstants.NOT_UNIQUE;
         }
         return UserConstants.UNIQUE;

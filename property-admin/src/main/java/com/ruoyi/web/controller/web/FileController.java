@@ -29,7 +29,7 @@ public class FileController {
 
     @ApiOperation(value = "单文件上传")
     @PostMapping("/upload")
-    public AjaxResult add(@RequestParam(value = "file") MultipartFile file) {
+    public AjaxResult add(@RequestParam(value = "file",required = false) MultipartFile file) {
         //判断文件是否空
         if (file == null || file.getOriginalFilename() == null || "".equalsIgnoreCase(file.getOriginalFilename().trim())) {
             return AjaxResult.error("文件为空");

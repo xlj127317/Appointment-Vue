@@ -1,5 +1,6 @@
 package com.ruoyi.property.service.impl;
 
+import cn.hutool.core.util.ObjUtil;
 import cn.hutool.core.util.StrUtil;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.DateUtils;
@@ -65,6 +66,11 @@ public class AssetsTypeServiceImpl implements IAssetsTypeService {
     @Override
     public int insertAssetsType(AssetsType assetsType) {
         assetsType.setId(PkeyGenerator.getUniqueString());
+        AssetsType assetsTypeInfo = assetsTypeMapper.selectAssetsTypeByName(assetsType.getAssetsType());
+        if (ObjUtil.isNotNull(assetsTypeInfo) &&
+                StrUtil.equals(assetsType.getAssetsType(), assetsType.getAssetsType())) {
+            throw new ServiceException("类型名称不能重复");
+        }
         assetsType.setCreateTime(DateUtils.getNowDate());
         return assetsTypeMapper.insertAssetsType(assetsType);
     }
