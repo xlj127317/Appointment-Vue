@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.wind</groupId>
-    <artifactId>appointment</artifactId>
+    <artifactId>Appointment-Vue</artifactId>
     <version>1.0.0</version>
 
     <name>property</name>
