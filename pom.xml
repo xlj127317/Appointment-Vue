@@ -4,15 +4,15 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.ruoyi</groupId>
-    <artifactId>ruoyi</artifactId>
-    <version>3.8.3</version>
+    <groupId>com.wind</groupId>
+    <artifactId>appointment</artifactId>
+    <version>1.0.0</version>
 
     <name>property</name>
     <description>物业管理系统</description>
 
     <properties>
-        <ruoyi.version>3.8.3</ruoyi.version>
+        <ruoyi.version>1.0.0</ruoyi.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
@@ -152,49 +152,49 @@
 
             <!-- 定时任务-->
             <dependency>
-                <groupId>com.ruoyi</groupId>
-                <artifactId>property-quartz</artifactId>
+                <groupId>com.wind</groupId>
+                <artifactId>appointment-quartz</artifactId>
                 <version>${ruoyi.version}</version>
             </dependency>
 
             <!-- 代码生成-->
             <dependency>
-                <groupId>com.ruoyi</groupId>
-                <artifactId>property-generator</artifactId>
+                <groupId>com.wind</groupId>
+                <artifactId>appointment-generator</artifactId>
                 <version>${ruoyi.version}</version>
             </dependency>
 
             <!-- 核心模块-->
             <dependency>
-                <groupId>com.ruoyi</groupId>
-                <artifactId>property-framework</artifactId>
+                <groupId>com.wind</groupId>
+                <artifactId>appointment-framework</artifactId>
                 <version>${ruoyi.version}</version>
             </dependency>
 
             <!-- 系统模块-->
             <dependency>
-                <groupId>com.ruoyi</groupId>
-                <artifactId>property-system</artifactId>
+                <groupId>com.wind</groupId>
+                <artifactId>appointment-system</artifactId>
                 <version>${ruoyi.version}</version>
             </dependency>
 
             <!--web 模块-->
             <dependency>
-                <groupId>com.ruoyi</groupId>
-                <artifactId>property-web</artifactId>
+                <groupId>com.wind</groupId>
+                <artifactId>appointment-web</artifactId>
                 <version>${ruoyi.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>com.ruoyi</groupId>
-                <artifactId>property-admin</artifactId>
+                <groupId>com.wind</groupId>
+                <artifactId>appointment-admin</artifactId>
                 <version>${ruoyi.version}</version>
             </dependency>
 
             <!-- 通用工具-->
             <dependency>
-                <groupId>com.ruoyi</groupId>
-                <artifactId>property-common</artifactId>
+                <groupId>com.wind</groupId>
+                <artifactId>appointment-common</artifactId>
                 <version>${ruoyi.version}</version>
             </dependency>
 
@@ -202,13 +202,13 @@
     </dependencyManagement>
 
     <modules>
-        <module>property-admin</module>
-        <module>property-framework</module>
-        <module>property-system</module>
-        <module>property-quartz</module>
-        <module>property-generator</module>
-        <module>property-common</module>
-        <module>property-web</module>
+        <module>appointment-admin</module>
+        <module>appointment-framework</module>
+        <module>appointment-system</module>
+        <module>appointment-quartz</module>
+        <module>appointment-generator</module>
+        <module>appointment-common</module>
+        <module>appointment-web</module>
     </modules>
     <packaging>pom</packaging>
 
