@@ -1,9 +1,9 @@
 package com.ruoyi.framework.websocket;
 
+import java.util.concurrent.Semaphore;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.concurrent.Semaphore;
 
 /**
  * 信号量相关处理

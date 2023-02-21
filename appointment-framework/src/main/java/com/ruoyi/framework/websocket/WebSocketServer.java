@@ -1,12 +1,16 @@
 package com.ruoyi.framework.websocket;
 
+import java.util.concurrent.Semaphore;
+import javax.websocket.OnClose;
+import javax.websocket.OnError;
+import javax.websocket.OnMessage;
+import javax.websocket.OnOpen;
+import javax.websocket.Session;
+import javax.websocket.server.ServerEndpoint;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-
-import javax.websocket.*;
-import javax.websocket.server.ServerEndpoint;
-import java.util.concurrent.Semaphore;
 
 /**
  * websocket 消息处理
